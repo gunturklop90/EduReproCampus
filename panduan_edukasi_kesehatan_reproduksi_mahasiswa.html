@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduRepro - Perencanaan Reproduksi Mahasiswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Keyframes Animations */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+        @keyframes float-sperm {
+            0% { transform: translateX(0px) translateY(0px); }
+            50% { transform: translateX(12px) translateY(-6px); }
+            100% { transform: translateX(0px) translateY(0px); }
+        }
+        @keyframes scan-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes shield-glow {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(13, 148, 136, 0.4)); }
+            50% { filter: drop-shadow(0 0 12px rgba(13, 148, 136, 0.8)); }
+        }
+
+        .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
+        .animate-sperm { animation: float-sperm 2.5s infinite ease-in-out; }
+        .animate-shield { animation: shield-glow 2s infinite; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-teal-600 text-white p-2 rounded-lg shadow-sm">
+                    <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold text-slate-900 tracking-tight">EduRepro<span class="text-teal-600">Campus</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-600">
+                <button onclick="switchTab('proses')" id="nav-proses" class="hover:text-teal-600 transition py-5">Proses Reproduksi</button>
+                <button onclick="switchTab('kontrasepsi')" id="nav-kontrasepsi" class="hover:text-teal-600 transition py-5">Kontrasepsi</button>
+                <button onclick="switchTab('risiko')" id="nav-risiko" class="hover:text-teal-600 transition py-5">Risiko Usia Muda</button>
+                <button onclick="switchTab('keputusan')" id="nav-keputusan" class="hover:text-teal-600 transition py-5">Keputusan & Layanan</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Header -->
+    <div class="md:hidden bg-white border-b border-slate-200 flex justify-around text-xs font-medium py-2.5 sticky top-16 z-40">
+        <button onclick="switchTab('proses')" id="mnav-proses" class="p-1.5 text-center text-teal-600 font-bold">Proses</button>
+        <button onclick="switchTab('kontrasepsi')" id="mnav-kontrasepsi" class="p-1.5 text-center text-slate-600">Kontrasepsi</button>
+        <button onclick="switchTab('risiko')" id="mnav-risiko" class="p-1.5 text-center text-slate-600">Risiko</button>
+        <button onclick="switchTab('keputusan')" id="mnav-keputusan" class="p-1.5 text-center text-slate-600">Keputusan</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-6">
+
+        <!-- Banner / Hero -->
+        <div class="bg-gradient-to-r from-teal-700 via-teal-600 to-cyan-700 rounded-2xl p-6 md:p-8 text-white mb-8 shadow-lg relative overflow-hidden">
+            <div class="relative z-10">
+                <span class="bg-teal-900/60 text-teal-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-teal-400/30">Panduan Edukasi Mahasiswa</span>
+                <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Kehamilan Tidak Direncanakan (KTD) & Perencanaan Reproduksi</h1>
+                <p class="text-teal-100 max-w-2xl text-sm md:text-base leading-relaxed">Edukasi medis berbasis fakta dan ilmu pengetahuan untuk membantu mahasiswa mengambil keputusan yang bijak, bertanggung jawab, dan aman bagi masa depannya.</p>
+            </div>
+            <!-- Decorative background element -->
+            <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
+                <svg width="280" height="280" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+        </div>
+
+        <!-- Section 1: Proses Reproduksi dengan Visual Animasi SVG -->
+        <section id="tab-proses" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i data-lucide="dna" class="text-teal-600"></i> Memahami Proses Reproduksi & Terjadinya Kehamilan
+                </h2>
+                <p class="text-slate-600 leading-relaxed text-sm mb-6">
+                    Kehamilan terjadi ketika sel sperma membuahi sel telur (*ovum*) dalam proses yang disebut fertilisasi, dilanjutkan dengan penempelan zigot pada dinding rahim (*implantasi*).
+                </p>
+
+                <!-- Animasi Visual SVG Proses Reproduksi -->
+                <div class="bg-slate-900 rounded-2xl p-6 mb-8 text-white shadow-inner">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                        <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span> Visualisasi Animasi Proses Fertilisasi
+                        </span>
+                        <span class="text-xs text-slate-400">Diagram Sains Interaktif</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                        <!-- Step 1 SVG -->
+                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
+                                <!-- Ovarium & Sel Telur -->
+                                <circle cx="50" cy="50" r="28" fill="#0d9488" fill-opacity="0.2" stroke="#14b8a6" stroke-width="2" class="animate-pulse-slow" />
+                                <circle cx="50" cy="50" r="16" fill="#0d9488" stroke="#2dd4bf" stroke-width="2" />
+                                <circle cx="50" cy="50" r="6" fill="#f0fdf4" />
+                                <!-- Label -->
+                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Sel Telur (Ovum)</text>
+                            </svg>
+                            <h4 class="text-xs font-bold text-teal-300 mt-2">1. Ovulasi (Masa Subur)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Ovarium melepas 1 sel telur matang. Sel telur dapat bertahan hidup 12-24 jam di saluran reproduksi.</p>
+                        </div>
+
+                        <!-- Step 2 SVG -->
+                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
+                                <!-- Sel Telur -->
+                                <circle cx="50" cy="50" r="24" fill="#0d9488" fill-opacity="0.3" stroke="#14b8a6" stroke-width="2" />
+                                <circle cx="50" cy="50" r="12" fill="#0d9488" />
+                                <!-- Sperma Bergerak Animasi -->
+                                <g class="animate-sperm">
+                                    <path d="M 20 45 Q 25 40 30 45 T 40 45" stroke="#38bdf8" stroke-width="2" fill="none" />
+                                    <circle cx="40" cy="45" r="3" fill="#38bdf8" />
+                                </g>
+                                <g class="animate-sperm" style="animation-delay: 0.8s;">
+                                    <path d="M 18 60 Q 23 55 28 60 T 38 55" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+                                    <circle cx="38" cy="55" r="2.5" fill="#38bdf8" />
+                                </g>
+                                <!-- Flash Fertilisasi -->
+                                <circle cx="50" cy="50" r="4" fill="#fef08a" class="animate-ping" />
+                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Pembuahan (Fertilisasi)</text>
+                            </svg>
+                            <h4 class="text-xs font-bold text-teal-300 mt-2">2. Pembuahan (Fertilisasi)</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Sperma bertahan hingga 5 hari. Pembuahan terjadi jika sperma bertemu sel telur di tuba falopi.</p>
+                        </div>
+
+                        <!-- Step 3 SVG -->
+                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
+                                <!-- Dinding Rahim -->
+                                <path d="M 10 20 C 30 20, 30 80, 10 80" stroke="#f43f5e" stroke-width="6" fill="none" stroke-linecap="round" />
+                                <!-- Implantasi Embrio -->
+                                <g class="animate-pulse-slow">
+                                    <circle cx="28" cy="50" r="10" fill="#f43f5e" fill-opacity="0.4" stroke="#fb7185" stroke-width="2" />
+                                    <circle cx="28" cy="50" r="5" fill="#f43f5e" />
+                                </g>
+                                <text x="55" y="53" font-size="7" fill="#fca5a5" text-anchor="start">Dinding Rahim</text>
+                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Implantasi Embrio</text>
+                            </svg>
+                            <h4 class="text-xs font-bold text-teal-300 mt-2">3. Implantasi Rahim</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Sel telur yang dibuahi menempel pada dinding rahim, secara medis menjadi awal dimulainya kehamilan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mitos vs Fakta -->
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                    <h4 class="font-semibold text-amber-900 text-sm flex items-center gap-2">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i> Mitos & Fakta Medis Penting
+                    </h4>
+                    <div class="text-xs text-amber-800 mt-2 space-y-1">
+                        <p><strong>Mitos:</strong> Mencegah kehamilan bisa dilakukan dengan meminum jamu atau membasuh organ intim setelah berhubungan.</p>
+                        <p><strong>Fakta:</strong> Hal tersebut tidak efektif secara medis. Kehamilan dapat terjadi pada setiap penetrasi tanpa kontrasepsi yang aman.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Metode Kontrasepsi dengan Visual Animasi Kerja -->
+        <section id="tab-kontrasepsi" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i data-lucide="shield-check" class="text-teal-600"></i> Metode Kontrasepsi & Efektivitasnya
+                </h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    Kontrasepsi bekerja mencegah fertilisasi atau implantasi. Efektivitas diukur berdasarkan **Penggunaan Sempurna (*Perfect Use*)** dan **Penggunaan Tipikal (*Typical Use*)**.
+                </p>
+
+                <!-- Animasi Visual Metode Kontrasepsi -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <!-- Visual Barier -->
+                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
+                        <svg class="w-20 h-20 my-2 animate-shield" viewBox="0 0 100 100">
+                            <path d="M 50 15 L 80 30 V 55 C 80 75 50 90 50 90 C 50 90 20 75 20 55 V 30 Z" fill="#0d9488" fill-opacity="0.3" stroke="#14b8a6" stroke-width="2" />
+                            <i data-lucide="shield" class="w-8 h-8 text-teal-400"></i>
+                            <circle cx="50" cy="50" r="12" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="3,3" class="animate-spin" />
+                        </svg>
+                        <span class="text-xs font-bold text-teal-300">Metode Barier (Kondom)</span>
+                        <p class="text-[10px] text-slate-400 mt-1">Mencegah fisik sperma bertemu sel telur. Mencegah penyakit menular seksual (IMS).</p>
+                    </div>
+
+                    <!-- Visual Hormonal -->
+                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
+                        <svg class="w-20 h-20 my-2" viewBox="0 0 100 100">
+                            <rect x="25" y="25" width="50" height="50" rx="10" fill="#6b21a8" fill-opacity="0.3" stroke="#a855f7" stroke-width="2" />
+                            <circle cx="40" cy="40" r="6" fill="#c084fc" class="animate-ping" />
+                            <circle cx="60" cy="40" r="6" fill="#c084fc" />
+                            <circle cx="40" cy="60" r="6" fill="#c084fc" />
+                            <circle cx="60" cy="60" r="6" fill="#c084fc" />
+                        </svg>
+                        <span class="text-xs font-bold text-purple-300">Metode Hormonal (Pil/Suntik)</span>
+                        <p class="text-[10px] text-slate-400 mt-1">Regulasi hormon untuk menghentikan proses ovulasi bulanan.</p>
+                    </div>
+
+                    <!-- Visual LARC (IUD) -->
+                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
+                        <svg class="w-20 h-20 my-2" viewBox="0 0 100 100">
+                            <path d="M 30 30 H 70 M 50 30 V 75" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
+                            <circle cx="50" cy="50" r="18" fill="none" stroke="#0284c7" stroke-width="1.5" class="animate-pulse-slow" />
+                        </svg>
+                        <span class="text-xs font-bold text-sky-300">Metode Jangka Panjang (IUD)</span>
+                        <p class="text-[10px] text-slate-400 mt-1">Alat kontrasepsi rahim aman dengan efektivitas tinggi hingga 5-10 tahun.</p>
+                    </div>
+                </div>
+
+                <!-- Cards Detail Efektivitas -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 border border-slate-200 rounded-xl hover:border-teal-500 transition">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-slate-900 text-sm">Kondom Eksternal</h3>
+                            <span class="bg-teal-100 text-teal-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">Barier</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Satu-satunya metode pencegah kehamilan sekaligus pencegah Infeksi Menular Seksual (IMS).</p>
+                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
+                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-amber-600">87%</span></div>
+                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">98%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-slate-200 rounded-xl hover:border-purple-500 transition">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-slate-900 text-sm">Pil KB Kombinasi</h3>
+                            <span class="bg-purple-100 text-purple-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">Hormonal</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Mencegah pelepasan sel telur. Membutuhkan kedisiplinan minum rutin setiap hari.</p>
+                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
+                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-amber-600">93%</span></div>
+                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">99.7%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border border-slate-200 rounded-xl hover:border-sky-500 transition">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-slate-900 text-sm">IUD / KB Spiral</h3>
+                            <span class="bg-sky-100 text-sky-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">LARC</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3">Dipasang oleh dokter/bidan di rahim. Sangat efektif tanpa tergantung kedisiplinan harian.</p>
+                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
+                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-teal-600">>99%</span></div>
+                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">>99%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Risiko Usia Muda -->
+        <section id="tab-risiko" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="text-amber-500"></i> Risiko Kehamilan pada Usia Remaja & Mahasiswa
+                </h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    Kehamilan tidak direncanakan pada usia muda membawa konsekuensi medis, psikologis, dan akademik yang perlu diantisipasi secara matang.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50/50 rounded-r-xl">
+                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Risiko Fisik & Medis</h3>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li>Anemia berat dan hipertensi kehamilan.</li>
+                            <li>Risiko kelahiran prematur dan berat bayi lahir rendah (BBLR).</li>
+                            <li>Kompilikasi panggul yang belum matang secara biologis.</li>
+                        </ul>
+                    </div>
+
+                    <div class="border-l-4 border-amber-500 pl-4 py-2 bg-amber-50/50 rounded-r-xl">
+                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Risiko Psikologis</h3>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li>Tingkat stres tinggi, kecemasan, hingga depresi.</li>
+                            <li>Kesiapan mental parenting yang belum optimal.</li>
+                            <li>Konflik relasi dengan keluarga atau pasangan.</li>
+                        </ul>
+                    </div>
+
+                    <div class="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50/50 rounded-r-xl">
+                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Dampak Akademis & Sosial</h3>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li>Risiko penundaan hingga putus kuliah (drop out).</li>
+                            <li>Keterbatasan kemandirian finansial di awal usia produktif.</li>
+                            <li>Stigma sosial di lingkungan masyarakat.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Keputusan & Akses Layanan Kesehatan Terpercaya -->
+        <section id="tab-keputusan" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="user-check" class="text-teal-600"></i> Pengambilan Keputusan & Akses Layanan Kesehatan
+                </h2>
+
+                <p class="text-sm text-slate-600 mb-6">
+                    Jika Anda membutuhkan konseling ramah remaja, informasi kesehatan reproduksi, atau konsultasi rahasia, Anda dapat menghubungi atau mengunjungi lembaga resmi berikut:
+                </p>
+
+                <!-- Highlight khusus PKBI Kepri sesuai permintaan -->
+                <div class="bg-gradient-to-r from-teal-50 to-emerald-50 border-2 border-teal-500/30 p-5 rounded-2xl mb-6 shadow-sm">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="bg-teal-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Layanan Utama Layak Pemuda</span>
+                                <span class="text-xs font-semibold text-teal-800">PKBI Kepulauan Riau</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Perkumpulan Keluarga Berencana Indonesia (PKBI) Kepri</h3>
+                            <p class="text-xs text-slate-600 mt-1 max-w-xl">
+                                Memprioritaskan konseling kesehatan reproduksi, edukasi remaja, penanganan KTD secara aman, rahasia, serta inklusif tanpa stigma.
+                            </p>
+                            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-700">
+                                <span class="flex items-center gap-1"><i data-lucide="phone" class="w-3.5 h-3.5 text-teal-600"></i> Hotline/WA: 0823-8814-9914</span>
+                                <span class="flex items-center gap-1"><i data-lucide="mail" class="w-3.5 h-3.5 text-teal-600"></i> pkbikepri@pkbi.or.id</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+                            <a href="https://pkbikepri.or.id/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl transition shadow-sm">
+                                <i data-lucide="external-link" class="w-4 h-4"></i> Kunjungi Website PKBI Kepri
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opsi Layanan Lainnya -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm mb-2">Pilihan Akses Konsultasi Lainnya:</h3>
+
+                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="p-2 bg-teal-100 text-teal-700 rounded-lg mt-0.5">
+                            <i data-lucide="stethoscope" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">PKPR Puskesmas (Pelayanan Kesehatan Peduli Remaja)</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">Fasilitas pemerintah di Puskesmas terdekat yang khusus menyediakan konseling reproduksi ramah usia remaja & mahasiswa.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="p-2 bg-purple-100 text-purple-700 rounded-lg mt-0.5">
+                            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Unit Konseling Kampus / UKM Kesehatan</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">Layanan Bimbingan Konseling universitas atau pusat kegiatan mahasiswa untuk mendapatkan pendampingan psikologis awal.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="p-2 bg-sky-100 text-sky-700 rounded-lg mt-0.5">
+                            <i data-lucide="phone-call" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Telehealth & Layanan Daring Resmi</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">Konsultasi medis online rahasia bersama Dokter Obgyn atau Psikolog melalui platform resmi seperti Halodoc, Alodokter, atau Riliv.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <p>&copy; 2026 EduRepro Campus. Platform Edukasi Kesehatan Reproduksi Mahasiswa.</p>
+        <p class="mt-1">Informasi bersifat edukatif berbasis ilmu medis dan kesehatan masyarakat.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Simple Tab Switcher Logic
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show selected content
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Reset desktop nav styles
+            document.querySelectorAll('header button').forEach(btn => {
+                btn.classList.remove('text-teal-600', 'font-bold', 'border-b-2', 'border-teal-600');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Reset mobile nav styles
+            document.querySelectorAll('.md\\:hidden button').forEach(btn => {
+                btn.classList.remove('text-teal-600', 'font-bold');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Activate current nav
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.classList.add('text-teal-600', 'font-bold');
+            }
+
+            const activeMNav = document.getElementById('mnav-' + tabId);
+            if(activeMNav) {
+                activeMNav.classList.add('text-teal-600', 'font-bold');
+            }
+        }
+
+        // Set default tab
+        switchTab('proses');
+    </script>
+</body>
+</html>
