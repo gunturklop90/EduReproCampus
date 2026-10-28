@@ -397,7 +397,7 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Simple Tab Switcher Logic
+        // Tab Switcher Logic with Scroll to Top
         function switchTab(tabId) {
             // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -427,6 +427,12 @@
             if(activeMNav) {
                 activeMNav.classList.add('text-teal-600', 'font-bold');
             }
+
+            // Menggulirkan layar langsung ke paling atas
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         // Set default tab
