@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xl font-bold text-slate-900 tracking-tight leading-none">EduRepro<span class="text-teal-600">Campus</span></span>
-                    <span class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</br></span>
+                    <span class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</span>
                 </div>
             </div>
             
@@ -449,30 +449,64 @@
 
     </main>
 
-    <!-- Modal Pop-Up Informasi Fitur & Ucapan Selamat Datang -->
-    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
-        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl relative my-auto">
-            <!-- Header Modal -->
-            <div class="bg-gradient-to-r from-teal-700 to-teal-600 text-white px-6 py-5 relative">
+    <!-- Modal Pop-Up Informasi Fitur, Ucapan, & Nama 9 Anggota Kelompok -->
+    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto hidden">
+        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative my-auto">
+            
+            <!-- Header Modal (Sticky/Fixed di dalam modal) -->
+            <div class="bg-gradient-to-r from-teal-700 to-teal-600 text-white px-6 py-4 relative shrink-0">
                 <button onclick="closeInfoModal()" class="absolute top-4 right-4 text-teal-200 hover:text-white transition p-1 rounded-lg hover:bg-teal-800/50">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
-                <div class="flex items-center gap-2 mb-2">
+                <div class="flex items-center gap-2 mb-1">
                     <span class="bg-teal-900/60 text-teal-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm border border-teal-400/30">Panduan Edukasi Interaktif</span>
                 </div>
-                <h3 class="text-xl font-extrabold flex items-center gap-2">
+                <h3 class="text-lg font-extrabold flex items-center gap-2">
                     <i data-lucide="sparkles" class="w-5 h-5 text-amber-300"></i> Terima Kasih Telah Mengunjungi Website Kami!
                 </h3>
-                <div class="mt-2 pt-2 border-t border-teal-500/40 text-xs text-teal-100">
-                    <p class="font-semibold">Dibuat & Dikembangkan Oleh:</p>
-                    <p class="font-bold text-white text-sm mt-0.5">Kelompok EduRepro Campus</p>
-                    <p class="text-[11px] opacity-90">Program Studi Ilmu Keperawatan | Fakultas Ilmu Kesehatan — Universitas Batam</p>
-                </div>
             </div>
 
-            <!-- Body Modal -->
-            <div class="p-6 max-h-[65vh] overflow-y-auto space-y-4 text-slate-700 text-xs md:text-sm">
-                <p class="text-slate-600 leading-relaxed">
+            <!-- Body Modal (Bisa digulir / Scrollable) -->
+            <div class="p-6 overflow-y-auto space-y-5 text-slate-700 text-xs md:text-sm">
+                
+                <!-- Bagian Nama 9 Anggota Kelompok -->
+                <div class="bg-teal-50/60 border border-teal-200 p-4 rounded-xl">
+                    <h4 class="font-bold text-teal-900 text-sm mb-2 flex items-center gap-2">
+                        <i data-lucide="users" class="w-4 h-4 text-teal-600"></i> Disusun Oleh: Kelompok 5 (9 Anggota)
+                    </h4>
+                    <p class="text-[11px] text-teal-800 mb-2 font-medium">Program Studi Ilmu Keperawatan | Fakultas Ilmu Keperawatan — Universitas Batam</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700 font-medium">
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">1</span> Nama Anggota 1
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">2</span> Nama Anggota 2
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">3</span> Nama Anggota 3
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">4</span> Nama Anggota 4
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">5</span> Nama Anggota 5
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">6</span> Nama Anggota 6
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">7</span> Nama Anggota 7
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">8</span> Nama Anggota 8
+                        </div>
+                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2 sm:col-span-2">
+                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">9</span> Nama Anggota 9
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed text-xs">
                     Website <strong>EduReproCampus</strong> dirancang secara interaktif untuk mempermudah Anda mempelajari kesehatan reproduksi, efektivitas kontrasepsi, serta akses konsultasi tepercaya.
                 </p>
 
@@ -523,8 +557,8 @@
                 </div>
             </div>
 
-            <!-- Footer Modal -->
-            <div class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 flex justify-end">
+            <!-- Footer Modal (Sticky/Fixed di dalam modal) -->
+            <div class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 flex justify-end shrink-0">
                 <button onclick="closeInfoModal()" class="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-sm flex items-center justify-center gap-2">
                     <i data-lucide="check-circle" class="w-4 h-4"></i> Mulai Jelajahi Website
                 </button>
@@ -616,31 +650,35 @@
         // Set default tab
         switchTab('proses');
 
-        // Fungsi Membuka Modal Informasi Panduan Fitur
+        // Fungsi Membuka Modal Informasi Panduan Fitur & Mengunci Scroll Web (Overflow Hidden)
         function openInfoModal() {
             document.getElementById('infoModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Mencegah halaman utama bergerak/scroll
         }
 
-        // Fungsi Menutup Modal Informasi Panduan Fitur
+        // Fungsi Menutup Modal Informasi Panduan Fitur & Mengembalikan Scroll Web
         function closeInfoModal() {
             document.getElementById('infoModal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Mengembalikan fungsi scroll halaman utama
         }
 
-        // Fungsi Membuka Modal YouTube
+        // Fungsi Membuka Modal YouTube & Mengunci Scroll Web
         function openYouTubeModal(event, url) {
             event.preventDefault();
             const modal = document.getElementById('youtubeModal');
             const iframe = document.getElementById('youtubeIframe');
             iframe.src = url + "?autoplay=1";
             modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Fungsi Menutup Modal YouTube
+        // Fungsi Menutup Modal YouTube & Mengembalikan Scroll Web
         function closeYouTubeModal() {
             const modal = document.getElementById('youtubeModal');
             const iframe = document.getElementById('youtubeIframe');
             modal.classList.add('hidden');
             iframe.src = ""; // Menghentikan pemutaran video saat modal ditutup
+            document.body.style.overflow = 'auto';
         }
 
         // Menutup modal jika pengguna mengklik area luar pop-up
@@ -654,6 +692,11 @@
                 closeInfoModal();
             }
         }
+
+        // Tampilkan pop-up informasi secara otomatis saat halaman pertama kali dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            openInfoModal();
+        });
     </script>
 </body>
 </html>
