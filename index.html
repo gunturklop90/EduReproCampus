@@ -36,12 +36,12 @@
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <div class="bg-teal-600 text-white p-2 rounded-lg shadow-sm">
+                <div class="bg-teal-600 text-white p-2 rounded-lg shadow-sm shrink-0">
                     <i data-lucide="heart-pulse" class="w-6 h-6"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-xl font-bold text-slate-900 tracking-tight leading-none">EduRepro<span class="text-teal-600">Campus</span></span>
-                    <span class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</span>
+                <div class="flex flex-col justify-center">
+                    <span class="text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-none">EduRepro<span class="text-teal-600">Campus</span></span>
+                    <span class="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5 leading-tight">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</span>
                 </div>
             </div>
             
@@ -52,15 +52,16 @@
                 <button onclick="switchTab('keputusan')" id="nav-keputusan" class="hover:text-teal-600 transition py-5">Keputusan & Layanan</button>
             </div>
 
-            <div class="flex items-center space-x-3">
-                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif -->
-                <button onclick="openInfoModal()" class="text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif (Teks disembunyikan di mobile) -->
+                <button onclick="openInfoModal()" title="Panduan Fitur" class="text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 p-2 md:px-3 md:py-1.5 rounded-lg flex items-center gap-1.5 transition">
                     <i data-lucide="help-circle" class="w-4 h-4 text-teal-600"></i>
+                    <span class="hidden md:inline">Panduan Fitur</span>
                 </button>
 
-                <!-- Logo Universitas Batam di Pojok Kanan Atas Header -->
-                <div class="flex items-center space-x-2 border-l border-slate-200 pl-3 py-1">
-                   <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
+                <!-- Logo Universitas Batam di Pojok Kanan Atas Header (Posisi Sejajar di Tengah) -->
+                <div class="flex items-center border-l border-slate-200 pl-2 md:pl-3 py-1">
+                   <a href="https://univbatam.ac.id/" target="_blank" class="flex items-center"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-9 md:h-10 w-auto object-contain"></a>
                 </div>
             </div>
         </div>
@@ -474,7 +475,7 @@
                     <h4 class="font-bold text-teal-900 text-sm mb-2 flex items-center gap-2">
                         <i data-lucide="users" class="w-4 h-4 text-teal-600"></i> Disusun Oleh: Kelompok 5 (9 Anggota)
                     </h4>
-                    <p class="text-[11px] text-teal-800 mb-2 font-medium">Program Studi Ilmu Keperawatan | Fakultas Ilmu Keperawatan — Universitas Batam</p>
+                    <p class="text-[11px] text-teal-800 mb-2 font-medium">Program Studi Ilmu Keperawatan | Fakultas Ilmu Kesehatan — Universitas Batam</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700 font-medium">
                         <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
                             <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">1</span> Nama Anggota 1
