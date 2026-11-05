@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xl font-bold text-slate-900 tracking-tight leading-none">EduRepro<span class="text-teal-600">Campus</span></span>
-                    <span class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5">Program Studi Ilmu Keperawatan Fakultas Ilmu Kesehatan</span>
+                    <span class="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</br></span>
                 </div>
             </div>
             
@@ -52,9 +52,16 @@
                 <button onclick="switchTab('keputusan')" id="nav-keputusan" class="hover:text-teal-600 transition py-5">Keputusan & Layanan</button>
             </div>
 
-            <!-- Logo Universitas Batam di Pojok Kanan Atas Header -->
-            <div class="flex items-center space-x-2 border-l border-slate-200 pl-4 py-1">
-               <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
+            <div class="flex items-center space-x-3">
+                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif -->
+                <button onclick="openInfoModal()" class="text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                    <i data-lucide="help-circle" class="w-4 h-4 text-teal-600"></i> Panduan Fitur
+                </button>
+
+                <!-- Logo Universitas Batam di Pojok Kanan Atas Header -->
+                <div class="flex items-center space-x-2 border-l border-slate-200 pl-3 py-1">
+                   <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
+                </div>
             </div>
         </div>
     </header>
@@ -442,6 +449,89 @@
 
     </main>
 
+    <!-- Modal Pop-Up Informasi Fitur & Ucapan Selamat Datang -->
+    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl relative my-auto">
+            <!-- Header Modal -->
+            <div class="bg-gradient-to-r from-teal-700 to-teal-600 text-white px-6 py-5 relative">
+                <button onclick="closeInfoModal()" class="absolute top-4 right-4 text-teal-200 hover:text-white transition p-1 rounded-lg hover:bg-teal-800/50">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-teal-900/60 text-teal-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm border border-teal-400/30">Panduan Edukasi Interaktif</span>
+                </div>
+                <h3 class="text-xl font-extrabold flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-amber-300"></i> Terima Kasih Telah Mengunjungi Website Kami!
+                </h3>
+                <div class="mt-2 pt-2 border-t border-teal-500/40 text-xs text-teal-100">
+                    <p class="font-semibold">Dibuat & Dikembangkan Oleh:</p>
+                    <p class="font-bold text-white text-sm mt-0.5">Kelompok EduRepro Campus</p>
+                    <p class="text-[11px] opacity-90">Program Studi Ilmu Keperawatan | Fakultas Ilmu Kesehatan — Universitas Batam</p>
+                </div>
+            </div>
+
+            <!-- Body Modal -->
+            <div class="p-6 max-h-[65vh] overflow-y-auto space-y-4 text-slate-700 text-xs md:text-sm">
+                <p class="text-slate-600 leading-relaxed">
+                    Website <strong>EduReproCampus</strong> dirancang secara interaktif untuk mempermudah Anda mempelajari kesehatan reproduksi, efektivitas kontrasepsi, serta akses konsultasi tepercaya.
+                </p>
+
+                <h4 class="font-bold text-slate-900 text-sm border-b border-slate-200 pb-1 flex items-center gap-1.5">
+                    <i data-lucide="pointer" class="w-4 h-4 text-teal-600"></i> Fitur & Komponen Interaktif di Website Ini:
+                </h4>
+
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div class="p-2 bg-teal-100 text-teal-700 rounded-lg mt-0.5 shrink-0">
+                            <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">1. Navigasi Tab Halaman Interaktif</span>
+                            <span class="text-slate-600">Gunakan bilah menu di bagian atas untuk berpindah secara langsung antara 4 topik utama tanpa memuat ulang halaman.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div class="p-2 bg-purple-100 text-purple-700 rounded-lg mt-0.5 shrink-0">
+                            <i data-lucide="play-circle" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">2. Pop-up Video Edukasi Fertilisasi</span>
+                            <span class="text-slate-600">Klik tombol <em>"Visualisasi Animasi Proses Fertilisasi"</em> pada Tab Proses Reproduksi untuk menonton pemutaran video edukasi interaktif.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div class="p-2 bg-sky-100 text-sky-700 rounded-lg mt-0.5 shrink-0">
+                            <i data-lucide="activity" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">3. Visual Animasi SVG & Kartu Komparasi</span>
+                            <span class="text-slate-600">Jelajahi visualisasi pergerakan sel sperma, ovulasi, implantasi, serta bandingkan angka efektivitas metode kontrasepsi secara visual.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div class="p-2 bg-emerald-100 text-emerald-700 rounded-lg mt-0.5 shrink-0">
+                            <i data-lucide="phone-call" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">4. Tautan Konsultasi Direct-Action</span>
+                            <span class="text-slate-600">Klik tombol <em>"Hotline/WA"</em> atau <em>"Kunjungi Website PKBI Kepri"</em> di Tab Keputusan untuk langsung terhubung dengan konselor resmi.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 flex justify-end">
+                <button onclick="closeInfoModal()" class="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-sm flex items-center justify-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i> Mulai Jelajahi Website
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Pop-up YouTube -->
     <div id="youtubeModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden p-4">
         <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative">
@@ -526,6 +616,16 @@
         // Set default tab
         switchTab('proses');
 
+        // Fungsi Membuka Modal Informasi Panduan Fitur
+        function openInfoModal() {
+            document.getElementById('infoModal').classList.remove('hidden');
+        }
+
+        // Fungsi Menutup Modal Informasi Panduan Fitur
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.add('hidden');
+        }
+
         // Fungsi Membuka Modal YouTube
         function openYouTubeModal(event, url) {
             event.preventDefault();
@@ -545,9 +645,13 @@
 
         // Menutup modal jika pengguna mengklik area luar pop-up
         window.onclick = function(event) {
-            const modal = document.getElementById('youtubeModal');
-            if (event.target === modal) {
+            const youtubeModal = document.getElementById('youtubeModal');
+            const infoModal = document.getElementById('infoModal');
+            if (event.target === youtubeModal) {
                 closeYouTubeModal();
+            }
+            if (event.target === infoModal) {
+                closeInfoModal();
             }
         }
     </script>
