@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduReproCampus - Tools & Quiz Edukasi Calon Orang Tua</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js untuk Grafik Visualisasi -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -15,6 +19,59 @@
         }
         .gradient-pink-teal {
             background: linear-gradient(135deg, #ec4899 0%, #f472b6 40%, #0d9488 100%);
+        }
+
+        /* Styling Kalender Visual Interaktif */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+        .cal-day-header {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            padding-bottom: 4px;
+        }
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            position: relative;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .cal-day-empty {
+            background-color: transparent;
+            border: none;
+        }
+        .cal-day.mens {
+            background-color: #ffe4e6;
+            color: #e11d48;
+            border-color: #f43f5e;
+        }
+        .cal-day.subur {
+            background-color: #ccfbf1;
+            color: #0d9488;
+            border-color: #14b8a6;
+        }
+        .cal-day.ovulasi {
+            background-color: #ec4899;
+            color: #ffffff;
+            border-color: #db2777;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+        }
+        .cal-day.today {
+            outline: 2px solid #0284c7;
+            outline-offset: 1px;
         }
     </style>
 </head>
@@ -27,19 +84,22 @@
                 <div class="gradient-teal-pink text-white p-2 rounded-xl shadow-sm shrink-0 flex items-center justify-center">
                     <i data-lucide="calculator" class="w-6 h-6"></i>
                 </div>
-                <a href="https://gunturklop90.github.io/EduReproCampus/" target="_blank"><div class="flex flex-col justify-center">
-                    <span class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-none">
-                        EduRepro<span class="text-teal-600">Campus</span> <span class="text-pink-500 font-semibold text-base">Tools &amp; Quiz</span>
-                    </span>
-                    <span class="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5 leading-tight">
-                        Program Studi Ilmu Keperawatan | FIK Universitas Batam
-                    </span>
-                </div></a>
+                <a href="index.html" target="_blank">
+                    <div class="flex flex-col justify-center">
+                        <span class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-none">
+                            EduRepro<span class="text-teal-600">Campus</span> <span class="text-pink-500 font-semibold text-base">Tools &amp; Quiz</span>
+                        </span>
+                        <span class="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5 leading-tight">
+                            Program Studi Ilmu Keperawatan | FIK Universitas Batam
+                        </span>
+                    </div>
+                </a>
+            </div>
 
             <!-- Nav Tabs -->
             <div class="hidden md:flex items-center space-x-1 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
-                <button onclick="switchSection('subur')" id="nav-subur" class="px-3 py-2 rounded-lg text-teal-700 bg-white shadow-sm transition">Masa Subur</button>
-                <button onclick="switchSection('siklus')" id="nav-siklus" class="px-3 py-2 rounded-lg text-slate-600 hover:text-pink-600 transition">Siklus Haid</button>
+                <button onclick="switchSection('subur')" id="nav-subur" class="px-3 py-2 rounded-lg text-pink-600 font-bold bg-white shadow-sm transition">Masa Subur</button>
+                <button onclick="switchSection('siklus')" id="nav-siklus" class="px-3 py-2 rounded-lg text-slate-600 hover:text-teal-600 transition">Siklus Haid</button>
                 <button onclick="switchSection('kehamilan')" id="nav-kehamilan" class="px-3 py-2 rounded-lg text-slate-600 hover:text-teal-600 transition">Kalender Kehamilan</button>
                 <button onclick="switchSection('quiz')" id="nav-quiz" class="px-3 py-2 rounded-lg text-slate-600 hover:text-pink-600 transition flex items-center gap-1">
                     <i data-lucide="award" class="w-3.5 h-3.5 text-pink-500"></i> Quiz Interaktif
@@ -56,7 +116,7 @@
 
     <!-- Mobile Nav Bar -->
     <div class="md:hidden bg-white border-b border-slate-200 flex justify-around text-xs font-semibold py-2 sticky top-16 z-40 overflow-x-auto">
-        <button onclick="switchSection('subur')" id="mnav-subur" class="px-2 py-1.5 text-teal-600 font-bold border-b-2 border-teal-600 whitespace-nowrap">Masa Subur</button>
+        <button onclick="switchSection('subur')" id="mnav-subur" class="px-2 py-1.5 text-pink-600 font-bold border-b-2 border-pink-600 whitespace-nowrap">Masa Subur</button>
         <button onclick="switchSection('siklus')" id="mnav-siklus" class="px-2 py-1.5 text-slate-600 whitespace-nowrap">Siklus Haid</button>
         <button onclick="switchSection('kehamilan')" id="mnav-kehamilan" class="px-2 py-1.5 text-slate-600 whitespace-nowrap">Kalender Kehamilan</button>
         <button onclick="switchSection('quiz')" id="mnav-quiz" class="px-2 py-1.5 text-pink-600 whitespace-nowrap">Quiz Interaktif</button>
@@ -73,7 +133,7 @@
                 </span>
                 <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2">Kalkulator Reproduksi & Kuis Calon Orang Tua</h1>
                 <p class="text-teal-50 text-xs md:text-sm leading-relaxed">
-                    Hitung perkiraan masa subur, siklus menstruasi, hari perkiraan lahir janin, serta uji pengetahuan Anda melalui kuis interaktif dengan fakta medis tepercaya!
+                    Hitung perkiraan masa subur, siklus menstruasi, hari perkiraan lahir janin, serta amati visualisasi kalender & grafik peluang kehamilan berbasis fakta medis!
                 </p>
             </div>
             <div class="absolute -right-8 -bottom-8 opacity-20 pointer-events-none">
@@ -83,14 +143,14 @@
 
         <!-- SECTION 1: KALKULATOR MASA SUBUR -->
         <section id="sec-subur" class="tool-section space-y-6">
-            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <div class="flex items-center gap-3 mb-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex items-center gap-3">
                     <div class="p-3 bg-pink-100 text-pink-600 rounded-2xl">
                         <i data-lucide="sparkles" class="w-6 h-6"></i>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-slate-900">Kalkulator Masa Subur & Ovulasi</h2>
-                        <p class="text-xs text-slate-500">Menghitung masa paling subur wanita untuk perencanaan kehamilan atau kewaspadaan reproduksi.</p>
+                        <p class="text-xs text-slate-500">Menghitung masa subur, puncak pembuahan, serta analisis peluang kehamilan harian.</p>
                     </div>
                 </div>
 
@@ -114,32 +174,112 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Lama Menstruasi (Hari):
+                            </label>
+                            <input type="number" id="lama-haid-subur" value="5" min="2" max="10" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500 outline-none transition">
+                        </div>
+
                         <button onclick="calculateSubur()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
                             <i data-lucide="calculator" class="w-4 h-4"></i> Hitung Masa Subur
                         </button>
                     </div>
 
-                    <!-- Output Result -->
-                    <div id="result-subur" class="bg-gradient-to-br from-pink-50 to-teal-50 p-6 rounded-2xl border border-pink-100 flex flex-col justify-between min-h-[240px]">
+                    <!-- Output Summary -->
+                    <div id="result-subur" class="bg-gradient-to-br from-pink-50 to-teal-50 p-6 rounded-2xl border border-pink-100 flex flex-col justify-between min-h-[260px]">
                         <div>
-                            <span class="text-[10px] font-bold text-pink-600 bg-pink-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Perhitungan</span>
+                            <span class="text-[10px] font-bold text-pink-600 bg-pink-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Ringkasan Hasil Perhitungan</span>
                             <h3 class="text-lg font-bold text-slate-800 mt-2 mb-4">Estimasi Masa Subur Anda</h3>
                             
-                            <div class="space-y-4 text-xs">
+                            <div class="space-y-3 text-xs">
                                 <div class="bg-white p-3.5 rounded-xl border border-pink-100 flex items-center justify-between shadow-sm">
-                                    <span class="text-slate-600 font-medium">Perkiraan Tanggal Ovulasi:</span>
+                                    <span class="text-slate-600 font-medium">Puncak Hari Ovulasi:</span>
                                     <span id="ovulasi-date" class="font-bold text-pink-600 text-sm">-</span>
                                 </div>
                                 <div class="bg-white p-3.5 rounded-xl border border-teal-100 flex items-center justify-between shadow-sm">
-                                    <span class="text-slate-600 font-medium">Rentang Jendela Masa Subur:</span>
+                                    <span class="text-slate-600 font-medium">Jendela Masa Subur (Fertile Window):</span>
                                     <span id="rentang-subur" class="font-bold text-teal-600 text-sm">-</span>
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                                    <span class="text-slate-600 font-medium">Peluang Kehamilan Tertinggi:</span>
+                                    <span id="peluang-tinggi" class="font-bold text-purple-600 text-xs">-</span>
                                 </div>
                             </div>
                         </div>
 
                         <p class="text-[11px] text-slate-500 mt-4 leading-relaxed border-t border-slate-200/60 pt-3">
-                            💡 <strong>Catatan Medis:</strong> Sel telur biasanya hidup 12–24 jam setelah ovulasi, sedangkan sperma dapat bertahan 3–5 hari di organ reproduksi wanita.
+                            💡 <strong>Catatan Medis:</strong> Sel telur bertahan 12–24 jam setelah release (ovulasi), sedangkan sperma dapat bertahan hidup hingga 3–5 hari di organ reproduksi wanita.
                         </p>
+                    </div>
+                </div>
+
+                <!-- DOKUMEN PERHITUNGAN DETAIL, KALENDER & GRAFIK -->
+                <div class="border-t border-slate-200 pt-6 space-y-6">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-pink-500"></i> Visualisasi & Analisis Lengkap Masa Subur
+                        </h3>
+                        <span id="cal-month-title-subur" class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
+                            Bulan Ini
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Kalender Visual Interaktif -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-700">Kalender Subur & Ovulasi</span>
+                                <div class="flex items-center gap-2 text-[10px] font-semibold">
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Haid</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span> Subur</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> Ovulasi</span>
+                                </div>
+                            </div>
+
+                            <div class="calendar-grid">
+                                <div class="cal-day-header">Min</div>
+                                <div class="cal-day-header">Sen</div>
+                                <div class="cal-day-header">Sel</div>
+                                <div class="cal-day-header">Rab</div>
+                                <div class="cal-day-header">Kam</div>
+                                <div class="cal-day-header">Jum</div>
+                                <div class="cal-day-header">Sab</div>
+                            </div>
+                            <div id="calendar-body-subur" class="calendar-grid">
+                                <!-- Dynamic Calendar Days -->
+                            </div>
+                        </div>
+
+                        <!-- Grafik Peluang Kehamilan (Chart.js) -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-bold text-slate-700 mb-2 block">Grafik Kurva Peluang Kehamilan (%)</span>
+                            <div class="relative w-full h-48 md:h-56">
+                                <canvas id="chart-subur"></canvas>
+                            </div>
+                            <p class="text-[10px] text-slate-400 text-center mt-2">Grafik menunjukkan estimasi probabilitas pembuahan sepanjang siklus.</p>
+                        </div>
+                    </div>
+
+                    <!-- Perhitungan Rinci (Step-by-Step) -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+                        <h4 class="font-bold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="file-text" class="w-4 h-4 text-teal-600"></i> Rincian Rumus & Perhitungan Medis:
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                <span class="text-slate-500 block text-[10px] uppercase font-bold">1. Hari Ovulasi</span>
+                                <p class="text-slate-800 font-semibold mt-1" id="detail-ovulasi">HPHT + (Siklus - 14 Hari)</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                <span class="text-slate-500 block text-[10px] uppercase font-bold">2. Awal Masa Subur</span>
+                                <p class="text-slate-800 font-semibold mt-1" id="detail-awal-subur">Ovulasi - 5 Hari</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                <span class="text-slate-500 block text-[10px] uppercase font-bold">3. Akhir Masa Subur</span>
+                                <p class="text-slate-800 font-semibold mt-1" id="detail-akhir-subur">Ovulasi + 1 Hari</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,14 +287,14 @@
 
         <!-- SECTION 2: KALKULATOR SIKLUS HAID -->
         <section id="sec-siklus" class="tool-section hidden space-y-6">
-            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <div class="flex items-center gap-3 mb-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex items-center gap-3">
                     <div class="p-3 bg-teal-100 text-teal-600 rounded-2xl">
                         <i data-lucide="calendar" class="w-6 h-6"></i>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-slate-900">Kalkulator Siklus Haid & Fase Menstruasi</h2>
-                        <p class="text-xs text-slate-500">Prediksi tanggal haid berikutnya serta pahami perubahan hormon dalam tiap fase tubuh Anda.</p>
+                        <p class="text-xs text-slate-500">Prediksi tanggal haid berikutnya, analisis fase reproduksi, dan visualisasi timeline.</p>
                     </div>
                 </div>
 
@@ -175,6 +315,13 @@
                             <input type="number" id="durasi-siklus" value="28" min="21" max="35" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-teal-400 focus:border-teal-500 outline-none transition">
                         </div>
 
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Lama Menstruasi (Hari):
+                            </label>
+                            <input type="number" id="lama-haid-siklus" value="5" min="2" max="10" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-teal-400 focus:border-teal-500 outline-none transition">
+                        </div>
+
                         <button onclick="calculateSiklus()" class="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-bold text-sm py-3 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
                             <i data-lucide="refresh-cw" class="w-4 h-4"></i> Prediksi Siklus
                         </button>
@@ -182,7 +329,7 @@
 
                     <!-- Output Result -->
                     <div id="result-siklus" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                        <span class="text-[10px] font-bold text-teal-600 bg-teal-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Prediksi</span>
+                        <span class="text-[10px] font-bold text-teal-600 bg-teal-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Prediksi Utama</span>
                         
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                             <span class="text-xs text-slate-500 block">Prediksi Haid Berikutnya:</span>
@@ -200,19 +347,57 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- KALENDER VISUAL & GRAFIK DUKUNGAN SIKLUS -->
+                <div class="border-t border-slate-200 pt-6 space-y-6">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="calendar-days" class="w-5 h-5 text-teal-600"></i> Kalender Visual Perjalanan Siklus
+                    </h3>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Kalender Siklus -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-700">Peta Menstruasi Bulan Ini</span>
+                            </div>
+
+                            <div class="calendar-grid">
+                                <div class="cal-day-header">Min</div>
+                                <div class="cal-day-header">Sen</div>
+                                <div class="cal-day-header">Sel</div>
+                                <div class="cal-day-header">Rab</div>
+                                <div class="cal-day-header">Kam</div>
+                                <div class="cal-day-header">Jum</div>
+                                <div class="cal-day-header">Sab</div>
+                            </div>
+                            <div id="calendar-body-siklus" class="calendar-grid">
+                                <!-- Dynamic Calendar Days -->
+                            </div>
+                        </div>
+
+                        <!-- Grafik Distribusi Hormon (Chart.js) -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <span class="text-xs font-bold text-slate-700 mb-2 block">Grafik Estimasi Fluktuasi Hormon Estrogen & Progesteron</span>
+                            <div class="relative w-full h-48 md:h-56">
+                                <canvas id="chart-siklus"></canvas>
+                            </div>
+                            <p class="text-[10px] text-slate-400 text-center mt-2">Fluktuasi hormon memengaruhi fisik, *mood*, dan energi sepanjang siklus.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- SECTION 3: KALKULATOR KALENDER KEHAMILAN -->
         <section id="sec-kehamilan" class="tool-section hidden space-y-6">
-            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <div class="flex items-center gap-3 mb-4">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex items-center gap-3">
                     <div class="p-3 bg-pink-100 text-pink-600 rounded-2xl">
                         <i data-lucide="baby" class="w-6 h-6"></i>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-slate-900">Kalkulator Kalender Kehamilan & HPL</h2>
-                        <p class="text-xs text-slate-500">Hitung Hari Perkiraan Lahir (HPL), usia kehamilan saat ini, serta tahap perkembangan janin.</p>
+                        <p class="text-xs text-slate-500">Hitung Hari Perkiraan Lahir (HPL), usia kehamilan, dan milestone perkembangan janin.</p>
                     </div>
                 </div>
 
@@ -253,6 +438,41 @@
                             <p id="milestone-text" class="text-xs text-slate-600 leading-relaxed">
                                 Silakan masukkan HPHT untuk melihat milestone perkembangan janin.
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRAFIK & TIMELINE PROGRESI KEHAMILAN -->
+                <div class="border-t border-slate-200 pt-6 space-y-6">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-purple-600"></i> Progresi Trimester Kehamilan
+                    </h3>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <!-- Progress Bar & Grafik Trimester -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex justify-between items-center text-xs font-bold">
+                                <span>Kemajuan Kehamilan</span>
+                                <span id="progress-percent-text" class="text-pink-600">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200">
+                                <div id="pregnancy-progress-bar" class="gradient-teal-pink h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+                                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-teal-700">Trimester 1</span>
+                                    <span class="text-slate-500 text-[10px]">Minggu 1 - 12</span>
+                                </div>
+                                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-purple-700">Trimester 2</span>
+                                    <span class="text-slate-500 text-[10px]">Minggu 13 - 27</span>
+                                </div>
+                                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+                                    <span class="font-bold block text-pink-700">Trimester 3</span>
+                                    <span class="text-slate-500 text-[10px]">Minggu 28 - 40</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -316,7 +536,7 @@
                 </div>
             </div>
 
-            <!-- MITOS & FAKTA MEDIS (EDUKASI KUSUS) -->
+            <!-- MITOS & FAKTA MEDIS -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
                 <div class="flex items-center gap-3">
                     <div class="p-3 bg-amber-100 text-amber-700 rounded-2xl">
@@ -388,9 +608,12 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic & Chart Engine -->
     <script>
         lucide.createIcons();
+
+        let suburChartInstance = null;
+        let siklusChartInstance = null;
 
         // Navigation Switcher Logic
         function switchSection(secId) {
@@ -418,14 +641,71 @@
 
         // Helper Format Date Bahasa Indonesia
         function formatDate(date) {
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
             return date.toLocaleDateString('id-ID', options);
         }
 
-        // 1. CALCULATE MASA SUBUR
+        // Render Kalender Visual Dynamically
+        function renderCalendar(containerId, hphtDate, cycleLen, mensDuration) {
+            const calendarEl = document.getElementById(containerId);
+            calendarEl.innerHTML = "";
+
+            const targetYear = hphtDate.getFullYear();
+            const targetMonth = hphtDate.getMonth();
+
+            const firstDayOfMonth = new Date(targetYear, targetMonth, 1).getDay();
+            const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+
+            // Padding hari kosong
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = "cal-day cal-day-empty";
+                calendarEl.appendChild(emptyCell);
+            }
+
+            // Hitung Tanggal Ovulasi & Masa Subur
+            const ovulasiDate = new Date(hphtDate);
+            ovulasiDate.setDate(hphtDate.getDate() + (cycleLen - 14));
+
+            const startSubur = new Date(ovulasiDate);
+            startSubur.setDate(ovulasiDate.getDate() - 5);
+
+            const endSubur = new Date(ovulasiDate);
+            endSubur.setDate(ovulasiDate.getDate() + 1);
+
+            const endMens = new Date(hphtDate);
+            endMens.setDate(hphtDate.getDate() + (mensDuration - 1));
+
+            const today = new Date();
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = new Date(targetYear, targetMonth, day);
+                const dayCell = document.createElement('div');
+                dayCell.className = "cal-day";
+                dayCell.innerText = day;
+
+                // Cek status tanggal
+                if (currentDate.toDateString() === today.toDateString()) {
+                    dayCell.classList.add('today');
+                }
+
+                if (currentDate >= hphtDate && currentDate <= endMens) {
+                    dayCell.classList.add('mens');
+                } else if (currentDate.toDateString() === ovulasiDate.toDateString()) {
+                    dayCell.classList.add('ovulasi');
+                } else if (currentDate >= startSubur && currentDate <= endSubur) {
+                    dayCell.classList.add('subur');
+                }
+
+                calendarEl.appendChild(dayCell);
+            }
+        }
+
+        // 1. CALCULATE MASA SUBUR (Lengkap dengan Kalender & Grafik)
         function calculateSubur() {
             const hphtVal = document.getElementById('hpht-subur').value;
             const cycleLen = parseInt(document.getElementById('siklus-length-subur').value) || 28;
+            const mensLen = parseInt(document.getElementById('lama-haid-subur').value) || 5;
 
             if (!hphtVal) {
                 alert("Harap masukkan tanggal HPHT Anda terlebih dahulu!");
@@ -434,26 +714,88 @@
 
             const hphtDate = new Date(hphtVal);
             
-            // Ovulasi terjadi kira-kira (Panjang Siklus - 14 hari) setelah HPHT
+            // Ovulasi: HPHT + (Siklus - 14)
             const ovulasiDayOffset = cycleLen - 14;
             const ovulasiDate = new Date(hphtDate);
             ovulasiDate.setDate(hphtDate.getDate() + ovulasiDayOffset);
 
-            // Jendela Subur: 3 hari sebelum ovulasi sampai 1 hari setelah ovulasi
+            // Jendela Subur: 5 hari sebelum ovulasi sampai 1 hari setelah ovulasi
             const startSubur = new Date(ovulasiDate);
-            startSubur.setDate(ovulasiDate.getDate() - 3);
+            startSubur.setDate(ovulasiDate.getDate() - 5);
 
             const endSubur = new Date(ovulasiDate);
             endSubur.setDate(ovulasiDate.getDate() + 1);
 
+            // Puncak peluang tinggi (2 hari sebelum ovulasi + hari ovulasi)
+            const peakStart = new Date(ovulasiDate);
+            peakStart.setDate(ovulasiDate.getDate() - 2);
+
             document.getElementById('ovulasi-date').innerText = formatDate(ovulasiDate);
             document.getElementById('rentang-subur').innerText = `${formatDate(startSubur)} - ${formatDate(endSubur)}`;
+            document.getElementById('peluang-tinggi').innerText = `${formatDate(peakStart)} - ${formatDate(ovulasiDate)}`;
+
+            // Detail Perhitungan Rumus
+            document.getElementById('detail-ovulasi').innerText = `${formatDate(hphtDate)} + (${cycleLen} - 14 hari) = ${formatDate(ovulasiDate)}`;
+            document.getElementById('detail-awal-subur').innerText = `${formatDate(ovulasiDate)} - 5 hari = ${formatDate(startSubur)}`;
+            document.getElementById('detail-akhir-subur').innerText = `${formatDate(ovulasiDate)} + 1 hari = ${formatDate(endSubur)}`;
+
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            document.getElementById('cal-month-title-subur').innerText = `${monthNames[hphtDate.getMonth()]} ${hphtDate.getFullYear()}`;
+
+            // Render Kalender Visual
+            renderCalendar('calendar-body-subur', hphtDate, cycleLen, mensLen);
+
+            // Render Grafik Chart.js
+            renderSuburChart(cycleLen, ovulasiDayOffset);
+        }
+
+        function renderSuburChart(cycleLen, ovulasiDay) {
+            const ctx = document.getElementById('chart-subur').getContext('2d');
+            
+            const labels = Array.from({length: cycleLen}, (_, i) => `Hari ${i + 1}`);
+            const dataPeluang = Array.from({length: cycleLen}, (_, i) => {
+                const day = i + 1;
+                if (day === ovulasiDay) return 95; // Puncak Ovulasi
+                if (day === ovulasiDay - 1 || day === ovulasiDay - 2) return 85;
+                if (day >= ovulasiDay - 5 && day <= ovulasiDay + 1) return 55;
+                return 5;
+            });
+
+            if (suburChartInstance) suburChartInstance.destroy();
+
+            suburChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Probabilitas Kehamilan (%)',
+                        data: dataPeluang,
+                        borderColor: '#ec4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.15)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 100, ticks: { callback: v => v + '%' } },
+                        x: { ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
         }
 
         // 2. CALCULATE SIKLUS HAID
         function calculateSiklus() {
             const hphtVal = document.getElementById('hpht-siklus').value;
             const durasi = parseInt(document.getElementById('durasi-siklus').value) || 28;
+            const mensLen = parseInt(document.getElementById('lama-haid-siklus').value) || 5;
 
             if (!hphtVal) {
                 alert("Harap masukkan tanggal HPHT Anda terlebih dahulu!");
@@ -465,6 +807,55 @@
             nextHaidDate.setDate(hphtDate.getDate() + durasi);
 
             document.getElementById('next-haid').innerText = formatDate(nextHaidDate);
+
+            // Render Kalender Visual Siklus
+            renderCalendar('calendar-body-siklus', hphtDate, durasi, mensLen);
+
+            // Render Grafik Hormon Siklus
+            renderSiklusChart(durasi);
+        }
+
+        function renderSiklusChart(cycleLen) {
+            const ctx = document.getElementById('chart-siklus').getContext('2d');
+            const labels = Array.from({length: cycleLen}, (_, i) => `H-${i + 1}`);
+
+            // Estrogen Curve (Peaks near ovulation)
+            const estrogenData = labels.map((_, i) => Math.sin((i / cycleLen) * Math.PI * 2 - 1.5) * 40 + 50);
+            // Progesterone Curve (Peaks in luteal phase)
+            const progesteronData = labels.map((_, i) => i > cycleLen/2 ? Math.sin(((i - cycleLen/2) / (cycleLen/2)) * Math.PI) * 70 + 10 : 10);
+
+            if (siklusChartInstance) siklusChartInstance.destroy();
+
+            siklusChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Estrogen',
+                            data: estrogenData,
+                            borderColor: '#0d9488',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Progesteron',
+                            data: progesteronData,
+                            borderColor: '#f43f5e',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } } },
+                    scales: { y: { display: false } }
+                }
+            });
         }
 
         // 3. CALCULATE KALENDER KEHAMILAN
@@ -478,11 +869,10 @@
 
             const hphtDate = new Date(hphtVal);
             
-            // Rumus Negele untuk HPL: HPHT + 280 hari (40 minggu)
+            // Rumus Negele: HPHT + 280 hari (40 minggu)
             const hplDate = new Date(hphtDate);
             hplDate.setDate(hphtDate.getDate() + 280);
 
-            // Hitung usia kehamilan saat ini
             const today = new Date();
             const diffTime = Math.abs(today - hphtDate);
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -493,7 +883,7 @@
             document.getElementById('hpl-date').innerText = formatDate(hplDate);
             document.getElementById('usia-hamil').innerText = `${weeks} Minggu ${days} Hari`;
 
-            // Dynamic Milestone logic
+            // Dynamic Milestone
             let milestone = "";
             if (weeks < 12) {
                 milestone = "🌱 <strong>Trimester 1:</strong> Pembentukan organ vital janin (jantung, otak, dan tulang belakang). Ibu memerlukan konsumsi asam folat secara teratur.";
@@ -506,6 +896,11 @@
             }
 
             document.getElementById('milestone-text').innerHTML = milestone;
+
+            // Update Progress Bar
+            const progressPercent = Math.min(Math.round((diffDays / 280) * 100), 100);
+            document.getElementById('pregnancy-progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('progress-percent-text').innerText = `${progressPercent}% (${weeks}/40 Mgg)`;
         }
 
         // 4. QUIZ INTERAKTIF DATA & LOGIC
@@ -522,7 +917,7 @@
                 explanation: "<strong>Jawaban Benar: B.</strong> Asam folat sangat krusial diminum pada masa prakonsepsi (sebelum hamil) untuk mencegah kelainan tabung saraf janin seperti Anensefali dan Spina Bifida."
             },
             {
-                question: "2. Alat kontrasepsi mana yang efektif mencegah kehamilan SEKRETALUS mencegah transmisi Infeksi Menular Seksual (IMS)?",
+                question: "2. Alat kontrasepsi mana yang efektif mencegah kehamilan SEKALIGUS mencegah transmisi Infeksi Menular Seksual (IMS)?",
                 options: [
                     "Pil KB Kombinasi",
                     "IUD / KB Spiral",
@@ -656,9 +1051,8 @@
             loadQuestion();
         }
 
-        // Initialize defaults
+        // Initialize Defaults
         window.addEventListener('DOMContentLoaded', () => {
-            // Set default date inputs to today
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('hpht-subur').value = todayStr;
             document.getElementById('hpht-siklus').value = todayStr;
