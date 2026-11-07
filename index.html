@@ -3,31 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduRepro - Perencanaan Reproduksi Mahasiswa</title>
+    <title>EduReproCampus - Tools & Quiz Edukasi Calon Orang Tua</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
 
-        /* Keyframes Animations */
-        @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.08); opacity: 1; }
+        .gradient-teal-pink {
+            background: linear-gradient(135deg, #0d9488 0%, #06b6d4 50%, #ec4899 100%);
         }
-        @keyframes float-sperm {
-            0% { transform: translateX(0px) translateY(0px); }
-            50% { transform: translateX(12px) translateY(-6px); }
-            100% { transform: translateX(0px) translateY(0px); }
+        .gradient-pink-teal {
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 40%, #0d9488 100%);
         }
-        @keyframes shield-glow {
-            0%, 100% { filter: drop-shadow(0 0 4px rgba(13, 148, 136, 0.4)); }
-            50% { filter: drop-shadow(0 0 12px rgba(13, 148, 136, 0.8)); }
-        }
-
-        .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
-        .animate-sperm { animation: float-sperm 2.5s infinite ease-in-out; }
-        .animate-shield { animation: shield-glow 2s infinite; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -35,544 +23,352 @@
     <!-- Header / Navbar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <div class="bg-teal-600 text-white p-2 rounded-lg shadow-sm shrink-0">
-                    <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+            <div class="flex items-center space-x-3">
+                <div class="gradient-teal-pink text-white p-2 rounded-xl shadow-sm shrink-0 flex items-center justify-center">
+                    <i data-lucide="calculator" class="w-6 h-6"></i>
                 </div>
-                <div class="flex flex-col justify-center">
-                    <span class="text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-none">EduRepro<span class="text-teal-600">Campus</span></span>
-                    <span class="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5 leading-tight">Program Studi Ilmu Keperawatan<br>Fakultas Ilmu Kesehatan</span>
-                </div>
-            </div>
-            
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <button onclick="switchTab('proses')" id="nav-proses" class="hover:text-teal-600 transition py-5">Proses Reproduksi</button>
-                <button onclick="switchTab('kontrasepsi')" id="nav-kontrasepsi" class="hover:text-teal-600 transition py-5">Kontrasepsi</button>
-                <button onclick="switchTab('risiko')" id="nav-risiko" class="hover:text-teal-600 transition py-5">Risiko Usia Muda</button>
-                <button onclick="switchTab('keputusan')" id="nav-keputusan" class="hover:text-teal-600 transition py-5">Keputusan & Layanan</button>
-                <a href="edurepro_tools_quiz.html" target="_blank" class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1.5 rounded-lg font-semibold text-xs transition flex items-center gap-1 shadow-sm">
-                    <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Tools & Quiz
-                </a>
-            </div>
+                <a href="index.html" target="_blank"><div class="flex flex-col justify-center">
+                    <span class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-none">
+                        EduRepro<span class="text-teal-600">Campus</span> <span class="text-pink-500 font-semibold text-base">Tools &amp; Quiz</span>
+                    </span>
+                    <span class="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-0.5 leading-tight">
+                        Program Studi Ilmu Keperawatan | FIK Universitas Batam
+                    </span>
+                </div></a>
 
-            <div class="flex items-center space-x-2 md:space-x-3">
-                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif -->
-                <button onclick="openInfoModal()" title="Panduan Fitur" class="text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 p-2 md:px-3 md:py-1.5 rounded-lg flex items-center gap-1.5 transition">
-                    <i data-lucide="help-circle" class="w-4 h-4 text-teal-600"></i>
-                    <span class="hidden md:inline">Panduan Fitur</span>
+            <!-- Nav Tabs -->
+            <div class="hidden md:flex items-center space-x-1 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+                <button onclick="switchSection('subur')" id="nav-subur" class="px-3 py-2 rounded-lg text-teal-700 bg-white shadow-sm transition">Masa Subur</button>
+                <button onclick="switchSection('siklus')" id="nav-siklus" class="px-3 py-2 rounded-lg text-slate-600 hover:text-pink-600 transition">Siklus Haid</button>
+                <button onclick="switchSection('kehamilan')" id="nav-kehamilan" class="px-3 py-2 rounded-lg text-slate-600 hover:text-teal-600 transition">Kalender Kehamilan</button>
+                <button onclick="switchSection('quiz')" id="nav-quiz" class="px-3 py-2 rounded-lg text-slate-600 hover:text-pink-600 transition flex items-center gap-1">
+                    <i data-lucide="award" class="w-3.5 h-3.5 text-pink-500"></i> Quiz Interaktif
                 </button>
+            </div>
 
-                <!-- Logo Universitas Batam -->
-                <div class="flex items-center border-l border-slate-200 pl-2 md:pl-3 py-1">
-                   <a href="https://univbatam.ac.id/" target="_blank" class="flex items-center"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-9 md:h-10 w-auto object-contain"></a>
-                </div>
+            <div class="flex items-center space-x-2">
+                <a href="https://univbatam.ac.id/" target="_blank" class="flex items-center pl-2 border-l border-slate-200">
+                    <img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-9 w-auto object-contain">
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Nav Header -->
-    <div class="md:hidden bg-white border-b border-slate-200 flex justify-around text-xs font-medium py-2.5 sticky top-16 z-40 overflow-x-auto">
-        <button onclick="switchTab('proses')" id="mnav-proses" class="p-1.5 text-center text-teal-600 font-bold whitespace-nowrap">Proses Reproduksi</button>
-        <button onclick="switchTab('kontrasepsi')" id="mnav-kontrasepsi" class="p-1.5 text-center text-slate-600 whitespace-nowrap">Kontrasepsi</button>
-        <button onclick="switchTab('risiko')" id="mnav-risiko" class="p-1.5 text-center text-slate-600 whitespace-nowrap">Risiko Usia Muda</button>
-        <button onclick="switchTab('keputusan')" id="mnav-keputusan" class="p-1.5 text-center text-slate-600 whitespace-nowrap">Keputusan & Layanan</button>
-        <a href="edurepro_tools_quiz.html" target="_blank" class="p-1.5 text-center text-pink-600 font-bold whitespace-nowrap flex items-center gap-1">
-            <i data-lucide="calculator" class="w-3 h-3"></i> Tools & Quiz
-        </a>
+    <!-- Mobile Nav Bar -->
+    <div class="md:hidden bg-white border-b border-slate-200 flex justify-around text-xs font-semibold py-2 sticky top-16 z-40 overflow-x-auto">
+        <button onclick="switchSection('subur')" id="mnav-subur" class="px-2 py-1.5 text-teal-600 font-bold border-b-2 border-teal-600 whitespace-nowrap">Masa Subur</button>
+        <button onclick="switchSection('siklus')" id="mnav-siklus" class="px-2 py-1.5 text-slate-600 whitespace-nowrap">Siklus Haid</button>
+        <button onclick="switchSection('kehamilan')" id="mnav-kehamilan" class="px-2 py-1.5 text-slate-600 whitespace-nowrap">Kalender Kehamilan</button>
+        <button onclick="switchSection('quiz')" id="mnav-quiz" class="px-2 py-1.5 text-pink-600 whitespace-nowrap">Quiz Interaktif</button>
     </div>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-6">
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-6 space-y-6">
 
-        <!-- Banner / Hero -->
-        <div class="bg-gradient-to-r from-teal-700 via-teal-600 to-cyan-700 rounded-2xl p-6 md:p-8 text-white mb-8 shadow-lg relative overflow-hidden">
-            <div class="relative z-10">
-                <span class="bg-teal-900/60 text-teal-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-teal-400/30">Panduan Edukasi Mahasiswa</span>
-                <h1 class="text-2xl md:text-4xl font-extrabold mt-3 mb-2">Kehamilan Tidak Direncanakan (KTD) & Perencanaan Reproduksi</h1>
-                <p class="text-teal-100 max-w-2xl text-sm md:text-base leading-relaxed">Edukasi medis berbasis fakta dan ilmu pengetahuan untuk membantu mahasiswa mengambil keputusan yang bijak, bertanggung jawab, dan aman bagi masa depannya.</p>
+        <!-- Hero Banner -->
+        <div class="gradient-teal-pink rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl">
+                <span class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-md border border-white/30 inline-block mb-3">
+                    Modul Interaktif & Perencanaan Kespro
+                </span>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2">Kalkulator Reproduksi & Kuis Calon Orang Tua</h1>
+                <p class="text-teal-50 text-xs md:text-sm leading-relaxed">
+                    Hitung perkiraan masa subur, siklus menstruasi, hari perkiraan lahir janin, serta uji pengetahuan Anda melalui kuis interaktif dengan fakta medis tepercaya!
+                </p>
             </div>
-            <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
-                <svg width="280" height="280" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="absolute -right-8 -bottom-8 opacity-20 pointer-events-none">
+                <i data-lucide="heart" class="w-64 h-64 text-white"></i>
             </div>
         </div>
 
-        <!-- Section 1: Proses Reproduksi -->
-        <section id="tab-proses" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-                    <i data-lucide="dna" class="text-teal-600"></i> Memahami Proses Reproduksi & Terjadinya Kehamilan
-                </h2>
-                <p class="text-slate-600 leading-relaxed text-sm mb-6">
-                    Kehamilan terjadi ketika sel sperma membuahi sel telur (ovum) dalam proses yang disebut fertilisasi, dilanjutkan dengan penempelan zigot pada dinding rahim (implantasi).<a href="https://www.alodokter.com/proses-kehamilan-ini-yang-perlu-diketahui" target="_blank" style="color: #0f766e;">Ingin tahu lebih?</a>
-                </p>
-
-                <!-- Animasi Visual SVG Proses Reproduksi -->
-                <div class="bg-slate-900 rounded-2xl p-6 mb-8 text-white shadow-inner">
-                    <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-                        <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span> 
-                            <a href="#" onclick="openYouTubeModal(event, 'https://www.youtube.com/embed/HuWCwyRiaUI')" class="hover:underline text-teal-300">Visualisasi Animasi Proses Fertilisasi</a>
-                        </span>
-                        <span class="text-xs text-slate-400">Disertai Video Edukasi</span>
+        <!-- SECTION 1: KALKULATOR MASA SUBUR -->
+        <section id="sec-subur" class="tool-section space-y-6">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-pink-100 text-pink-600 rounded-2xl">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="28" fill="#0d9488" fill-opacity="0.2" stroke="#14b8a6" stroke-width="2" class="animate-pulse-slow" />
-                                <circle cx="50" cy="50" r="16" fill="#0d9488" stroke="#2dd4bf" stroke-width="2" />
-                                <circle cx="50" cy="50" r="6" fill="#f0fdf4" />
-                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Sel Telur (Ovum)</text>
-                            </svg>
-                            <h4 class="text-xs font-bold text-teal-300 mt-2">1. Ovulasi (Masa Subur)</h4>
-                            <p class="text-[11px] text-slate-400 mt-1">Ovarium melepas 1 sel telur matang. Sel telur dapat bertahan hidup 12-24 jam di saluran reproduksi.</p>
-                        </div>
-
-                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="24" fill="#0d9488" fill-opacity="0.3" stroke="#14b8a6" stroke-width="2" />
-                                <circle cx="50" cy="50" r="12" fill="#0d9488" />
-                                <g class="animate-sperm">
-                                    <path d="M 20 45 Q 25 40 30 45 T 40 45" stroke="#38bdf8" stroke-width="2" fill="none" />
-                                    <circle cx="40" cy="45" r="3" fill="#38bdf8" />
-                                </g>
-                                <g class="animate-sperm" style="animation-delay: 0.8s;">
-                                    <path d="M 18 60 Q 23 55 28 60 T 38 55" stroke="#38bdf8" stroke-width="1.5" fill="none" />
-                                    <circle cx="38" cy="55" r="2.5" fill="#38bdf8" />
-                                </g>
-                                <circle cx="50" cy="50" r="4" fill="#fef08a" class="animate-ping" />
-                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Pembuahan (Fertilisasi)</text>
-                            </svg>
-                            <h4 class="text-xs font-bold text-teal-300 mt-2">2. Pembuahan (Fertilisasi)</h4>
-                            <p class="text-[11px] text-slate-400 mt-1">Sperma bertahan hingga 5 hari. Pembuahan terjadi jika sperma bertemu sel telur di tuba falopi.</p>
-                        </div>
-
-                        <div class="flex flex-col items-center text-center p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                            <svg class="w-32 h-32 my-2" viewBox="0 0 100 100">
-                                <path d="M 10 20 C 30 20, 30 80, 10 80" stroke="#f43f5e" stroke-width="6" fill="none" stroke-linecap="round" />
-                                <g class="animate-pulse-slow">
-                                    <circle cx="28" cy="50" r="10" fill="#f43f5e" fill-opacity="0.4" stroke="#fb7185" stroke-width="2" />
-                                    <circle cx="28" cy="50" r="5" fill="#f43f5e" />
-                                </g>
-                                <text x="55" y="53" font-size="7" fill="#fca5a5" text-anchor="start">Dinding Rahim</text>
-                                <text x="50" y="93" font-size="8" fill="#94a3b8" text-anchor="middle">Implantasi Embrio</text>
-                            </svg>
-                            <h4 class="text-xs font-bold text-teal-300 mt-2">3. Implantasi Rahim</h4>
-                            <p class="text-[11px] text-slate-400 mt-1">Sel telur yang dibuahi menempel pada dinding rahim, secara medis menjadi awal dimulainya kehamilan.</p>
-                        </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Kalkulator Masa Subur & Ovulasi</h2>
+                        <p class="text-xs text-slate-500">Menghitung masa paling subur wanita untuk perencanaan kehamilan atau kewaspadaan reproduksi.</p>
                     </div>
                 </div>
 
-                <!-- Mitos vs Fakta -->
-                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
-                    <h4 class="font-semibold text-amber-900 text-sm flex items-center gap-2">
-                        <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i> Mitos & Fakta Medis Penting
-                    </h4>
-                    <div class="text-xs text-amber-800 mt-2 space-y-1">
-                        <p><strong>Mitos:</strong> Mencegah kehamilan bisa dilakukan dengan meminum jamu atau membasuh organ intim setelah berhubungan.</p>
-                        <p><strong>Fakta:</strong> Hal tersebut tidak efektif secara medis. Kehamilan dapat terjadi pada setiap penetrasi tanpa kontrasepsi yang aman.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Metode Kontrasepsi -->
-        <section id="tab-kontrasepsi" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-                    <i data-lucide="shield-check" class="text-teal-600"></i> Metode Kontrasepsi & Efektivitasnya
-                </h2>
-                <p class="text-slate-600 text-sm mb-6">
-                    Kontrasepsi bekerja mencegah fertilisasi atau implantasi. Efektivitas diukur berdasarkan Penggunaan Sempurna (Perfect Use) dan Penggunaan Tipikal (Typical Use).<a href="https://www.alodokter.com/memilih-alat-kontrasepsi" target="_blank" style="color: #0f766e;">Kenali lebih banyak?</a>
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
-                        <svg class="w-20 h-20 my-2 animate-shield" viewBox="0 0 100 100">
-                            <path d="M 50 15 L 80 30 V 55 C 80 75 50 90 50 90 C 50 90 20 75 20 55 V 30 Z" fill="#0d9488" fill-opacity="0.3" stroke="#14b8a6" stroke-width="2" />
-                            <i data-lucide="shield" class="w-8 h-8 text-teal-400"></i>
-                            <circle cx="50" cy="50" r="12" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="3,3" />
-                        </svg>
-                        <span class="text-xs font-bold text-teal-300">Metode Barier (Kondom)</span>
-                        <p class="text-[10px] text-slate-400 mt-1">Mencegah fisik sperma bertemu sel telur. Mencegah penyakit menular seksual (IMS).</p>
-                    </div>
-
-                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
-                        <svg class="w-20 h-20 my-2" viewBox="0 0 100 100">
-                            <rect x="25" y="25" width="50" height="50" rx="10" fill="#6b21a8" fill-opacity="0.3" stroke="#a855f7" stroke-width="2" />
-                            <circle cx="40" cy="40" r="6" fill="#c084fc" class="animate-ping" />
-                            <circle cx="60" cy="40" r="6" fill="#c084fc" />
-                            <circle cx="40" cy="60" r="6" fill="#c084fc" />
-                            <circle cx="60" cy="60" r="6" fill="#c084fc" />
-                        </svg>
-                        <span class="text-xs font-bold text-purple-300">Metode Hormonal (Pil/Suntik)</span>
-                        <p class="text-[10px] text-slate-400 mt-1">Regulasi hormon untuk menghentikan proses ovulasi bulanan.</p>
-                    </div>
-
-                    <div class="bg-slate-900 p-4 rounded-xl text-center text-white flex flex-col items-center">
-                        <svg class="w-20 h-20 my-2" viewBox="0 0 100 100">
-                            <path d="M 30 30 H 70 M 50 30 V 75" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
-                            <circle cx="50" cy="50" r="18" fill="none" stroke="#0284c7" stroke-width="1.5" class="animate-pulse-slow" />
-                        </svg>
-                        <span class="text-xs font-bold text-sky-300">Metode Jangka Panjang (IUD)</span>
-                        <p class="text-[10px] text-slate-400 mt-1">Alat kontrasepsi rahim aman dengan efektivitas tinggi hingga 5-10 tahun.</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-4 border border-slate-200 rounded-xl hover:border-teal-500 transition">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-slate-900 text-sm">Kondom Eksternal</h3>
-                            <span class="bg-teal-100 text-teal-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">Barier</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-3">Satu-satunya metode pencegah kehamilan sekaligus pencegah Infeksi Menular Seksual (IMS).</p>
-                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
-                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-amber-600">87%</span></div>
-                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">98%</span></div>
-                        </div>
-                    </div>
-
-                    <div class="p-4 border border-slate-200 rounded-xl hover:border-purple-500 transition">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-slate-900 text-sm">Pil KB Kombinasi</h3>
-                            <span class="bg-purple-100 text-purple-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">Hormonal</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-3">Mencegah pelepasan sel telur. Membutuhkan kedisiplinan minum rutin setiap hari.</p>
-                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
-                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-amber-600">93%</span></div>
-                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">99.7%</span></div>
-                        </div>
-                    </div>
-
-                    <div class="p-4 border border-slate-200 rounded-xl hover:border-sky-500 transition">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-slate-900 text-sm">IUD / KB Spiral</h3>
-                            <span class="bg-sky-100 text-sky-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">LARC</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-3">Dipasang oleh dokter/bidan di rahim. Sangat efektif tanpa tergantung kedisiplinan harian.</p>
-                        <div class="space-y-1 text-xs border-t pt-2 text-slate-700">
-                            <div class="flex justify-between"><span>Penggunaan Tipikal:</span> <span class="font-bold text-teal-600">&gt;99%</span></div>
-                            <div class="flex justify-between"><span>Penggunaan Sempurna:</span> <span class="font-bold text-teal-600">&gt;99%</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Risiko Usia Muda -->
-        <section id="tab-risiko" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i data-lucide="alert-triangle" class="text-amber-500"></i> Risiko Kehamilan pada Usia Remaja & Mahasiswa
-                </h2>
-                <p class="text-slate-600 text-sm mb-6">
-                    Kehamilan tidak direncanakan pada usia muda membawa konsekuensi medis, psikologis, dan akademik yang perlu diantisipasi secara matang.<a href="https://www.alodokter.com/hamil-muda-akibat-hubungan-intim-dini" target="_blank" style="color: #0f766e;">Cari tahu lebih dalam?</a>
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50/50 rounded-r-xl">
-                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Risiko Fisik & Medis</h3>
-                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
-                            <li>Anemia berat dan hipertensi kehamilan.</li>
-                            <li>Risiko kelahiran prematur dan berat bayi lahir rendah (BBLR).</li>
-                            <li>Komplikasi panggul yang belum matang secara biologis.</li>
-                        </ul>
-                    </div>
-
-                    <div class="border-l-4 border-amber-500 pl-4 py-2 bg-amber-50/50 rounded-r-xl">
-                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Risiko Psikologis</h3>
-                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
-                            <li>Tingkat stres tinggi, kecemasan, hingga depresi.</li>
-                            <li>Kesiapan mental parenting yang belum optimal.</li>
-                            <li>Konflik relasi dengan keluarga atau pasangan.</li>
-                        </ul>
-                    </div>
-
-                    <div class="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50/50 rounded-r-xl">
-                        <h3 class="font-bold text-slate-900 mb-1 text-sm">Dampak Akademis & Sosial</h3>
-                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
-                            <li>Risiko penundaan hingga putus kuliah (drop out).</li>
-                            <li>Keterbatasan kemandirian finansial di awal usia produktif.</li>
-                            <li>Stigma sosial di lingkungan masyarakat.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Keputusan & Akses Layanan Kesehatan Terpercaya -->
-        <section id="tab-keputusan" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i data-lucide="user-check" class="text-teal-600"></i> Pengambilan Keputusan & Akses Layanan Kesehatan
-                </h2>
-
-                <!-- Penjelasan Perencanaan Kehamilan -->
-                <div class="mb-8">
-                    <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i data-lucide="calendar-heart" class="w-5 h-5 text-teal-600"></i> Apa Saja Perencanaan Kehamilan Sehat?
-                    </h3>
-                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
-                        Perencanaan kehamilan (prakonsepsi) adalah langkah terencana untuk memastikan kondisi kesehatan medis, fisik, emosional, dan finansial calon orang tua berada dalam kondisi optimal sebelum kehamilan terjadi.
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Kesehatan Medis & Nutrisi -->
-                        <div class="p-4 bg-teal-50/50 border border-teal-100 rounded-xl">
-                            <h4 class="font-bold text-teal-900 text-sm flex items-center gap-2 mb-2">
-                                <i data-lucide="heart-pulse" class="w-4 h-4 text-teal-600"></i> 1. Kesiapan Fisik & Medis
-                            </h4>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
-                                <li>Pemeriksaan kesehatan prakonsepsi (skrining penyakit menular, anemia, dan TORCH).</li>
-                                <li>Konsumsi asam folat minimal 400 mcg/hari untuk mencegah cacat tabung saraf janin.</li>
-                                <li>Penyelesaian vaksinasi penting (seperti TT/Tetanus Toxoid, Hepatitis B, MMR).</li>
-                                <li>Menjaga berat badan ideal (BMI) dan menghentikan kebiasaan merokok/alkohol.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Kesiapan Psikologis & Relational -->
-                        <div class="p-4 bg-purple-50/50 border border-purple-100 rounded-xl">
-                            <h4 class="font-bold text-purple-900 text-sm flex items-center gap-2 mb-2">
-                                <i data-lucide="brain-circuit" class="w-4 h-4 text-purple-600"></i> 2. Kesiapan Mental & Psikologis
-                            </h4>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
-                                <li>Kesiapan komitmen peran sebagai orang tua (parenting readiness).</li>
-                                <li>Pengelolaan stres dan menjaga kesehatan mental pasangan.</li>
-                                <li>Komunikasi terbuka antar mitra mengenai pembagian peran keluarga.</li>
-                                <li>Ketersediaan sistem pendukung (*support system*) keluarga yang stabil.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Kesiapan Finansial -->
-                        <div class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-                            <h4 class="font-bold text-emerald-900 text-sm flex items-center gap-2 mb-2">
-                                <i data-lucide="wallet" class="w-4 h-4 text-emerald-600"></i> 3. Kesiapan Finansial & Karir/Studi
-                            </h4>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
-                                <li>Perencanaan biaya pemeriksaan kehamilan, persalinan, hingga perawatan bayi.</li>
-                                <li>Asuransi atau jaminan kesehatan aktif (seperti BPJS Kesehatan).</li>
-                                <li>Pengaturan waktu agar tidak mengganggu pencapaian target pendidikan/akademik.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Konseling & Kontrasepsi -->
-                        <div class="p-4 bg-sky-50/50 border border-sky-100 rounded-xl">
-                            <h4 class="font-bold text-sky-900 text-sm flex items-center gap-2 mb-2">
-                                <i data-lucide="message-square" class="w-4 h-4 text-sky-600"></i> 4. Konseling & Pengaturan Jarak Kehamilan
-                            </h4>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
-                                <li>Konsultasi bersama tenaga medis/bidan/dokter spesialis kandungan.</li>
-                                <li>Penggunaan kontrasepsi yang tepat jika belum siap secara waktu atau kondisi.</li>
-                                <li>Menentukan usia kehamilan ideal (antara 21–35 tahun secara biologis).</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Taut Tautan Link Sementara (not_found.html) Di Sini -->
-                <div class="my-6 p-4 bg-slate-100 border border-dashed border-slate-300 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-                    <div class="flex items-center gap-3">
-                        <div class="p-2.5 bg-amber-100 text-amber-700 rounded-lg shrink-0">
-                            <i data-lucide="link" class="w-5 h-5"></i>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Form Input -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
                         <div>
-                            <h4 class="text-xs font-bold text-slate-800">Tautan Layanan & Referensi Tambahan</h4>
-                            <p class="text-[11px] text-slate-500">Akses dokumen atau panduan eksternal tambahan pengguna.</p>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Hari Pertama Haid Terakhir (HPHT):
+                            </label>
+                            <input type="date" id="hpht-subur" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500 outline-none transition">
                         </div>
-                    </div>
-                    <!-- Link pengisi sementara ke not_found.html -->
-                    <a href="edurepro_tools.html" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium px-4 py-2 rounded-lg transition shrink-0">
-                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Buka Tautan Eksternal
-                    </a>
-                </div>
 
-                <hr class="border-slate-200 my-6">
-
-                <p class="text-sm text-slate-600 mb-6">
-                    Jika Anda membutuhkan konseling ramah remaja, informasi kesehatan reproduksi, atau konsultasi rahasia, Anda dapat menghubungi atau mengunjungi lembaga resmi berikut:
-                </p>
-
-                <!-- Highlight khusus PKBI Kepri -->
-                <div class="bg-gradient-to-r from-teal-50 to-emerald-50 border-2 border-teal-500/30 p-5 rounded-2xl mb-6 shadow-sm">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="bg-teal-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Layanan Utama Layak Pemuda</span>
-                                <span class="text-xs font-semibold text-teal-800">PKBI Kepulauan Riau</span>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Rata-rata Durasi Siklus Haid (Hari):
+                            </label>
+                            <div class="flex items-center gap-3">
+                                <input type="number" id="siklus-length-subur" value="28" min="20" max="45" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500 outline-none transition">
+                                <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Hari (Standar 28)</span>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900">Perkumpulan Keluarga Berencana Indonesia (PKBI) Kepri</h3>
-                            <p class="text-xs text-slate-600 mt-1 max-w-xl">
-                                Memprioritaskan konseling kesehatan reproduksi, edukasi remaja, penanganan KTD secara aman, rahasia, serta inklusif tanpa stigma.
+                        </div>
+
+                        <button onclick="calculateSubur()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-sm py-3 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                            <i data-lucide="calculator" class="w-4 h-4"></i> Hitung Masa Subur
+                        </button>
+                    </div>
+
+                    <!-- Output Result -->
+                    <div id="result-subur" class="bg-gradient-to-br from-pink-50 to-teal-50 p-6 rounded-2xl border border-pink-100 flex flex-col justify-between min-h-[240px]">
+                        <div>
+                            <span class="text-[10px] font-bold text-pink-600 bg-pink-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Perhitungan</span>
+                            <h3 class="text-lg font-bold text-slate-800 mt-2 mb-4">Estimasi Masa Subur Anda</h3>
+                            
+                            <div class="space-y-4 text-xs">
+                                <div class="bg-white p-3.5 rounded-xl border border-pink-100 flex items-center justify-between shadow-sm">
+                                    <span class="text-slate-600 font-medium">Perkiraan Tanggal Ovulasi:</span>
+                                    <span id="ovulasi-date" class="font-bold text-pink-600 text-sm">-</span>
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-teal-100 flex items-center justify-between shadow-sm">
+                                    <span class="text-slate-600 font-medium">Rentang Jendela Masa Subur:</span>
+                                    <span id="rentang-subur" class="font-bold text-teal-600 text-sm">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-[11px] text-slate-500 mt-4 leading-relaxed border-t border-slate-200/60 pt-3">
+                            💡 <strong>Catatan Medis:</strong> Sel telur biasanya hidup 12–24 jam setelah ovulasi, sedangkan sperma dapat bertahan 3–5 hari di organ reproduksi wanita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: KALKULATOR SIKLUS HAID -->
+        <section id="sec-siklus" class="tool-section hidden space-y-6">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-teal-100 text-teal-600 rounded-2xl">
+                        <i data-lucide="calendar" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Kalkulator Siklus Haid & Fase Menstruasi</h2>
+                        <p class="text-xs text-slate-500">Prediksi tanggal haid berikutnya serta pahami perubahan hormon dalam tiap fase tubuh Anda.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Form Input -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Tanggal Hari Pertama Haid Terakhir:
+                            </label>
+                            <input type="date" id="hpht-siklus" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-teal-400 focus:border-teal-500 outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Durasi Rata-Rata Siklus (Hari):
+                            </label>
+                            <input type="number" id="durasi-siklus" value="28" min="21" max="35" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-teal-400 focus:border-teal-500 outline-none transition">
+                        </div>
+
+                        <button onclick="calculateSiklus()" class="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-bold text-sm py-3 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Prediksi Siklus
+                        </button>
+                    </div>
+
+                    <!-- Output Result -->
+                    <div id="result-siklus" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                        <span class="text-[10px] font-bold text-teal-600 bg-teal-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Prediksi</span>
+                        
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-xs text-slate-500 block">Prediksi Haid Berikutnya:</span>
+                            <span id="next-haid" class="text-lg font-extrabold text-teal-700 block mt-1">-</span>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-slate-800 block border-b pb-1">Detail 4 Fase Siklus Menstruasi:</span>
+                            <ul class="text-xs space-y-1.5 text-slate-600">
+                                <li>🩸 <strong>Fase Menstruasi:</strong> Hari 1 - 5 (Luruhan dinding rahim).</li>
+                                <li>🌱 <strong>Fase Folikuler:</strong> Hari 6 - 13 (Pertumbuhan folikel telur).</li>
+                                <li>✨ <strong>Fase Ovulasi:</strong> Hari 14 (Pelepasan sel telur matang).</li>
+                                <li>🍂 <strong>Fase Luteal:</strong> Hari 15 - 28 (Persiapan rahim / PMS).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: KALKULATOR KALENDER KEHAMILAN -->
+        <section id="sec-kehamilan" class="tool-section hidden space-y-6">
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-pink-100 text-pink-600 rounded-2xl">
+                        <i data-lucide="baby" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Kalkulator Kalender Kehamilan & HPL</h2>
+                        <p class="text-xs text-slate-500">Hitung Hari Perkiraan Lahir (HPL), usia kehamilan saat ini, serta tahap perkembangan janin.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Form Input -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Hari Pertama Haid Terakhir (HPHT):
+                            </label>
+                            <input type="date" id="hpht-hamil" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500 outline-none transition">
+                        </div>
+
+                        <button onclick="calculateKehamilan()" class="w-full gradient-pink-teal text-white font-bold text-sm py-3 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                            <i data-lucide="heart-pulse" class="w-4 h-4"></i> Hitung Usia & HPL
+                        </button>
+                    </div>
+
+                    <!-- Output Result -->
+                    <div id="result-kehamilan" class="bg-gradient-to-br from-pink-50 via-purple-50 to-teal-50 p-6 rounded-2xl border border-pink-100 space-y-4">
+                        <span class="text-[10px] font-bold text-purple-600 bg-purple-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Hasil Usia Kehamilan</span>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-white p-3.5 rounded-xl border border-pink-100 shadow-sm text-center">
+                                <span class="text-[11px] text-slate-500 block">Hari Perkiraan Lahir (HPL)</span>
+                                <span id="hpl-date" class="text-sm font-extrabold text-pink-600 mt-1 block">-</span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-teal-100 shadow-sm text-center">
+                                <span class="text-[11px] text-slate-500 block">Usia Kehamilan Saat Ini</span>
+                                <span id="usia-hamil" class="text-sm font-extrabold text-teal-600 mt-1 block">-</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <i data-lucide="activity" class="w-4 h-4 text-pink-500"></i> Milestone Perkembangan Janin:
+                            </h4>
+                            <p id="milestone-text" class="text-xs text-slate-600 leading-relaxed">
+                                Silakan masukkan HPHT untuk melihat milestone perkembangan janin.
                             </p>
-                            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-700">
-                                <a href="https://wa.me/6282388149914?text=Halo!!%20saya%20ingin%20berkonsultasi" title="Bagikan di WhatsApp" id="action-button" class="_9vcv _9u4i" role="link" style="width:200px;"><span class="_advp _aeam"><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-3.5 h-3.5 text-teal-600"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg> Hotline/WA: 0823-8814-9914</span></span></a>
-                                <span class="flex items-center gap-1"><i data-lucide="mail" class="w-3.5 h-3.5 text-teal-600"></i> pkbikepri@pkbi.or.id</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-                            <a href="https://pkbikepri.or.id/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl transition shadow-sm">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Kunjungi Website PKBI Kepri
-                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Opsi Layanan Lainnya -->
-                <div class="space-y-3">
-                    <h3 class="font-bold text-slate-800 text-sm mb-2">Pilihan Akses Konsultasi Lainnya:</h3>
-
-                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="p-2 bg-teal-100 text-teal-700 rounded-lg mt-0.5">
-                            <i data-lucide="stethoscope" class="w-4 h-4"></i>
+        <!-- SECTION 4: QUIZ INTERAKTIF & MITOS-FAKTA -->
+        <section id="sec-quiz" class="tool-section hidden space-y-8">
+            <!-- Quiz Box -->
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-3 bg-gradient-to-br from-pink-500 to-rose-500 text-white rounded-2xl shadow-md">
+                            <i data-lucide="help-circle" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-slate-800">PKPR Puskesmas (Pelayanan Kesehatan Peduli Remaja)</h4>
-                            <p class="text-xs text-slate-600 mt-0.5">Fasilitas pemerintah di Puskesmas terdekat yang khusus menyediakan konseling reproduksi ramah usia remaja & mahasiswa.</p>
+                            <h2 class="text-xl font-bold text-slate-900">Quiz Kespro & Perencanaan Kehamilan</h2>
+                            <p class="text-xs text-slate-500">Uji pemahaman calon orang tua & mahasiswa seputar materi EduReproCampus.</p>
                         </div>
                     </div>
+                    <span id="quiz-progress" class="text-xs font-bold text-pink-600 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200">
+                        Soal 1 dari 5
+                    </span>
+                </div>
 
-                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="p-2 bg-purple-100 text-purple-700 rounded-lg mt-0.5">
-                            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Unit Konseling Kampus / UKM Kesehatan</h4>
-                            <p class="text-xs text-slate-600 mt-0.5">Layanan Bimbingan Konseling universitas atau pusat kegiatan mahasiswa untuk mendapatkan pendampingan psikologis awal.</p>
-                        </div>
+                <!-- Active Question Container -->
+                <div id="quiz-container" class="space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <h3 id="question-text" class="text-sm md:text-base font-bold text-slate-900 leading-snug">
+                            Loading pertanyaan...
+                        </h3>
                     </div>
 
-                    <div class="flex items-start gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <div class="p-2 bg-sky-100 text-sky-700 rounded-lg mt-0.5">
-                            <i data-lucide="phone-call" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800">Telehealth & Layanan Daring Resmi</h4>
-                            <p class="text-xs text-slate-600 mt-0.5">Konsultasi medis online rahasia bersama Dokter Obgyn atau Psikolog melalui platform resmi seperti Halodoc, Alodokter, atau Riliv.</p>
-                        </div>
+                    <div id="options-container" class="grid grid-cols-1 gap-3">
+                        <!-- Options dynamically injected -->
+                    </div>
+
+                    <div id="explanation-box" class="hidden p-4 rounded-2xl text-xs leading-relaxed transition-all">
+                        <!-- Explanation text injected here -->
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button id="btn-next" onclick="nextQuestion()" class="hidden bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">
+                            Soal Berikutnya <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Summary (Hidden Initially) -->
+                <div id="quiz-result" class="hidden text-center py-8 space-y-4">
+                    <div class="w-20 h-20 mx-auto rounded-full gradient-teal-pink flex items-center justify-center text-white shadow-lg">
+                        <i data-lucide="award" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Kuis Selesai!</h3>
+                    <p class="text-sm text-slate-600">Skor Akhir Pemahaman Anda:</p>
+                    <div class="text-4xl font-black text-pink-600" id="final-score">0 / 100</div>
+                    <p id="final-eval" class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">Evaluation message...</p>
+                    <button onclick="resetQuiz()" class="mt-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-md inline-flex items-center gap-2">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Coba Kuis Lagi
+                    </button>
+                </div>
+            </div>
+
+            <!-- MITOS & FAKTA MEDIS (EDUKASI KUSUS) -->
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-amber-100 text-amber-700 rounded-2xl">
+                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Mitos vs Fakta Medis Calon Orang Tua</h2>
+                        <p class="text-xs text-slate-500">Pengetahuan mendasar yang wajib diketahui calon ibu & ayah sebelum merencanakan kehamilan.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Card 1 -->
+                    <div class="p-4 bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 rounded-2xl space-y-2">
+                        <span class="text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-full uppercase">Mitos #1</span>
+                        <h4 class="text-xs font-bold text-slate-800">"Berhubungan intim sekali tidak akan langsung menyebabkan kehamilan."</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-red-100 pt-2">
+                            ✅ <strong>Fakta Medis:</strong> Kehamilan dapat terjadi dari <em>satu kali penetrasi saja</em> jika penetrasi terjadi pada masa subur wanita dan tanpa kontrasepsi.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-4 bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 rounded-2xl space-y-2">
+                        <span class="text-[10px] font-bold text-teal-600 bg-teal-100 px-2 py-0.5 rounded-full uppercase">Mitos #2</span>
+                        <h4 class="text-xs font-bold text-slate-800">"Asam folat hanya perlu diminum setelah ibu tahu dirinya positif hamil."</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-teal-100 pt-2">
+                            ✅ <strong>Fakta Medis:</strong> Asam folat idealnya diminum <strong>3 bulan sebelum hamil</strong> (prakonsepsi) untuk mencegah kecacatan tabung saraf janin (Anensefali & Spina Bifida).
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-4 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-2xl space-y-2">
+                        <span class="text-[10px] font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full uppercase">Mitos #3</span>
+                        <h4 class="text-xs font-bold text-slate-800">"Kondom bisa digunakan berkali-kali jika dicuci dengan sabun."</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-purple-100 pt-2">
+                            ✅ <strong>Fakta Medis:</strong> Kondom hanya untuk <strong>sekali pakai</strong>. Mencuci atau menggunakan kembali akan merusak integritas bahan latex dan memicu kebocoran.
+                        </p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="p-4 bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-100 rounded-2xl space-y-2">
+                        <span class="text-[10px] font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full uppercase">Mitos #4</span>
+                        <h4 class="text-xs font-bold text-slate-800">"Mencuci organ intim pasca berhubungan intim bisa mencegah kehamilan."</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-sky-100 pt-2">
+                            ✅ <strong>Fakta Medis:</strong> Sel sperma berenang sangat cepat masuk ke dalam leher rahim (serviks) dalam hitungan detik setelah ejakulasi. Bilasan luar tidak menghentikan kehamilan.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
     </main>
-
-    <!-- Modal Pop-Up Informasi Fitur -->
-    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto hidden">
-        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative my-auto">
-            <div class="bg-gradient-to-r from-teal-700 to-teal-600 text-white px-6 py-4 relative shrink-0">
-                <button onclick="closeInfoModal()" class="absolute top-4 right-4 text-teal-200 hover:text-white transition p-1 rounded-lg hover:bg-teal-800/50">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="bg-teal-900/60 text-teal-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm border border-teal-400/30">Panduan Edukasi Interaktif</span>
-                </div>
-                <h3 class="text-lg font-extrabold flex items-center gap-2">
-                    <i data-lucide="sparkles" class="w-5 h-5 text-amber-300"></i> Terima Kasih Telah Mengunjungi Website Kami!
-                </h3>
-            </div>
-
-            <div class="p-6 overflow-y-auto space-y-5 text-slate-700 text-xs md:text-sm">
-                <div class="bg-teal-50/60 border border-teal-200 p-4 rounded-xl">
-                    <h4 class="font-bold text-teal-900 text-sm mb-2 flex items-center gap-2">
-                        <i data-lucide="users" class="w-4 h-4 text-teal-600"></i> Disusun Oleh: Kelompok 5 (9 Anggota)
-                    </h4>
-                    <p class="text-[11px] text-teal-800 mb-2 font-medium">Program Studi Ilmu Keperawatan | Fakultas Ilmu Kesehatan — Universitas Batam</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700 font-medium">
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">1</span> Sabri
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">2</span> Bakri
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">3</span> Annisa Salfika
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">4</span> Eisyah Herlian Pradini
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">5</span> Agustine Nur Kholifah
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">6</span> Sefen Agusman Waruwu 
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">7</span> Vesia
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">8</span> Nadia Putri Kirana
-                        </div>
-                        <div class="bg-white px-3 py-1.5 rounded-lg border border-teal-100 flex items-center gap-2 sm:col-span-2">
-                            <span class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">9</span> Guntur Saputro
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-slate-600 leading-relaxed text-xs">
-                    Website <strong>EduReproCampus</strong> dirancang secara interaktif untuk mempermudah Anda mempelajari kesehatan reproduksi, efektivitas kontrasepsi, serta akses konsultasi tepercaya.
-                </p>
-
-                <h4 class="font-bold text-slate-900 text-sm border-b border-slate-200 pb-1 flex items-center gap-1.5">
-                    <i data-lucide="pointer" class="w-4 h-4 text-teal-600"></i> Fitur & Komponen Interaktif di Website Ini:
-                </h4>
-
-                <div class="space-y-3 text-xs">
-                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <div class="p-2 bg-teal-100 text-teal-700 rounded-lg mt-0.5 shrink-0">
-                            <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="font-bold text-slate-900 block">1. Navigasi Tab Halaman Interaktif</span>
-                            <span class="text-slate-600">Gunakan bilah menu di bagian atas untuk berpindah secara langsung antara 4 topik utama tanpa memuat ulang halaman.</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <div class="p-2 bg-pink-100 text-pink-700 rounded-lg mt-0.5 shrink-0">
-                            <i data-lucide="calculator" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="font-bold text-slate-900 block">2. Tools & Quiz EduReproCampus (Web Baru)</span>
-                            <span class="text-slate-600">Gunakan menu <strong>Tools & Quiz</strong> di barisan navigasi untuk membuka kalkulator reproduksi dan kuis interaktif di tab baru!</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <div class="p-2 bg-purple-100 text-purple-700 rounded-lg mt-0.5 shrink-0">
-                            <i data-lucide="play-circle" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="font-bold text-slate-900 block">3. Pop-up Video Edukasi Fertilisasi</span>
-                            <span class="text-slate-600">Klik tombol <em>"Visualisasi Animasi Proses Fertilisasi"</em> pada Tab Proses Reproduksi untuk menonton pemutaran video edukasi interaktif.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 flex justify-end shrink-0">
-                <button onclick="closeInfoModal()" class="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-sm flex items-center justify-center gap-2">
-                    <i data-lucide="check-circle" class="w-4 h-4"></i> Mulai Jelajahi Website
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Pop-up YouTube -->
-    <div id="youtubeModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden p-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-slate-800">
-                <span class="text-sm font-bold text-teal-400 flex items-center gap-2">
-                    <i data-lucide="play-circle" class="w-4 h-4"></i> Pemutar Video Edukasi
-                </span>
-                <button onclick="closeYouTubeModal()" class="text-slate-400 hover:text-white transition p-1 rounded-lg hover:bg-slate-800">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            <div class="relative w-full" style="padding-top: 56.25%;">
-                <iframe id="youtubeIframe" class="absolute top-0 left-0 w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
@@ -581,85 +377,297 @@
                 <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
                 <div class="text-left">
                     <p class="font-bold text-slate-800 text-xs">Universitas Batam</p>
-                    <p class="text-[11px] text-slate-500">Mitra Edukasi & Pengabdian Masyarakat</p>
+                    <p class="text-[11px] text-slate-500">Program Studi Ilmu Keperawatan — FIK</p>
                 </div>
             </div>
 
             <div class="text-center md:text-right text-xs text-slate-500">
-                <p>&copy; 2026 EduRepro Campus. Platform Edukasi Kesehatan Reproduksi Mahasiswa.</p>
-                <p class="mt-1">Informasi bersifat edukatif berbasis ilmu medis dan kesehatan masyarakat.</p>
+                <p>&copy; 2026 EduRepro Campus Tools & Quiz. Seluruh Hak Cipta Dilindungi.</p>
+                <p class="mt-1">Dibuat sebagai media pembelajaran edukasi reproduksi interaktif mahasiswa & calon orang tua.</p>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript Logic -->
     <script>
         lucide.createIcons();
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
+        // Navigation Switcher Logic
+        function switchSection(secId) {
+            document.querySelectorAll('.tool-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sec-' + secId).classList.remove('hidden');
 
-            document.querySelectorAll('header button').forEach(btn => {
-                btn.classList.remove('text-teal-600', 'font-bold', 'border-b-2', 'border-teal-600');
-                btn.classList.add('text-slate-600');
+            // Desktop styles reset
+            document.querySelectorAll('.hidden.md\\:flex button').forEach(btn => {
+                btn.className = "px-3 py-2 rounded-lg text-slate-600 hover:text-pink-600 transition";
             });
 
+            // Mobile styles reset
             document.querySelectorAll('.md\\:hidden button').forEach(btn => {
-                btn.classList.remove('text-teal-600', 'font-bold');
-                btn.classList.add('text-slate-600');
+                btn.className = "px-2 py-1.5 text-slate-600 whitespace-nowrap";
             });
 
-            const activeNav = document.getElementById('nav-' + tabId);
-            if(activeNav) {
-                activeNav.classList.add('text-teal-600', 'font-bold');
-            }
+            const activeBtn = document.getElementById('nav-' + secId);
+            if (activeBtn) activeBtn.className = "px-3 py-2 rounded-lg text-pink-600 font-bold bg-white shadow-sm transition";
 
-            const activeMNav = document.getElementById('mnav-' + tabId);
-            if(activeMNav) {
-                activeMNav.classList.add('text-teal-600', 'font-bold');
-            }
+            const activeMBtn = document.getElementById('mnav-' + secId);
+            if (activeMBtn) activeMBtn.className = "px-2 py-1.5 text-pink-600 font-bold border-b-2 border-pink-600 whitespace-nowrap";
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        switchTab('proses');
-
-        function openInfoModal() {
-            document.getElementById('infoModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+        // Helper Format Date Bahasa Indonesia
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
         }
 
-        function closeInfoModal() {
-            document.getElementById('infoModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
+        // 1. CALCULATE MASA SUBUR
+        function calculateSubur() {
+            const hphtVal = document.getElementById('hpht-subur').value;
+            const cycleLen = parseInt(document.getElementById('siklus-length-subur').value) || 28;
+
+            if (!hphtVal) {
+                alert("Harap masukkan tanggal HPHT Anda terlebih dahulu!");
+                return;
+            }
+
+            const hphtDate = new Date(hphtVal);
+            
+            // Ovulasi terjadi kira-kira (Panjang Siklus - 14 hari) setelah HPHT
+            const ovulasiDayOffset = cycleLen - 14;
+            const ovulasiDate = new Date(hphtDate);
+            ovulasiDate.setDate(hphtDate.getDate() + ovulasiDayOffset);
+
+            // Jendela Subur: 3 hari sebelum ovulasi sampai 1 hari setelah ovulasi
+            const startSubur = new Date(ovulasiDate);
+            startSubur.setDate(ovulasiDate.getDate() - 3);
+
+            const endSubur = new Date(ovulasiDate);
+            endSubur.setDate(ovulasiDate.getDate() + 1);
+
+            document.getElementById('ovulasi-date').innerText = formatDate(ovulasiDate);
+            document.getElementById('rentang-subur').innerText = `${formatDate(startSubur)} - ${formatDate(endSubur)}`;
         }
 
-        function openYouTubeModal(event, url) {
-            event.preventDefault();
-            const modal = document.getElementById('youtubeModal');
-            const iframe = document.getElementById('youtubeIframe');
-            iframe.src = url + "?autoplay=1";
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+        // 2. CALCULATE SIKLUS HAID
+        function calculateSiklus() {
+            const hphtVal = document.getElementById('hpht-siklus').value;
+            const durasi = parseInt(document.getElementById('durasi-siklus').value) || 28;
+
+            if (!hphtVal) {
+                alert("Harap masukkan tanggal HPHT Anda terlebih dahulu!");
+                return;
+            }
+
+            const hphtDate = new Date(hphtVal);
+            const nextHaidDate = new Date(hphtDate);
+            nextHaidDate.setDate(hphtDate.getDate() + durasi);
+
+            document.getElementById('next-haid').innerText = formatDate(nextHaidDate);
         }
 
-        function closeYouTubeModal() {
-            const modal = document.getElementById('youtubeModal');
-            const iframe = document.getElementById('youtubeIframe');
-            modal.classList.add('hidden');
-            iframe.src = "";
-            document.body.style.overflow = 'auto';
+        // 3. CALCULATE KALENDER KEHAMILAN
+        function calculateKehamilan() {
+            const hphtVal = document.getElementById('hpht-hamil').value;
+
+            if (!hphtVal) {
+                alert("Harap masukkan tanggal HPHT Anda terlebih dahulu!");
+                return;
+            }
+
+            const hphtDate = new Date(hphtVal);
+            
+            // Rumus Negele untuk HPL: HPHT + 280 hari (40 minggu)
+            const hplDate = new Date(hphtDate);
+            hplDate.setDate(hphtDate.getDate() + 280);
+
+            // Hitung usia kehamilan saat ini
+            const today = new Date();
+            const diffTime = Math.abs(today - hphtDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            const weeks = Math.floor(diffDays / 7);
+            const days = diffDays % 7;
+
+            document.getElementById('hpl-date').innerText = formatDate(hplDate);
+            document.getElementById('usia-hamil').innerText = `${weeks} Minggu ${days} Hari`;
+
+            // Dynamic Milestone logic
+            let milestone = "";
+            if (weeks < 12) {
+                milestone = "🌱 <strong>Trimester 1:</strong> Pembentukan organ vital janin (jantung, otak, dan tulang belakang). Ibu memerlukan konsumsi asam folat secara teratur.";
+            } else if (weeks >= 12 && weeks < 28) {
+                milestone = "👶 <strong>Trimester 2:</strong> Denyut jantung janin dapat terdengar jelas, organ kelamin mulai terbentuk, dan gerakan janin mulai terasa oleh ibu.";
+            } else if (weeks >= 28 && weeks <= 42) {
+                milestone = "✨ <strong>Trimester 3:</strong> Janin tumbuh pesat, organ paru-paru makin matang, dan posisi janin bersiap menuju jalan lahir.";
+            } else {
+                milestone = "🎉 Kehamilan melebihi 40 minggu, disarankan melakukan konsultasi lanjutan bersama dokter spesialis kandungan (Obgyn).";
+            }
+
+            document.getElementById('milestone-text').innerHTML = milestone;
         }
 
-        window.onclick = function(event) {
-            const youtubeModal = document.getElementById('youtubeModal');
-            const infoModal = document.getElementById('infoModal');
-            if (event.target === youtubeModal) closeYouTubeModal();
-            if (event.target === infoModal) closeInfoModal();
+        // 4. QUIZ INTERAKTIF DATA & LOGIC
+        const quizData = [
+            {
+                question: "1. Kapan waktu yang paling tepat untuk mengonsumsi Suplemen Asam Folat bagi perencanaan kehamilan?",
+                options: [
+                    "Setelah usia kehamilan memasuki trimester ketiga",
+                    "Minimal 1-3 bulan sebelum kehamilan (Masa Prakonsepsi)",
+                    "Saat persalinan sudah dekat",
+                    "Tidak perlu mengonsumsi asam folat sama sekali"
+                ],
+                correct: 1,
+                explanation: "<strong>Jawaban Benar: B.</strong> Asam folat sangat krusial diminum pada masa prakonsepsi (sebelum hamil) untuk mencegah kelainan tabung saraf janin seperti Anensefali dan Spina Bifida."
+            },
+            {
+                question: "2. Alat kontrasepsi mana yang efektif mencegah kehamilan SEKRETALUS mencegah transmisi Infeksi Menular Seksual (IMS)?",
+                options: [
+                    "Pil KB Kombinasi",
+                    "IUD / KB Spiral",
+                    "Kondom Eksternal",
+                    "Suntik KB 3 Bulan"
+                ],
+                correct: 2,
+                explanation: "<strong>Jawaban Benar: C.</strong> Kondom adalah satu-satunya metode barrier yang mampu memberikan perlindungan ganda dari kehamilan tidak direncanakan sekaligus Infeksi Menular Seksual (IMS)."
+            },
+            {
+                question: "3. Apa yang dimaksud dengan proses Fertilisasi dalam sistem reproduksi manusia?",
+                options: [
+                    "Pelepasan dinding rahim saat menstruasi",
+                    "Pembuahan sel telur (ovum) oleh sel sperma di tuba falopi",
+                    "Penempelan janin di dinding rahim",
+                    "Pembentukan jaringan plasenta"
+                ],
+                correct: 1,
+                explanation: "<strong>Jawaban Benar: B.</strong> Fertilisasi adalah momen penting peleburan inti sel sperma dengan inti sel telur matang di tuba falopi."
+            },
+            {
+                question: "4. Berapa lama rentang hidup rata-rata sel sperma di dalam organ reproduksi wanita?",
+                options: [
+                    "Beberapa menit saja",
+                    "12 jam",
+                    "3 hingga 5 hari",
+                    "30 hari"
+                ],
+                correct: 2,
+                explanation: "<strong>Jawaban Benar: C.</strong> Sperma sehat dapat bertahan hidup hingga 3–5 hari di dalam saluran reproduksi wanita yang subur."
+            },
+            {
+                question: "5. Rentang usia reproduksi sehat ideal bagi calon ibu secara biologis dan medis adalah...",
+                options: [
+                    "12 - 17 tahun",
+                    "21 - 35 tahun",
+                    "38 - 45 tahun",
+                    "Diatas 45 tahun"
+                ],
+                correct: 1,
+                explanation: "<strong>Jawaban Benar: B.</strong> Usia 21-35 tahun merupakan usia reproduksi sehat karena panggul, organ rahim, dan kematangan emosional dalam kondisi paling optimal."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentQuestion];
+
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+            document.getElementById('question-text').innerText = q.question;
+
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = "";
+
+            const expBox = document.getElementById('explanation-box');
+            expBox.classList.add('hidden');
+            expBox.className = "hidden p-4 rounded-2xl text-xs leading-relaxed transition-all";
+
+            document.getElementById('btn-next').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 bg-slate-50 border border-slate-200 hover:border-pink-300 hover:bg-pink-50/50 rounded-xl text-xs font-semibold text-slate-700 transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <i data-lucide="circle" class="w-4 h-4 text-slate-300"></i>`;
+                btn.onclick = () => checkAnswer(idx);
+                optContainer.appendChild(btn);
+            });
+
+            lucide.createIcons();
         }
 
+        function checkAnswer(selectedIdx) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestion];
+            const optButtons = document.getElementById('options-container').children;
+            const expBox = document.getElementById('explanation-box');
+
+            if (selectedIdx === q.correct) {
+                score += 20;
+                optButtons[selectedIdx].className = "w-full text-left p-3.5 bg-emerald-100 border-2 border-emerald-500 rounded-xl text-xs font-bold text-emerald-900 flex items-center justify-between";
+                expBox.className = "p-4 rounded-2xl text-xs leading-relaxed bg-emerald-50 border border-emerald-200 text-emerald-900 block";
+            } else {
+                optButtons[selectedIdx].className = "w-full text-left p-3.5 bg-rose-100 border-2 border-rose-500 rounded-xl text-xs font-bold text-rose-900 flex items-center justify-between";
+                optButtons[q.correct].className = "w-full text-left p-3.5 bg-emerald-50 border border-emerald-400 rounded-xl text-xs font-bold text-emerald-800 flex items-center justify-between";
+                expBox.className = "p-4 rounded-2xl text-xs leading-relaxed bg-rose-50 border border-rose-200 text-rose-900 block";
+            }
+
+            expBox.innerHTML = q.explanation;
+            document.getElementById('btn-next').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resDiv = document.getElementById('quiz-result');
+            resDiv.classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = `${score} / 100`;
+
+            let evalMsg = "";
+            if (score >= 80) {
+                evalMsg = "🌟 <strong>Sangat Luar Biasa!</strong> Pemahaman Anda mengenai kesehatan reproduksi dan perencanaan kehamilan sehat sangat matang dan siap menjadi calon orang tua yang bijak.";
+            } else if (score >= 60) {
+                evalMsg = "👍 <strong>Cukup Baik!</strong> Anda sudah memiliki pemahaman dasar yang baik, tingkatkan lagi literasi medis melalui materi EduReproCampus.";
+            } else {
+                evalMsg = "📚 <strong>Perlu Belajar Lagi!</strong> Jangan berkecil hati, pelajari kembali modul-modul di EduReproCampus untuk memperkuat pengetahuan reproduksi Anda.";
+            }
+
+            document.getElementById('final-eval').innerHTML = evalMsg;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Initialize defaults
         window.addEventListener('DOMContentLoaded', () => {
-            openInfoModal();
+            // Set default date inputs to today
+            const todayStr = new Date().toISOString().split('T')[0];
+            document.getElementById('hpht-subur').value = todayStr;
+            document.getElementById('hpht-siklus').value = todayStr;
+            document.getElementById('hpht-hamil').value = todayStr;
+
+            calculateSubur();
+            calculateSiklus();
+            calculateKehamilan();
+            loadQuestion();
         });
     </script>
 </body>
