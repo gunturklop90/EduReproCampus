@@ -108,7 +108,7 @@
 
             <div class="flex items-center space-x-2">
                 <a href="https://univbatam.ac.id/" target="_blank" class="flex items-center pl-2 border-l border-slate-200">
-                    <img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-9 w-auto object-contain">
+                    <img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original" alt="Logo Universitas Batam" class="h-9 w-auto object-contain">
                 </a>
             </div>
         </div>
@@ -220,16 +220,25 @@
                         <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
                             <i data-lucide="bar-chart-3" class="w-5 h-5 text-pink-500"></i> Visualisasi & Analisis Lengkap Masa Subur
                         </h3>
-                        <span id="cal-month-title-subur" class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-                            Bulan Ini
-                        </span>
+                        <!-- Navigasi Multi-Bulan (Hingga 3 Bulan ke Depan/Belakang) -->
+                        <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                            <button onclick="changeMonthSubur(-1)" class="p-1.5 bg-white hover:bg-slate-200 text-slate-700 rounded-lg shadow-sm transition text-xs font-bold flex items-center gap-1" title="Bulan Sebelumnya">
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i> Prev
+                            </button>
+                            <span id="cal-month-title-subur" class="text-xs font-bold text-slate-800 px-3 min-w-[140px] text-center">
+                                Bulan Ini
+                            </span>
+                            <button onclick="changeMonthSubur(1)" class="p-1.5 bg-white hover:bg-slate-200 text-slate-700 rounded-lg shadow-sm transition text-xs font-bold flex items-center gap-1" title="Bulan Berikutnya">
+                                Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Kalender Visual Interaktif -->
                         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-700">Kalender Subur & Ovulasi</span>
+                                <span class="text-xs font-bold text-slate-700">Kalender Subur & Ovulasi (Multi-Bulan)</span>
                                 <div class="flex items-center gap-2 text-[10px] font-semibold">
                                     <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Haid</span>
                                     <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span> Subur</span>
@@ -350,15 +359,29 @@
 
                 <!-- KALENDER VISUAL & GRAFIK DUKUNGAN SIKLUS -->
                 <div class="border-t border-slate-200 pt-6 space-y-6">
-                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
-                        <i data-lucide="calendar-days" class="w-5 h-5 text-teal-600"></i> Kalender Visual Perjalanan Siklus
-                    </h3>
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="calendar-days" class="w-5 h-5 text-teal-600"></i> Kalender Visual Perjalanan Siklus (Multi-Bulan)
+                        </h3>
+                        <!-- Navigasi Multi-Bulan Siklus -->
+                        <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                            <button onclick="changeMonthSiklus(-1)" class="p-1.5 bg-white hover:bg-slate-200 text-slate-700 rounded-lg shadow-sm transition text-xs font-bold flex items-center gap-1" title="Bulan Sebelumnya">
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i> Prev
+                            </button>
+                            <span id="cal-month-title-siklus" class="text-xs font-bold text-slate-800 px-3 min-w-[140px] text-center">
+                                Bulan Ini
+                            </span>
+                            <button onclick="changeMonthSiklus(1)" class="p-1.5 bg-white hover:bg-slate-200 text-slate-700 rounded-lg shadow-sm transition text-xs font-bold flex items-center gap-1" title="Bulan Berikutnya">
+                                Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Kalender Siklus -->
                         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-700">Peta Menstruasi Bulan Ini</span>
+                                <span class="text-xs font-bold text-slate-700">Peta Menstruasi</span>
                             </div>
 
                             <div class="calendar-grid">
@@ -397,7 +420,7 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-slate-900">Kalkulator Kalender Kehamilan & HPL</h2>
-                        <p class="text-xs text-slate-500">Hitung Hari Perkiraan Lahir (HPL), usia kehamilan, dan milestone perkembangan janin.</p>
+                        <p class="text-xs text-slate-500">Hitung Hari Perkiraan Lahir (HPL), usia kehamilan, serta panduan perkembangan janin mingguan ala Primaya Hospital.</p>
                     </div>
                 </div>
 
@@ -438,6 +461,71 @@
                             <p id="milestone-text" class="text-xs text-slate-600 leading-relaxed">
                                 Silakan masukkan HPHT untuk melihat milestone perkembangan janin.
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FITUR DETAIL PERKEMBANGAN JANIN MINGGUAN (GAYA PRIMAYA HOSPITAL) -->
+                <div class="border-t border-slate-200 pt-6 space-y-6">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <h3 class="text-md font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-5 h-5 text-pink-500"></i> Panduan Detail Perkembangan Janin Mingguan
+                        </h3>
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs font-bold text-slate-600">Pilih Minggu Kehamilan:</label>
+                            <select id="select-minggu-detail" onchange="updateDetailMingguan()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-pink-600 outline-none focus:ring-2 focus:ring-pink-400">
+                                <!-- Generated via JS -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Container Kartu Detail Perkembangan Janin -->
+                    <div class="bg-gradient-to-br from-sky-50 via-teal-50 to-pink-50 p-6 rounded-3xl border border-sky-100 shadow-sm space-y-6">
+                        <div class="text-center space-y-1">
+                            <h4 id="detail-card-title" class="text-lg md:text-xl font-extrabold text-slate-900">Perkembangan Janin Usia 1 - 4 Minggu Kehamilan</h4>
+                            <p id="detail-card-subtitle" class="text-xs font-semibold text-teal-700">Trimester Pertama</p>
+                        </div>
+
+                        <!-- Visual Card / Ilustrasi Ukuran -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-white/80 backdrop-blur-md p-5 rounded-2xl border border-white shadow-sm">
+                            <div class="text-center md:text-left space-y-1">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Panjang Janin</span>
+                                <p id="val-panjang" class="text-sm md:text-base font-bold text-slate-800">Sekitar 2 - 7 mm</p>
+                            </div>
+                            
+                            <div class="flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-sky-400 to-teal-400 rounded-2xl text-white shadow-inner">
+                                <i data-lucide="baby" class="w-8 h-8 mb-1"></i>
+                                <span id="val-badge-minggu" class="text-xs font-extrabold tracking-wider bg-white/20 px-3 py-0.5 rounded-full">0 Minggu</span>
+                                <span id="val-ukuran-buah" class="text-[10px] text-sky-50 mt-1 font-medium text-center">Sebesar biji wijen</span>
+                            </div>
+
+                            <div class="text-center md:text-right space-y-1">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Berat Janin</span>
+                                <p id="val-berat" class="text-sm md:text-base font-bold text-slate-800">Sekitar 0,1 - 0,2 gram</p>
+                            </div>
+                        </div>
+
+                        <!-- Poin Catatan Medis Perkembangan & Catatan USG -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 space-y-2">
+                                <h5 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i> Proses Biologis Utama:
+                                </h5>
+                                <ul id="list-proses" class="text-xs space-y-1.5 text-slate-600 list-disc list-inside">
+                                    <li>Zigot mulai berkembang menjadi embrio.</li>
+                                    <li>Sel-sel tubuh mulai terbentuk dengan sangat cepat.</li>
+                                    <li>Cikal bakal plasenta mulai berkembang.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 space-y-2">
+                                <h5 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                                    <i data-lucide="info" class="w-4 h-4 text-pink-500"></i> Catatan Pemeriksaan USG & Kesehatan:
+                                </h5>
+                                <p id="val-catatan-usg" class="text-xs text-slate-600 leading-relaxed">
+                                    Ukuran janin masih sangat kecil dan biasanya belum terlihat jelas melalui USG transabdominal standar pada minggu-minggu awal ini.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -594,7 +682,7 @@
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
-                <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&amp;utm_campaign=index&amp;utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
+                <a href="https://univbatam.ac.id/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/id/f/f6/Logo-uniba.png?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original" alt="Logo Universitas Batam" class="h-10 w-auto object-contain"></a>
                 <div class="text-left">
                     <p class="font-bold text-slate-800 text-xs">Universitas Batam</p>
                     <p class="text-[11px] text-slate-500">Program Studi Ilmu Keperawatan — FIK</p>
@@ -614,6 +702,24 @@
 
         let suburChartInstance = null;
         let siklusChartInstance = null;
+
+        // Variabel Navigasi Multi-Bulan (Masa Subur & Siklus)
+        let currentSuburDate = new Date();
+        let currentSiklusDate = new Date();
+
+        // Data Referensi Perkembangan Janin Mingguan (Primaya Hospital Style)
+        const dbPerkembanganJanin = {
+            "1-4": { title: "Usia 1 - 4 Minggu Kehamilan", sub: "Trimester Pertama", p: "Sekitar 2 - 7 mm", b: "Sekitar 0,1 - 0,2 gram", ukuran: "Sebesar biji wijen", proses: ["Zigot mulai berkembang menjadi embrio.", "Sel-sel tubuh mulai terbentuk dengan sangat cepat.", "Cikal bakal plasenta mulai berkembang."], usg: "Ukuran janin masih sangat kecil dan biasanya belum terlihat jelas melalui USG standar." },
+            "5-8": { title: "Usia 5 - 8 Minggu Kehamilan", sub: "Trimester Pertama", p: "Sekitar 1 - 1,6 cm", b: "Sekitar 1 - 2 gram", ukuran: "Sebesar buah beri / kacang polong", proses: ["Denyut jantung janin mulai berdetak dan terdeteksi.", "Pembentukan struktur dasar otak, sumsum tulang belakang, dan saluran pencernaan.", "Tunas tangan dan kaki mulai terbentuk."], usg: "Kantong kehamilan dan denyut jantung embrio sudah mulai dapat dideteksi melalui USG transvaginal." },
+            "9-12": { title: "Usia 9 - 12 Minggu Kehamilan", sub: "Trimester Pertama", p: "Sekitar 4 - 6 cm", b: "Sekitar 8 - 14 gram", ukuran: "Sebesar buah jeruk nipis", proses: ["Janin mulai aktif bergerak (menendang kecil walau belum terasa ibu).", "Jari-jari tangan dan kaki terpisah sempurna tanpa selaput.", "Organ vital utama sudah terbentuk lengkap."], usg: "Janin sudah terlihat jelas menyerupai bentuk bayi utuh dan gerakan refleks awal dapat diamati." },
+            "13-16": { title: "Usia 13 - 16 Minggu Kehamilan", sub: "Trimester Kedua", p: "Sekitar 10 - 12 cm", b: "Sekitar 70 - 100 gram", ukuran: "Sebesar buah alpukat", proses: ["Jenis kelamin mulai dapat diidentifikasi lewat USG.", "Tulang dan kerangka mulai mengeras (kalsifikasi).", "Janin mulai bisa mendengar suara dari luar rahim."], usg: "Struktur anatomi tubuh sudah semakin jelas terlihat, posisi plasenta sudah matang." },
+            "17-20": { title: "Usia 17 - 20 Minggu Kehamilan", sub: "Trimester Kedua", p: "Sekitar 14 - 16 cm", b: "Sekitar 300 - 350 gram", ukuran: "Sebesar buah pisang / mangga kecil", proses: ["Ibu mulai merasakan gerakan tendangan pertama (quickening).", "Lapisan pelindung verniks caseosa melapisi kulit janin.", "Rambut halus (lanugo) tumbuh di seluruh tubuh janin."], usg: "Pemeriksaan USG morfologi detail sangat disarankan pada rentang minggu ini untuk mengevaluasi organ." },
+            "21-24": { title: "Usia 21 - 24 Minggu Kehamilan", sub: "Trimester Kedua", b: "Sekitar 600 - 700 gram", p: "Sekitar 20 - 28 cm", ukuran: "Sebesar buah jagung manis", proses: ["Paru-paru mulai memproduksi surfaktan untuk persiapan bernapas.", "Indra pengecap dan sidik jari janin terbentuk sempurna.", "Mata janin sudah mulai bisa berkedip."], usg: "Detak jantung sangat kuat terdengar melalui stetoskop Laennec maupun USG Doppler." },
+            "25-28": { title: "Usia 25 - 28 Minggu Kehamilan", sub: "Trimester Ketiga", p: "Sekitar 35 - 38 cm", b: "Sekitar 1 - 1,2 kg", ukuran: "Sebesar kubis / selada besar", proses: ["Otak berkembang sangat pesat dan aktif bermimpi.", "Mata dapat membuka dan menutup serta merespons cahaya.", "Cadangan lemak bawah kulit mulai menumpuk."], usg: "Proporsi tubuh janin sudah mirip bayi baru lahir namun dengan tubuh lebih langsing." },
+            "29-32": { title: "Usia 29 - 32 Minggu Kehamilan", sub: "Trimester Ketiga", p: "Sekitar 38 - 43 cm", b: "Sekitar 1,5 - 1,8 kg", ukuran: "Sebesar buah kelapa / jicama", proses: ["Kulit menjadi lebih halus dan kemerahan karena lemak.", "Janin sering berlatih menendang dan merespons suara keras.", "Sebagian besar organ sudah matang sempurna."], usg: "Posisi janin mulai berputar ke bawah (kepala di bawah) bersiap menuju jalan lahir." },
+            "33-36": { title: "Usia 33 - 36 Minggu Kehamilan", sub: "Trimester Ketiga", p: "Sekitar 43 - 47 cm", b: "Sekitar 2 - 2,5 kg", ukuran: "Sebesar buah melon kecil", proses: ["Sistem kekebalan tubuh janin mulai menerima antibodi dari ibu.", "Ruang gerak dalam rahim semakin sempit karena pertumbuhan janin.", "Kepala janin umumnya mulai masuk ke panggul."], usg: "Pemeriksaan rutin mingguan dianjurkan untuk memantau kesejahteraan janin." },
+            "37-40": { title: "Usia 37 - 40 Minggu Kehamilan", sub: "Trimester Ketiga", p: "Sekitar 48 - 52 cm", b: "Sekitar 3 - 3,5 kg", ukuran: "Sebesar buah semangka kecil", proses: ["Janin sudah siap lahir penuh (Aterm) dan matang.", "Lapisan verniks mulai meluntur, organ paru siap berfungsi penuh.", "Menunggu tanda-tanda persalinan (kontraksi teratur, lendir darah)."], usg: "Evaluasi ketuban dan kondisi plasenta untuk memastikan proses persalinan aman." }
+        };
 
         // Navigation Switcher Logic
         function switchSection(secId) {
@@ -645,13 +751,13 @@
             return date.toLocaleDateString('id-ID', options);
         }
 
-        // Render Kalender Visual Dynamically
-        function renderCalendar(containerId, hphtDate, cycleLen, mensDuration) {
+        // Render Kalender Visual Dynamically dengan dukungan Multi-Bulan
+        function renderCalendarCustom(containerId, hphtDate, cycleLen, mensDuration, targetDate) {
             const calendarEl = document.getElementById(containerId);
             calendarEl.innerHTML = "";
 
-            const targetYear = hphtDate.getFullYear();
-            const targetMonth = hphtDate.getMonth();
+            const targetYear = targetDate.getFullYear();
+            const targetMonth = targetDate.getMonth();
 
             const firstDayOfMonth = new Date(targetYear, targetMonth, 1).getDay();
             const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
@@ -663,19 +769,7 @@
                 calendarEl.appendChild(emptyCell);
             }
 
-            // Hitung Tanggal Ovulasi & Masa Subur
-            const ovulasiDate = new Date(hphtDate);
-            ovulasiDate.setDate(hphtDate.getDate() + (cycleLen - 14));
-
-            const startSubur = new Date(ovulasiDate);
-            startSubur.setDate(ovulasiDate.getDate() - 5);
-
-            const endSubur = new Date(ovulasiDate);
-            endSubur.setDate(ovulasiDate.getDate() + 1);
-
-            const endMens = new Date(hphtDate);
-            endMens.setDate(hphtDate.getDate() + (mensDuration - 1));
-
+            // Hitung rentang haid, ovulasi, & subur berdasarkan HPHT acuan dan siklus berulang
             const today = new Date();
 
             for (let day = 1; day <= daysInMonth; day++) {
@@ -684,16 +778,52 @@
                 dayCell.className = "cal-day";
                 dayCell.innerText = day;
 
-                // Cek status tanggal
                 if (currentDate.toDateString() === today.toDateString()) {
                     dayCell.classList.add('today');
                 }
 
-                if (currentDate >= hphtDate && currentDate <= endMens) {
+                // Cek apakah hari ini masuk ke periode haid, ovulasi, atau subur untuk siklus yang sedang berjalan
+                let isMens = false;
+                let isOvulasi = false;
+                let isSubur = false;
+
+                // Hitung selisih hari dari HPHT utama untuk mendeteksi siklus berulang (ke depan & ke belakang)
+                const diffTime = currentDate - hphtDate;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays >= 0) {
+                    const cycleIndex = Math.floor(diffDays / cycleLen);
+                    const dayInCycle = diffDays % cycleLen;
+
+                    const currentCycleHpht = new Date(hphtDate);
+                    currentCycleHpht.setDate(hphtDate.getDate() + (cycleIndex * cycleLen));
+
+                    const currentOvulasi = new Date(currentCycleHpht);
+                    currentOvulasi.setDate(currentCycleHpht.getDate() + (cycleLen - 14));
+
+                    const currentStartSubur = new Date(currentOvulasi);
+                    currentStartSubur.setDate(currentOvulasi.getDate() - 5);
+
+                    const currentEndSubur = new Date(currentOvulasi);
+                    currentEndSubur.setDate(currentOvulasi.getDate() + 1);
+
+                    const currentEndMens = new Date(currentCycleHpht);
+                    currentEndMens.setDate(currentCycleHpht.getDate() + (mensDuration - 1));
+
+                    if (currentDate >= currentCycleHpht && currentDate <= currentEndMens) {
+                        isMens = true;
+                    } else if (currentDate.toDateString() === currentOvulasi.toDateString()) {
+                        isOvulasi = true;
+                    } else if (currentDate >= currentStartSubur && currentDate <= currentEndSubur) {
+                        isSubur = true;
+                    }
+                }
+
+                if (isMens) {
                     dayCell.classList.add('mens');
-                } else if (currentDate.toDateString() === ovulasiDate.toDateString()) {
+                } else if (isOvulasi) {
                     dayCell.classList.add('ovulasi');
-                } else if (currentDate >= startSubur && currentDate <= endSubur) {
+                } else if (isSubur) {
                     dayCell.classList.add('subur');
                 }
 
@@ -701,8 +831,20 @@
             }
         }
 
-        // 1. CALCULATE MASA SUBUR (Lengkap dengan Kalender & Grafik)
-        function calculateSubur() {
+        // Navigasi Bulan Masa Subur
+        function changeMonthSubur(direction) {
+            currentSuburDate.setMonth(currentSuburDate.getMonth() + direction);
+            calculateSubur(true); // true = keep month navigation
+        }
+
+        // Navigasi Bulan Siklus Haid
+        function changeMonthSiklus(direction) {
+            currentSiklusDate.setMonth(currentSiklusDate.getMonth() + direction);
+            calculateSiklus(true);
+        }
+
+        // 1. CALCULATE MASA SUBUR (Lengkap dengan Navigasi Multi-Bulan & Grafik)
+        function calculateSubur(isNavigating = false) {
             const hphtVal = document.getElementById('hpht-subur').value;
             const cycleLen = parseInt(document.getElementById('siklus-length-subur').value) || 28;
             const mensLen = parseInt(document.getElementById('lama-haid-subur').value) || 5;
@@ -713,20 +855,21 @@
             }
 
             const hphtDate = new Date(hphtVal);
+            if (!isNavigating) {
+                currentSuburDate = new Date(hphtDate);
+            }
             
             // Ovulasi: HPHT + (Siklus - 14)
             const ovulasiDayOffset = cycleLen - 14;
             const ovulasiDate = new Date(hphtDate);
             ovulasiDate.setDate(hphtDate.getDate() + ovulasiDayOffset);
 
-            // Jendela Subur: 5 hari sebelum ovulasi sampai 1 hari setelah ovulasi
             const startSubur = new Date(ovulasiDate);
             startSubur.setDate(ovulasiDate.getDate() - 5);
 
             const endSubur = new Date(ovulasiDate);
             endSubur.setDate(ovulasiDate.getDate() + 1);
 
-            // Puncak peluang tinggi (2 hari sebelum ovulasi + hari ovulasi)
             const peakStart = new Date(ovulasiDate);
             peakStart.setDate(ovulasiDate.getDate() - 2);
 
@@ -734,19 +877,19 @@
             document.getElementById('rentang-subur').innerText = `${formatDate(startSubur)} - ${formatDate(endSubur)}`;
             document.getElementById('peluang-tinggi').innerText = `${formatDate(peakStart)} - ${formatDate(ovulasiDate)}`;
 
-            // Detail Perhitungan Rumus
             document.getElementById('detail-ovulasi').innerText = `${formatDate(hphtDate)} + (${cycleLen} - 14 hari) = ${formatDate(ovulasiDate)}`;
             document.getElementById('detail-awal-subur').innerText = `${formatDate(ovulasiDate)} - 5 hari = ${formatDate(startSubur)}`;
             document.getElementById('detail-akhir-subur').innerText = `${formatDate(ovulasiDate)} + 1 hari = ${formatDate(endSubur)}`;
 
             const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            document.getElementById('cal-month-title-subur').innerText = `${monthNames[hphtDate.getMonth()]} ${hphtDate.getFullYear()}`;
+            document.getElementById('cal-month-title-subur').innerText = `${monthNames[currentSuburDate.getMonth()]} ${currentSuburDate.getFullYear()}`;
 
-            // Render Kalender Visual
-            renderCalendar('calendar-body-subur', hphtDate, cycleLen, mensLen);
+            // Render Kalender Visual Custom dengan Multi-Bulan
+            renderCalendarCustom('calendar-body-subur', hphtDate, cycleLen, mensLen, currentSuburDate);
 
-            // Render Grafik Chart.js
-            renderSuburChart(cycleLen, ovulasiDayOffset);
+            if (!isNavigating) {
+                renderSuburChart(cycleLen, ovulasiDayOffset);
+            }
         }
 
         function renderSuburChart(cycleLen, ovulasiDay) {
@@ -755,7 +898,7 @@
             const labels = Array.from({length: cycleLen}, (_, i) => `Hari ${i + 1}`);
             const dataPeluang = Array.from({length: cycleLen}, (_, i) => {
                 const day = i + 1;
-                if (day === ovulasiDay) return 95; // Puncak Ovulasi
+                if (day === ovulasiDay) return 95;
                 if (day === ovulasiDay - 1 || day === ovulasiDay - 2) return 85;
                 if (day >= ovulasiDay - 5 && day <= ovulasiDay + 1) return 55;
                 return 5;
@@ -791,8 +934,8 @@
             });
         }
 
-        // 2. CALCULATE SIKLUS HAID
-        function calculateSiklus() {
+        // 2. CALCULATE SIKLUS HAID (Lengkap dengan Navigasi Multi-Bulan)
+        function calculateSiklus(isNavigating = false) {
             const hphtVal = document.getElementById('hpht-siklus').value;
             const durasi = parseInt(document.getElementById('durasi-siklus').value) || 28;
             const mensLen = parseInt(document.getElementById('lama-haid-siklus').value) || 5;
@@ -803,25 +946,31 @@
             }
 
             const hphtDate = new Date(hphtVal);
+            if (!isNavigating) {
+                currentSiklusDate = new Date(hphtDate);
+            }
+
             const nextHaidDate = new Date(hphtDate);
             nextHaidDate.setDate(hphtDate.getDate() + durasi);
 
             document.getElementById('next-haid').innerText = formatDate(nextHaidDate);
 
-            // Render Kalender Visual Siklus
-            renderCalendar('calendar-body-siklus', hphtDate, durasi, mensLen);
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            document.getElementById('cal-month-title-siklus').innerText = `${monthNames[currentSiklusDate.getMonth()]} ${currentSiklusDate.getFullYear()}`;
 
-            // Render Grafik Hormon Siklus
-            renderSiklusChart(durasi);
+            // Render Kalender Siklus Custom Multi-Bulan
+            renderCalendarCustom('calendar-body-siklus', hphtDate, durasi, mensLen, currentSiklusDate);
+
+            if (!isNavigating) {
+                renderSiklusChart(durasi);
+            }
         }
 
         function renderSiklusChart(cycleLen) {
             const ctx = document.getElementById('chart-siklus').getContext('2d');
             const labels = Array.from({length: cycleLen}, (_, i) => `H-${i + 1}`);
 
-            // Estrogen Curve (Peaks near ovulation)
             const estrogenData = labels.map((_, i) => Math.sin((i / cycleLen) * Math.PI * 2 - 1.5) * 40 + 50);
-            // Progesterone Curve (Peaks in luteal phase)
             const progesteronData = labels.map((_, i) => i > cycleLen/2 ? Math.sin(((i - cycleLen/2) / (cycleLen/2)) * Math.PI) * 70 + 10 : 10);
 
             if (siklusChartInstance) siklusChartInstance.destroy();
@@ -858,6 +1007,43 @@
             });
         }
 
+        // Inisialisasi Opsi Dropdown Minggu Kehamilan
+        function initDropdownMinggu() {
+            const selectEl = document.getElementById('select-minggu-detail');
+            selectEl.innerHTML = "";
+            const keys = Object.keys(dbPerkembanganJanin);
+            keys.forEach(k => {
+                const opt = document.createElement('option');
+                opt.value = k;
+                opt.innerText = `Minggu ${k.replace('-', ' - ')}`;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        // Update Tampilan Detail Perkembangan Janin saat Dropdown Dipilih
+        function updateDetailMingguan() {
+            const key = document.getElementById('select-minggu-detail').value;
+            const data = dbPerkembanganJanin[key];
+            if (!data) return;
+
+            document.getElementById('detail-card-title').innerText = `Perkembangan Janin ${data.title}`;
+            document.getElementById('detail-card-subtitle').innerText = data.sub;
+            document.getElementById('val-panjang').innerText = data.p;
+            document.getElementById('val-berat').innerText = data.b;
+            document.getElementById('val-badge-minggu').innerText = `Minggu ${key.split('-')[0]}`;
+            document.getElementById('val-ukuran-buah').innerText = data.ukuran;
+
+            const listEl = document.getElementById('list-proses');
+            listEl.innerHTML = "";
+            data.proses.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                listEl.appendChild(li);
+            });
+
+            document.getElementById('val-catatan-usg').innerText = data.usg;
+        }
+
         // 3. CALCULATE KALENDER KEHAMILAN
         function calculateKehamilan() {
             const hphtVal = document.getElementById('hpht-hamil').value;
@@ -883,19 +1069,49 @@
             document.getElementById('hpl-date').innerText = formatDate(hplDate);
             document.getElementById('usia-hamil').innerText = `${weeks} Minggu ${days} Hari`;
 
-            // Dynamic Milestone
+            // Dynamic Milestone Ringkasan
             let milestone = "";
-            if (weeks < 12) {
+            let matchedKey = "1-4";
+
+            if (weeks < 5) {
                 milestone = "🌱 <strong>Trimester 1:</strong> Pembentukan organ vital janin (jantung, otak, dan tulang belakang). Ibu memerlukan konsumsi asam folat secara teratur.";
-            } else if (weeks >= 12 && weeks < 28) {
-                milestone = "👶 <strong>Trimester 2:</strong> Denyut jantung janin dapat terdengar jelas, organ kelamin mulai terbentuk, dan gerakan janin mulai terasa oleh ibu.";
-            } else if (weeks >= 28 && weeks <= 42) {
-                milestone = "✨ <strong>Trimester 3:</strong> Janin tumbuh pesat, organ paru-paru makin matang, dan posisi janin bersiap menuju jalan lahir.";
+                matchedKey = "1-4";
+            } else if (weeks >= 5 && weeks <= 8) {
+                milestone = "💓 <strong>Trimester 1:</strong> Detak jantung janin mulai berdetak dan tunas organ vital mulai terbentuk.";
+                matchedKey = "5-8";
+            } else if (weeks >= 9 && weeks <= 12) {
+                milestone = "🌿 <strong>Trimester 1:</strong> Janin aktif bergerak, jari tangan dan kaki terbentuk sempurna.";
+                matchedKey = "9-12";
+            } else if (weeks >= 13 && weeks <= 16) {
+                milestone = "✨ <strong>Trimester 2:</strong> Jenis kelamin mulai dapat diidentifikasi lewat USG, tulang mengeras.";
+                matchedKey = "13-16";
+            } else if (weeks >= 17 && weeks <= 20) {
+                milestone = "👶 <strong>Trimester 2:</strong> Gerakan tendangan pertama (quickening) mulai dirasakan ibu.";
+                matchedKey = "17-20";
+            } else if (weeks >= 21 && weeks <= 24) {
+                milestone = "🫁 <strong>Trimester 2:</strong> Paru-paru memproduksi surfaktan, indra pengecap dan sidik jari terbentuk.";
+                matchedKey = "21-24";
+            } else if (weeks >= 25 && weeks <= 28) {
+                milestone = "🧠 <strong>Trimester 3:</strong> Otak berkembang sangat pesat, mata dapat membuka dan menutup.";
+                matchedKey = "25-28";
+            } else if (weeks >= 29 && weeks <= 32) {
+                milestone = "🌟 <strong>Trimester 3:</strong> Kulit semakin halus, janin berlatih menendang dan bersiap posisi lahir.";
+                matchedKey = "29-32";
+            } else if (weeks >= 33 && weeks <= 36) {
+                milestone = "🛡️ <strong>Trimester 3:</strong> Sistem kekebalan menerima antibodi dari ibu, kepala mulai masuk panggul.";
+                matchedKey = "33-36";
             } else {
-                milestone = "🎉 Kehamilan melebihi 40 minggu, disarankan melakukan konsultasi lanjutan bersama dokter spesialis kandungan (Obgyn).";
+                milestone = "🎉 <strong>Trimester 3:</strong> Janin matang penuh (Aterm) dan siap lahir sewaktu-waktu.";
+                matchedKey = "37-40";
             }
 
             document.getElementById('milestone-text').innerHTML = milestone;
+
+            // Sinkronkan otomatis dropdown detail perkembangan janin dengan minggu kehamilan saat ini
+            if (dbPerkembanganJanin[matchedKey]) {
+                document.getElementById('select-minggu-detail').value = matchedKey;
+                updateDetailMingguan();
+            }
 
             // Update Progress Bar
             const progressPercent = Math.min(Math.round((diffDays / 280) * 100), 100);
@@ -1057,6 +1273,9 @@
             document.getElementById('hpht-subur').value = todayStr;
             document.getElementById('hpht-siklus').value = todayStr;
             document.getElementById('hpht-hamil').value = todayStr;
+
+            initDropdownMinggu();
+            updateDetailMingguan();
 
             calculateSubur();
             calculateSiklus();
