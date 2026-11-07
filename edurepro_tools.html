@@ -569,7 +569,7 @@
 
         <!-- SECTION 4: QUIZ INTERAKTIF & MITOS-FAKTA -->
         <section id="sec-quiz" class="tool-section hidden space-y-8">
-            <!-- Quiz Box -->
+            <!-- Quiz Box Utama -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-3">
@@ -578,11 +578,11 @@
                         </div>
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">Quiz Kespro & Perencanaan Kehamilan</h2>
-                            <p class="text-xs text-slate-500">Uji pemahaman calon orang tua & mahasiswa seputar materi EduReproCampus.</p>
+                            <p class="text-xs text-slate-500">Uji pemahaman calon orang tua & mahasiswa seputar materi EduReproCampus (10 Soal).</p>
                         </div>
                     </div>
                     <span id="quiz-progress" class="text-xs font-bold text-pink-600 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200">
-                        Soal 1 dari 5
+                        Soal 1 dari 10
                     </span>
                 </div>
 
@@ -624,54 +624,66 @@
                 </div>
             </div>
 
-            <!-- MITOS & FAKTA MEDIS -->
+            <!-- KUIS INTERAKTIF MITOS VS FAKTA -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-                <div class="flex items-center gap-3">
-                    <div class="p-3 bg-amber-100 text-amber-700 rounded-2xl">
-                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="p-3 bg-amber-100 text-amber-700 rounded-2xl">
+                            <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Quiz Pilihan Mitos vs Fakta Medis</h2>
+                            <p class="text-xs text-slate-500">Tebak apakah pernyataan di bawah ini MITOS atau FAKTA berbasis bukti medis!</p>
+                        </div>
                     </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900">Mitos vs Fakta Medis Calon Orang Tua</h2>
-                        <p class="text-xs text-slate-500">Pengetahuan mendasar yang wajib diketahui calon ibu & ayah sebelum merencanakan kehamilan.</p>
+                    <span id="mf-quiz-progress" class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
+                        Soal 1 dari 8
+                    </span>
+                </div>
+
+                <!-- Quiz Container Mitos vs Fakta -->
+                <div id="mf-quiz-container" class="space-y-6">
+                    <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-2xl border border-amber-200">
+                        <span class="text-[10px] font-bold text-amber-700 bg-amber-200/60 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block mb-2">Pernyataan Mitos/Fakta</span>
+                        <h3 id="mf-question-text" class="text-sm md:text-base font-bold text-slate-900 leading-snug">
+                            Loading pernyataan mitos/fakta...
+                        </h3>
+                    </div>
+
+                    <!-- Tombol Pilihan MITOS vs FAKTA -->
+                    <div id="mf-options-container" class="grid grid-cols-2 gap-4">
+                        <button onclick="checkMfAnswer('MITOS')" class="p-4 bg-red-50 hover:bg-red-100 border-2 border-red-200 rounded-2xl text-center font-extrabold text-red-600 text-base transition shadow-sm hover:shadow">
+                            ❌ MITOS
+                        </button>
+                        <button onclick="checkMfAnswer('FAKTA')" class="p-4 bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 rounded-2xl text-center font-extrabold text-emerald-600 text-base transition shadow-sm hover:shadow">
+                            ✅ FAKTA
+                        </button>
+                    </div>
+
+                    <!-- Kotak Penjelasan Mitos Fakta -->
+                    <div id="mf-explanation-box" class="hidden p-4 rounded-2xl text-xs leading-relaxed transition-all">
+                        <!-- Explanation text injected here -->
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button id="mf-btn-next" onclick="nextMfQuestion()" class="hidden bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">
+                            Pernyataan Berikutnya <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Card 1 -->
-                    <div class="p-4 bg-gradient-to-br from-red-50 to-orange-50 border border-red-100 rounded-2xl space-y-2">
-                        <span class="text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-full uppercase">Mitos #1</span>
-                        <h4 class="text-xs font-bold text-slate-800">"Berhubungan intim sekali tidak akan langsung menyebabkan kehamilan."</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-red-100 pt-2">
-                            ✅ <strong>Fakta Medis:</strong> Kehamilan dapat terjadi dari <em>satu kali penetrasi saja</em> jika penetrasi terjadi pada masa subur wanita dan tanpa kontrasepsi.
-                        </p>
+                <!-- Summary Mitos Fakta Quiz -->
+                <div id="mf-quiz-result" class="hidden text-center py-8 space-y-4">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-lg">
+                        <i data-lucide="check-check" class="w-10 h-10"></i>
                     </div>
-
-                    <!-- Card 2 -->
-                    <div class="p-4 bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 rounded-2xl space-y-2">
-                        <span class="text-[10px] font-bold text-teal-600 bg-teal-100 px-2 py-0.5 rounded-full uppercase">Mitos #2</span>
-                        <h4 class="text-xs font-bold text-slate-800">"Asam folat hanya perlu diminum setelah ibu tahu dirinya positif hamil."</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-teal-100 pt-2">
-                            ✅ <strong>Fakta Medis:</strong> Asam folat idealnya diminum <strong>3 bulan sebelum hamil</strong> (prakonsepsi) untuk mencegah kecacatan tabung saraf janin (Anensefali & Spina Bifida).
-                        </p>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="p-4 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-2xl space-y-2">
-                        <span class="text-[10px] font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full uppercase">Mitos #3</span>
-                        <h4 class="text-xs font-bold text-slate-800">"Kondom bisa digunakan berkali-kali jika dicuci dengan sabun."</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-purple-100 pt-2">
-                            ✅ <strong>Fakta Medis:</strong> Kondom hanya untuk <strong>sekali pakai</strong>. Mencuci atau menggunakan kembali akan merusak integritas bahan latex dan memicu kebocoran.
-                        </p>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="p-4 bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-100 rounded-2xl space-y-2">
-                        <span class="text-[10px] font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full uppercase">Mitos #4</span>
-                        <h4 class="text-xs font-bold text-slate-800">"Mencuci organ intim pasca berhubungan intim bisa mencegah kehamilan."</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed border-t border-sky-100 pt-2">
-                            ✅ <strong>Fakta Medis:</strong> Sel sperma berenang sangat cepat masuk ke dalam leher rahim (serviks) dalam hitungan detik setelah ejakulasi. Bilasan luar tidak menghentikan kehamilan.
-                        </p>
-                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Kuis Mitos/Fakta Selesai!</h3>
+                    <p class="text-sm text-slate-600">Skor Kebenaran Persepsi Anda:</p>
+                    <div class="text-4xl font-black text-amber-600" id="mf-final-score">0 / 100</div>
+                    <p id="mf-final-eval" class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">Evaluation message...</p>
+                    <button onclick="resetMfQuiz()" class="mt-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-md inline-flex items-center gap-2">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Coba Kuis Mitos/Fakta Lagi
+                    </button>
                 </div>
             </div>
         </section>
@@ -1119,7 +1131,7 @@
             document.getElementById('progress-percent-text').innerText = `${progressPercent}% (${weeks}/40 Mgg)`;
         }
 
-        // 4. QUIZ INTERAKTIF DATA & LOGIC
+        // 4. QUIZ INTERAKTIF DATA & LOGIC (10 SOAL LENGKAP)
         const quizData = [
             {
                 question: "1. Kapan waktu yang paling tepat untuk mengonsumsi Suplemen Asam Folat bagi perencanaan kehamilan?",
@@ -1175,6 +1187,61 @@
                 ],
                 correct: 1,
                 explanation: "<strong>Jawaban Benar: B.</strong> Usia 21-35 tahun merupakan usia reproduksi sehat karena panggul, organ rahim, dan kematangan emosional dalam kondisi paling optimal."
+            },
+            {
+                question: "6. Apa yang dimaksud dengan istilah HPHT dalam dunia kebidanan dan kesehatan reproduksi?",
+                options: [
+                    "Hari Pertama Haid Terakhir",
+                    "Hari Puncak Penurunan Hormon Terakhir",
+                    "Hasil Pemeriksaan Hematologi Terpadu",
+                    "Hari Perkiraan Hari Lahir"
+                ],
+                correct: 0,
+                explanation: "<strong>Jawaban Benar: A.</strong> HPHT singkatan dari Hari Pertama Haid Terakhir, yang merupakan patokan utama untuk menghitung usia kehamilan dan menentukan Hari Perkiraan Lahir (HPL)."
+            },
+            {
+                question: "7. Bagaimana cara menghitung durasi satu siklus menstruasi secara medis?",
+                options: [
+                    "Dihitung dari hari terakhir haid bulan ini hingga hari terakhir haid berikutnya",
+                    "Dihitung dari hari pertama haid bulan ini hingga hari pertama haid berikutnya",
+                    "Dihitung selama masa perdarahan haid berlangsung saja",
+                    "Dihitung dari hari ovulasi hingga hari haid berikutnya"
+                ],
+                correct: 1,
+                explanation: "<strong>Jawaban Benar: B.</strong> Siklus menstruasi dihitung mulai dari H-1 perdarahan haid bulan ini sampai H-1 perdarahan haid bulan berikutnya."
+            },
+            {
+                question: "8. Secara umum, apa fungsi utama dari penggunaan alat kontrasepsi?",
+                options: [
+                    "Untuk menyembuhkan penyakit infeksi menular",
+                    "Untuk mencegah atau merencanakan kehamilan serta mengatur jarak kelahiran",
+                    "Untuk mempercepat terjadinya kehamilan pada wanita",
+                    "Untuk menghentikan menstruasi secara permanen"
+                ],
+                correct: 1,
+                explanation: "<strong>Jawaban Benar: B.</strong> Kontrasepsi bertujuan untuk mencegah kehamilan tidak direncanakan, menunda, atau mengatur jarak kehamilan demi kesehatan ibu dan anak."
+            },
+            {
+                question: "9. Pada siklus menstruasi 28 hari yang teratur, ovulasi (pelepasan sel telur) paling sering diperkirakan terjadi pada hari ke berapa?",
+                options: [
+                    "Hari ke-1",
+                    "Hari ke-7",
+                    "Hari ke-14",
+                    "Hari ke-25"
+                ],
+                correct: 2,
+                explanation: "<strong>Jawaban Benar: C.</strong> Pada siklus rata-rata 28 hari, ovulasi terjadi sekitar 14 hari sebelum siklus berikutnya, yaitu pada hari ke-14."
+            },
+            {
+                question: "10. Apa tindakan yang paling tepat dilakukan jika menstruasi sering tidak teratur, sangat terlambat, atau berubah secara mengkhawatirkan?",
+                options: [
+                    "Membeli obat pemancing haid sendiri tanpa resep",
+                    "Mengabaikannya karena itu hal biasa",
+                    "Melakukan konsultasi medis ke dokter spesialis kandungan (Sp.OG) atau bidan/fasilitas kesehatan",
+                    "Mengonsumsi suplemen penambah darah terus-menerus"
+                ],
+                correct: 2,
+                explanation: "<strong>Jawaban Benar: C.</strong> Menstruasi yang tidak teratur secara persisten perlu dievaluasi oleh tenaga kesehatan (dokter/bidan) untuk mendeteksi potensi gangguan hormonal, PCOS, atau kondisi medis lainnya."
             }
         ];
 
@@ -1218,7 +1285,7 @@
             const expBox = document.getElementById('explanation-box');
 
             if (selectedIdx === q.correct) {
-                score += 20;
+                score += 10;
                 optButtons[selectedIdx].className = "w-full text-left p-3.5 bg-emerald-100 border-2 border-emerald-500 rounded-xl text-xs font-bold text-emerald-900 flex items-center justify-between";
                 expBox.className = "p-4 rounded-2xl text-xs leading-relaxed bg-emerald-50 border border-emerald-200 text-emerald-900 block";
             } else {
@@ -1267,6 +1334,130 @@
             loadQuestion();
         }
 
+        // 5. KUIS INTERAKTIF MITOS VS FAKTA DATA & LOGIC
+        const mfQuizData = [
+            {
+                statement: "1. Siklus menstruasi setiap perempuan harus selalu persis 28 hari.",
+                type: "MITOS",
+                explanation: "❌ <strong>MITOS!</strong> Siklus menstruasi normal wanita dewasa berkisar antara 21–35 hari. Tidak semua wanita memiliki siklus persis 28 hari dan variasi ini normal secara medis."
+            },
+            {
+                statement: "2. Stres fisik dan emosional dapat memengaruhi serta mengganggu siklus menstruasi.",
+                type: "FAKTA",
+                explanation: "✅ <strong>FAKTA!</strong> Stres memicu pelepasan hormon kortisol yang mengganggu kerja hipotalamus dan otak dalam mengatur hormon reproduksi (FSH/LH), sehingga haid bisa terlambat atau terhenti sementara."
+            },
+            {
+                statement: "3. Kalender masa subur dapat menjamin 100% seseorang tidak akan hamil jika berhubungan di luar perkiraan masa subur.",
+                type: "MITOS",
+                explanation: "❌ <strong>MITOS!</strong> Metode kalender memiliki tingkat kegagalan hingga 12–24% karena hari ovulasi wanita dapat bergeser sewaktu-waktu akibat stres, sakit, atau perubahan pola hidup."
+            },
+            {
+                statement: "4. Kondom dapat membantu mengurangi risiko kehamilan sekaligus mencegah penularan Infeksi Menular Seksual (IMS).",
+                type: "FAKTA",
+                explanation: "✅ <strong>FAKTA!</strong> Kondom adalah satu-satunya alat kontrasepsi barrier yang terbukti secara medis mampu mencegah pembuahan sekaligus memberikan proteksi dari penularan IMS (seperti HIV, Sifilis, Gonore)."
+            },
+            {
+                statement: "5. Berhubungan intim hanya sekali tidak akan pernah menyebabkan kehamilan.",
+                type: "MITOS",
+                explanation: "❌ <strong>MITOS!</strong> Kehamilan dapat terjadi hanya dari satu kali penetrasi jika sperma berhasil membuahi sel telur pada jendela masa subur."
+            },
+            {
+                statement: "6. Asam folat idealnya diminum 1-3 bulan sebelum kehamilan (prakonsepsi).",
+                type: "FAKTA",
+                explanation: "✅ <strong>FAKTA!</strong> Asam folat pra-konsepsi mencegah pembentukan cacat tabung saraf janin yang terbentuk pada 28 hari pertama kehamilan saat ibu mungkin belum menyadari dirinya hamil."
+            },
+            {
+                statement: "7. Kondom latex boleh dicuci dengan sabun dan digunakan kembali untuk menghemat.",
+                type: "MITOS",
+                explanation: "❌ <strong>MITOS!</strong> Kondom hanya untuk sekali pakai. Mencuci atau menggunakan kembali akan merusak integritas elastisitas lateks dan menyebabkan mikro-kebocoran."
+            },
+            {
+                statement: "8. Mencuci atau membilas vagina setelah berhubungan intim dapat membilas sperma dan mencegah kehamilan.",
+                type: "MITOS",
+                explanation: "❌ <strong>MITOS!</strong> Sel sperma berenang sangat cepat memasuki serviks (leher rahim) dalam waktu beberapa detik setelah ejakulasi. Pembilasan luar tidak dapat mencegah kehamilan."
+            }
+        ];
+
+        let currentMfQuestion = 0;
+        let mfScore = 0;
+        let mfAnswered = false;
+
+        function loadMfQuestion() {
+            mfAnswered = false;
+            const q = mfQuizData[currentMfQuestion];
+
+            document.getElementById('mf-quiz-progress').innerText = `Soal ${currentMfQuestion + 1} dari ${mfQuizData.length}`;
+            document.getElementById('mf-question-text').innerText = q.statement;
+
+            const expBox = document.getElementById('mf-explanation-box');
+            expBox.classList.add('hidden');
+            expBox.className = "hidden p-4 rounded-2xl text-xs leading-relaxed transition-all";
+
+            document.getElementById('mf-btn-next').classList.add('hidden');
+
+            const optionsContainer = document.getElementById('mf-options-container');
+            optionsContainer.style.pointerEvents = "auto";
+            optionsContainer.style.opacity = "1";
+
+            lucide.createIcons();
+        }
+
+        function checkMfAnswer(userChoice) {
+            if (mfAnswered) return;
+            mfAnswered = true;
+
+            const q = mfQuizData[currentMfQuestion];
+            const expBox = document.getElementById('mf-explanation-box');
+            const optionsContainer = document.getElementById('mf-options-container');
+
+            optionsContainer.style.pointerEvents = "none";
+
+            if (userChoice === q.type) {
+                mfScore += (100 / mfQuizData.length);
+                expBox.className = "p-4 rounded-2xl text-xs leading-relaxed bg-emerald-50 border border-emerald-200 text-emerald-900 block";
+            } else {
+                expBox.className = "p-4 rounded-2xl text-xs leading-relaxed bg-rose-50 border border-rose-200 text-rose-900 block";
+            }
+
+            expBox.innerHTML = q.explanation;
+            document.getElementById('mf-btn-next').classList.remove('hidden');
+        }
+
+        function nextMfQuestion() {
+            currentMfQuestion++;
+            if (currentMfQuestion < mfQuizData.length) {
+                loadMfQuestion();
+            } else {
+                showMfQuizResult();
+            }
+        }
+
+        function showMfQuizResult() {
+            document.getElementById('mf-quiz-container').classList.add('hidden');
+            const resDiv = document.getElementById('mf-quiz-result');
+            resDiv.classList.remove('hidden');
+
+            const finalScoreVal = Math.round(mfScore);
+            document.getElementById('mf-final-score').innerText = `${finalScoreVal} / 100`;
+
+            let evalMsg = "";
+            if (finalScoreVal >= 80) {
+                evalMsg = "🎉 <strong>Luar Biasa!</strong> Wawasan kesehatan reproduksi Anda sangat akurat dan terhindar dari mitos-mitos keliru!";
+            } else {
+                evalMsg = "💡 <strong>Tetap Semangat!</strong> Banyak mitos kesehatan reproduksi yang beredar di masyarakat. Pelajari fakta medis lengkapnya di EduReproCampus!";
+            }
+
+            document.getElementById('mf-final-eval').innerHTML = evalMsg;
+        }
+
+        function resetMfQuiz() {
+            currentMfQuestion = 0;
+            mfScore = 0;
+            document.getElementById('mf-quiz-result').classList.add('hidden');
+            document.getElementById('mf-quiz-container').classList.remove('hidden');
+            loadMfQuestion();
+        }
+
         // Initialize Defaults
         window.addEventListener('DOMContentLoaded', () => {
             const todayStr = new Date().toISOString().split('T')[0];
@@ -1280,7 +1471,9 @@
             calculateSubur();
             calculateSiklus();
             calculateKehamilan();
+
             loadQuestion();
+            loadMfQuestion();
         });
     </script>
 </body>
