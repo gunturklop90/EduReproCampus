@@ -524,11 +524,12 @@
                         </div>
 
                         <!-- Legenda Kalender -->
-                        <div class="flex flex-wrap items-center gap-3 text-[10px] font-semibold text-slate-600 bg-slate-50 px-3 py-2 rounded-xl">
+                        <div class="flex flex-wrap items-center gap-2.5 text-[10px] font-semibold text-slate-600 bg-slate-50 px-3 py-2 rounded-xl">
                             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Haid Tercatat</span>
-                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full border border-dashed border-rose-500 bg-rose-100"></span> Prediksi Haid</span>
-                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span> Perkiraan Subur</span>
-                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Ada Catatan Mood/Fisik</span>
+                            <span class="flex items-center gap-1 text-rose-700">🩸 Sedikit • 🩸🩸 Sedang • 🩸🩸🩸 Banyak</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full border border-dashed border-rose-500 bg-rose-100"></span> Prediksi</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span> Subur</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Catatan</span>
                         </div>
 
                         <div class="calendar-grid">
@@ -739,6 +740,138 @@
                             <strong class="text-slate-900 block mb-1">4. Kesehatan Saluran Reproduksi</strong>
                             <span class="text-slate-600">Tuba falopi yang tidak tersumbat serta lendir serviks subur (jernih & elastis) membantu pergerakan sperma.</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2.1B PERAWATAN SAAT SEDANG HAMIL (ANTENATAL CARE) DENGAN GAMBAR VISUAL ANIMASI -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-teal-100 text-teal-800 px-2.5 py-1 rounded-full">Antenatal Care (ANC)</span>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-900 mt-2 flex items-center gap-2">
+                            <i data-lucide="heart-pulse" class="text-pink-500"></i> Perawatan Saat Sedang Hamil
+                        </h2>
+                        <p class="text-slate-600 text-xs md:text-sm mt-1 leading-relaxed">
+                            Perawatan teratur selama masa kehamilan bertujuan menjaga kesehatan ibu, mendukung tumbuh kembang janin secara optimal, serta mendeteksi dini risiko komplikasi sejak trimester pertama hingga persalinan.
+                        </p>
+                    </div>
+                    <span class="text-xs text-pink-700 bg-pink-50 border border-pink-200 px-3 py-1.5 rounded-lg font-semibold shrink-0">Minimal 6x Pemeriksaan ANC</span>
+                </div>
+
+                <!-- Panel Gambar Visual Animasi SVG 4 Pilar Perawatan Saat Hamil -->
+                <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-inner space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <span class="text-xs font-semibold text-pink-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+                            Visualisasi Animasi 4 Pilar Perawatan Saat Hamil
+                        </span>
+                        <span class="text-[11px] text-slate-400">Trimester I – III</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Pilar 1: Pemeriksaan ANC & USG -->
+                        <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
+                            <svg class="w-28 h-28 my-1" viewBox="0 0 100 100">
+                                <!-- Layar Monitor USG -->
+                                <rect x="18" y="20" width="64" height="46" rx="8" fill="#0f172a" stroke="#14b8a6" stroke-width="2.5"/>
+                                <path d="M24 44 H36 L41 32 L47 54 L53 38 L58 44 H76" fill="none" stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="animate-wave"/>
+                                <circle cx="50" cy="43" r="16" fill="#14b8a6" fill-opacity="0.12" class="animate-pulse-slow"/>
+                                <!-- Dudukan Monitor -->
+                                <path d="M42 66 L38 78 H62 L58 66" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="72" cy="28" r="3" fill="#10b981" class="animate-ping"/>
+                            </svg>
+                            <span class="text-[10px] font-bold bg-teal-500/20 text-teal-300 px-2.5 py-0.5 rounded-full mt-1">Pemeriksaan Rutin</span>
+                            <h4 class="text-xs font-bold text-white mt-1.5">1. Kontrol ANC & USG Berkala</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Periksa kehamilan minimal 6 kali (1x Trimester I, 2x Trimester II, 3x Trimester III) termasuk USG dokter.</p>
+                        </div>
+
+                        <!-- Pilar 2: Nutrisi, Asam Folat & Zat Besi -->
+                        <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
+                            <svg class="w-28 h-28 my-1" viewBox="0 0 100 100">
+                                <!-- Lingkaran Nutrisi -->
+                                <circle cx="50" cy="50" r="30" fill="#ec4899" fill-opacity="0.15" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="4 3" class="animate-spin-slow"/>
+                                <!-- Kapsul Asam Folat & TTD -->
+                                <g class="animate-wave">
+                                    <rect x="30" y="38" width="24" height="11" rx="5.5" transform="rotate(-25 42 43)" fill="#f43f5e" stroke="#fecdd3" stroke-width="1.5"/>
+                                    <circle cx="62" cy="40" r="8" fill="#10b981" fill-opacity="0.85"/>
+                                    <path d="M62 32 Q67 26 70 30" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round"/>
+                                </g>
+                                <!-- Gelas Hidrasi -->
+                                <path d="M40 58 H60 L57 76 H43 Z" fill="#38bdf8" fill-opacity="0.5" stroke="#7dd3fc" stroke-width="2"/>
+                                <circle cx="50" cy="66" r="2.5" fill="#e0f2fe" class="animate-ping"/>
+                            </svg>
+                            <span class="text-[10px] font-bold bg-pink-500/20 text-pink-300 px-2.5 py-0.5 rounded-full mt-1">Gizi & Suplemen</span>
+                            <h4 class="text-xs font-bold text-white mt-1.5">2. Nutrisi & Tablet Tambah Darah</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Konsumsi gizi seimbang, asam folat, kalsium, minimal 90 Tablet Tambah Darah (TTD), dan air putih 2,5–3 L/hari.</p>
+                        </div>
+
+                        <!-- Pilar 3: Aktivitas Fisik & Istirahat -->
+                        <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
+                            <svg class="w-28 h-28 my-1" viewBox="0 0 100 100">
+                                <!-- Siluet Ibu Hamil Harmonis -->
+                                <circle cx="50" cy="25" r="8" fill="#fbbf24" class="animate-pulse-slow"/>
+                                <path d="M43 36 C38 45, 38 62, 43 74 H57 C64 68, 68 56, 61 45 C58 40, 56 36, 50 36 Z" fill="#f59e0b" fill-opacity="0.35" stroke="#fbbf24" stroke-width="2"/>
+                                <!-- Simbol Jantung / Janin Hangat -->
+                                <circle cx="56" cy="54" r="7" fill="#fb7185" class="animate-pulse-slow"/>
+                                <!-- Gelombang Relaksasi -->
+                                <path d="M24 78 Q50 70 76 78" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" class="animate-wave"/>
+                            </svg>
+                            <span class="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full mt-1">Kebugaran & Tidur</span>
+                            <h4 class="text-xs font-bold text-white mt-1.5">3. Olahraga Ringan & Tidur Miring Kiri</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Lakukan jalan santai atau senam hamil ringan, tidur cukup 7–8 jam, serta biasakan posisi tidur miring ke kiri.</p>
+                        </div>
+
+                        <!-- Pilar 4: Skrining Tanda Bahaya -->
+                        <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
+                            <svg class="w-28 h-28 my-1 animate-shield" viewBox="0 0 100 100">
+                                <path d="M50 16 L78 28 V52 C78 70 50 84 50 84 C50 84 22 70 22 52 V28 Z" fill="#ef4444" fill-opacity="0.2" stroke="#f87171" stroke-width="2.5"/>
+                                <path d="M50 34 V52" stroke="#fca5a5" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="50" cy="62" r="3" fill="#fca5a5" class="animate-ping"/>
+                            </svg>
+                            <span class="text-[10px] font-bold bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full mt-1">Kewaspadaan Medis</span>
+                            <h4 class="text-xs font-bold text-white mt-1.5">4. Deteksi Dini Tanda Bahaya</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">Segera ke fasilitas kesehatan jika muncul perdarahan, pusing hebat, pandangan kabur, demam, atau gerak janin berkurang.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panduan Perawatan Per Trimester -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-pink-50/60 border border-pink-100 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-pink-900 text-sm">Trimester I (Minggu 1–12)</span>
+                            <span class="text-[10px] font-bold bg-pink-200 text-pink-900 px-2 py-0.5 rounded-full">Adaptasi Awal</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1">
+                            <li><strong>Atasi Mual Muntah (Morning Sickness):</strong> Makan porsi kecil tapi sering, hindari makanan terlalu pedas/berminyak, dan cukupi cairan.</li>
+                            <li><strong>Asam Folat & Imunisasi:</strong> Rutin konsumsi asam folat 400 mcg/hari dan periksa status imunisasi Tetanus (TT) serta lab dasar (Hb, golongan darah, triple eliminasi).</li>
+                            <li><strong>Hindari Zat Berbahaya:</strong> Bebas asap rokok, alkohol, kafein berlebih, serta obat-obatan tanpa resep dokter.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-teal-50/60 border border-teal-100 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-teal-900 text-sm">Trimester II (Minggu 13–27)</span>
+                            <span class="text-[10px] font-bold bg-teal-200 text-teal-900 px-2 py-0.5 rounded-full">Fase Nyaman</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1">
+                            <li><strong>Peningkatan Kalori & Protein:</strong> Tambah asupan sekitar +300 kkal/hari (telur, ikan, daging, tempe, sayuran hijau) untuk pertumbuhan organ janin.</li>
+                            <li><strong>Perawatan Gigi & Kulit:</strong> Jaga kebersihan gigi dan gusi (hormon kehamilan memicu gusi mudah berdarah) serta gunakan pelembap kulit perut.</li>
+                            <li><strong>Latihan Kegel & Senam Hamil:</strong> Menguatkan otot dasar panggul dan mengurangi nyeri punggung bawah.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50/60 border border-amber-100 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-amber-900 text-sm">Trimester III (Minggu 28–40)</span>
+                            <span class="text-[10px] font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full">Persiapan Lahir</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1">
+                            <li><strong>Hitung Gerakan Janin:</strong> Pastikan janin bergerak aktif minimal 10 kali dalam 12 jam; segera lapor bidan/dokter bila gerakan melemah.</li>
+                            <li><strong>Posisi Tidur Miring Kiri:</strong> Melancarkan aliran darah dan oksigen dari plasenta menuju janin serta mengurangi bengkak kaki.</li>
+                            <li><strong>Rencana Persalinan (P4K):</strong> Siapkan tas persalinan, buku KIA, JKN/BPJS, calon pendonor darah, dan transportasi menuju fasilitas kesehatan.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
