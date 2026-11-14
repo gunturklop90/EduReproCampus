@@ -14,7 +14,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
 
-        /* Keyframes Animations */
+        /* Keyframes Animations *//*G */
         @keyframes pulse-slow {
             0%, 100% { transform: scale(1); opacity: 0.9; }
             50% { transform: scale(1.08); opacity: 1; }
@@ -50,7 +50,7 @@
             background: linear-gradient(135deg, #ec4899 0%, #f472b6 40%, #0d9488 100%);
         }
 
-        /* Styling Kalender Visual Interaktif */
+        /* Styling Kalender Visual Interaktif *//*creator Gunturklop90 */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -125,7 +125,7 @@
             background-color: #f59e0b;
         }
 
-        /* Styling Balon Teks / Tooltip Kalender Haid */
+        /* Styling Balon Teks / Tooltip Kalender Haid *//*creator GunturSS */
         .cal-tooltip {
             position: absolute;
             bottom: 115%;
@@ -158,7 +158,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Header / Navbar (Judul, Nama Pembuat/Prodi & Logo Kampus Dipertahankan) -->
+    <!-- Header / Navbar (Judul, Nama Pembuat/Prodi & Logo Kampus Dipertahankan) --><!-- U -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -171,7 +171,7 @@
                 </div>
             </div>
             
-            <!-- Navigasi 4 Modul Utama Desktop -->
+            <!-- Navigasi 4 Modul Utama Desktop --><!-- N -->
             <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium text-slate-600">
                 <button onclick="switchTab('menstruasi')" id="nav-menstruasi" class="px-3 py-2 rounded-xl hover:bg-teal-50 hover:text-teal-600 transition flex items-center gap-1.5">
                     <i data-lucide="droplets" class="w-4 h-4"></i> Menstruasi
@@ -188,7 +188,7 @@
             </nav>
 
             <div class="flex items-center space-x-2 md:space-x-3">
-                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif -->
+                <!-- Tombol Bantuan / Petunjuk Fitur Interaktif --><!-- T -->
                 <button onclick="openInfoModal()" title="Panduan Fitur & Tim Penyusun" class="text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 p-2 md:px-3 md:py-1.5 rounded-lg flex items-center gap-1.5 transition">
                     <i data-lucide="help-circle" class="w-4 h-4 text-teal-600"></i>
                     <span class="hidden md:inline">Panduan & Tim</span>
@@ -204,7 +204,7 @@
         </div>
     </header>
 
-    <!-- Mobile Nav Header -->
+    <!-- Mobile Nav Header --><!-- U -->
     <div class="md:hidden bg-white border-b border-slate-200 flex justify-around text-xs font-medium py-2 sticky top-16 z-40 overflow-x-auto px-1">
         <button onclick="switchTab('menstruasi')" id="mnav-menstruasi" class="px-2.5 py-1.5 rounded-lg text-center text-teal-600 font-bold whitespace-nowrap">1. Menstruasi</button>
         <button onclick="switchTab('kehamilan')" id="mnav-kehamilan" class="px-2.5 py-1.5 rounded-lg text-center text-slate-600 whitespace-nowrap">2. Kehamilan</button>
@@ -212,7 +212,7 @@
         <button onclick="switchTab('keputusan')" id="mnav-keputusan" class="px-2.5 py-1.5 rounded-lg text-center text-slate-600 whitespace-nowrap">4. Keputusan</button>
     </div>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Area --><!-- R -->
     <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-6">
 
         <!-- Banner / Hero -->
@@ -779,7 +779,6 @@
                                 <circle cx="50" cy="43" r="16" fill="#14b8a6" fill-opacity="0.12" class="animate-pulse-slow"/>
                                 <!-- Dudukan Monitor -->
                                 <path d="M42 66 L38 78 H62 L58 66" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
-                                <circle cx="72" cy="28" r="3" fill="#10b981" class="animate-ping"/>
                             </svg>
                             <span class="text-[10px] font-bold bg-teal-500/20 text-teal-300 px-2.5 py-0.5 rounded-full mt-1">Pemeriksaan Rutin</span>
                             <h4 class="text-xs font-bold text-white mt-1.5">1. Kontrol ANC & USG Berkala</h4>
@@ -790,7 +789,7 @@
                         <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
                             <svg class="w-28 h-28 my-1" viewBox="0 0 100 100">
                                 <!-- Lingkaran Nutrisi -->
-                                <circle cx="50" cy="50" r="30" fill="#ec4899" fill-opacity="0.15" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="4 3" class="animate-spin-slow"/>
+                                <circle cx="50" cy="50" r="30" fill="#ec4899" fill-opacity="0.15" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="4 3" class="animate-pulse-slow"/>
                                 <!-- Kapsul Asam Folat & TTD -->
                                 <g class="animate-wave">
                                     <rect x="30" y="38" width="24" height="11" rx="5.5" transform="rotate(-25 42 43)" fill="#f43f5e" stroke="#fecdd3" stroke-width="1.5"/>
@@ -799,14 +798,13 @@
                                 </g>
                                 <!-- Gelas Hidrasi -->
                                 <path d="M40 58 H60 L57 76 H43 Z" fill="#38bdf8" fill-opacity="0.5" stroke="#7dd3fc" stroke-width="2"/>
-                                <circle cx="50" cy="66" r="2.5" fill="#e0f2fe" class="animate-ping"/>
                             </svg>
                             <span class="text-[10px] font-bold bg-pink-500/20 text-pink-300 px-2.5 py-0.5 rounded-full mt-1">Gizi & Suplemen</span>
                             <h4 class="text-xs font-bold text-white mt-1.5">2. Nutrisi & Tablet Tambah Darah</h4>
                             <p class="text-[11px] text-slate-400 mt-1">Konsumsi gizi seimbang, asam folat, kalsium, minimal 90 Tablet Tambah Darah (TTD), dan air putih 2,5–3 L/hari.</p>
                         </div>
 
-                        <!-- Pilar 3: Aktivitas Fisik & Istirahat -->
+                        <!-- Pilar 3: Aktivitas Fisik & Istirahat --><!-- GSS -->
                         <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl flex flex-col items-center text-center">
                             <svg class="w-28 h-28 my-1" viewBox="0 0 100 100">
                                 <!-- Siluet Ibu Hamil Harmonis -->
@@ -827,7 +825,6 @@
                             <svg class="w-28 h-28 my-1 animate-shield" viewBox="0 0 100 100">
                                 <path d="M50 16 L78 28 V52 C78 70 50 84 50 84 C50 84 22 70 22 52 V28 Z" fill="#ef4444" fill-opacity="0.2" stroke="#f87171" stroke-width="2.5"/>
                                 <path d="M50 34 V52" stroke="#fca5a5" stroke-width="4" stroke-linecap="round"/>
-                                <circle cx="50" cy="62" r="3" fill="#fca5a5" class="animate-ping"/>
                             </svg>
                             <span class="text-[10px] font-bold bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full mt-1">Kewaspadaan Medis</span>
                             <h4 class="text-xs font-bold text-white mt-1.5">4. Deteksi Dini Tanda Bahaya</h4>
@@ -972,7 +969,7 @@
                     </div>
                 </div>
 
-                <!-- Sub-Tool B: Kalkulator Kalender Kehamilan & HPL -->
+                <!-- Sub-Tool B: Kalkulator Kalender Kehamilan & HPL --><!-- GSS -->
                 <div id="subtool-hpl" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                         <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
@@ -1129,7 +1126,7 @@
                     </p>
                 </div>
 
-                <!-- Ilustrasi Animasi SVG 3 Dimensi Risiko Usia Muda -->
+                <!-- Ilustrasi Animasi SVG 3 Dimensi Risiko Usia Muda --><!-- GSS -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <!-- Bahaya Fisik -->
                     <div class="border border-red-200 bg-red-50/40 rounded-2xl p-5 flex flex-col justify-between space-y-3">
@@ -1372,7 +1369,7 @@
                     </div>
                 </div>
 
-                <!-- 4 Pilar Kesiapan Perencanaan Kehamilan -->
+                <!-- 4 Pilar Kesiapan Perencanaan Kehamilan --><!-- GSS -->
                 <div>
                     <h3 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
                         <i data-lucide="check-square" class="w-5 h-5 text-teal-600"></i> 4 Pertimbangan Medis & Pribadi Sebelum Memutuskan Kehamilan
@@ -1468,7 +1465,7 @@
                     </div>
                 </div>
 
-                <!-- Mode Mitos vs Fakta -->
+                <!-- Mode Mitos vs Fakta --><!-- GSS -->
                 <div id="quiz-mode-mitosfakta" class="hidden space-y-4">
                     <div class="flex justify-between items-center">
                         <span id="mf-quiz-progress" class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Soal 1 dari 8</span>
@@ -2018,7 +2015,7 @@
             }
 
             sortPeriodRecordsChronologically();
-            // Setiap kali data baru masuk otomatis mengikuti aturan FIFO (hanya 4 terbaru yang tampil kecuali user klik Tambah Bulan)
+            // Setiap kali data baru masuk otomatis mengikuti aturan FIFO (hanya 4 terbaru yang tampil kecuali user klik Tambah Bulan)<!-- GSS -->
             showAllPeriodHistory = false;
             renderPeriodRows();
             saveAndAnalyzeTracker(false);
@@ -2473,7 +2470,7 @@
             }
         }
 
-        // Database & Kalkulator Kehamilan Mingguan
+        // Database & Kalkulator Kehamilan Mingguan<!-- gss -->
         const dbPerkembanganJanin = {
             "1-4": { p: "2 – 7 mm", b: "0,1 – 0,2 gram", ukuran: "Sebesar biji wijen", proses: ["Zigot berkembang menjadi embrio.", "Sel-sel tubuh membelah dengan cepat.", "Cikal bakal plasenta mulai terbentuk."], usg: "Kantong kehamilan sangat kecil dan mulai tampak pada akhir minggu ke-4." },
             "5-8": { p: "1 – 1,6 cm", b: "1 – 2 gram", ukuran: "Sebesar buah beri", proses: ["Denyut jantung janin mulai terdeteksi.", "Pembentukan otak, sumsum tulang belakang, & tunas tangan/kaki."], usg: "Denyut jantung embrio sudah dapat dideteksi lewat USG." },
@@ -2788,7 +2785,7 @@
             loadQuestion();
             loadMfQuestion();
 
-            // Default tab aktif: Modul 1 Menstruasi
+            // Default tab aktif: Modul 1 Menstruasi<!-- GSS -->
             switchTab('menstruasi');
             lucide.createIcons();
         });
