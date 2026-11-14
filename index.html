@@ -553,9 +553,37 @@
                             <input type="date" id="daily-log-date" onchange="loadDailyLogForDate()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-700">
                         </div>
 
+                        <!-- Pilih Volume / Aliran Darah Haid -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">1. Keluarnya Darah Haid (Volume Aliran):</label>
+                            <div class="grid grid-cols-3 gap-2 text-xs" id="flow-selector">
+                                <button type="button" onclick="toggleFlow('Sedikit')" data-val="Sedikit" class="flow-btn p-2.5 bg-white border border-slate-200 rounded-xl font-semibold hover:border-rose-400 transition flex flex-col items-center justify-center gap-1">
+                                    <span class="flex items-center justify-center text-rose-500">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                    </span>
+                                    <span>Sedikit</span>
+                                </button>
+                                <button type="button" onclick="toggleFlow('Sedang')" data-val="Sedang" class="flow-btn p-2.5 bg-white border border-slate-200 rounded-xl font-semibold hover:border-rose-400 transition flex flex-col items-center justify-center gap-1">
+                                    <span class="flex items-center justify-center -space-x-1 text-rose-600">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                    </span>
+                                    <span>Sedang</span>
+                                </button>
+                                <button type="button" onclick="toggleFlow('Banyak')" data-val="Banyak" class="flow-btn p-2.5 bg-white border border-slate-200 rounded-xl font-semibold hover:border-rose-400 transition flex flex-col items-center justify-center gap-1">
+                                    <span class="flex items-center justify-center -space-x-1 text-rose-700">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                    </span>
+                                    <span>Banyak</span>
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Pilih Suasana Hati (Mood) -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-2">1. Suasana Hati (Mood) Hari Ini:</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">2. Suasana Hati (Mood) Hari Ini:</label>
                             <div class="grid grid-cols-3 gap-2 text-xs" id="mood-selector">
                                 <button type="button" onclick="toggleMood('😊 Senang / Stabil')" data-val="😊 Senang / Stabil" class="mood-btn p-2 bg-white border border-slate-200 rounded-xl font-medium hover:border-teal-400 transition text-center">😊 Senang</button>
                                 <button type="button" onclick="toggleMood('😠 Mudah Marah')" data-val="😠 Mudah Marah" class="mood-btn p-2 bg-white border border-slate-200 rounded-xl font-medium hover:border-rose-400 transition text-center">😠 Marah</button>
@@ -568,7 +596,7 @@
 
                         <!-- Pilih Kondisi Fisik (Bisa lebih dari 1) -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-2">2. Kondisi Fisik / Gejala (Bisa pilih lebih dari satu):</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">3. Kondisi Fisik / Gejala (Bisa pilih lebih dari satu):</label>
                             <div class="flex flex-wrap gap-1.5 text-xs" id="symptom-selector">
                                 <button type="button" onclick="toggleSymptom('Kram Perut')" data-val="Kram Perut" class="sym-btn px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg font-medium hover:border-rose-400 transition">😣 Kram Perut</button>
                                 <button type="button" onclick="toggleSymptom('Nyeri Punggung')" data-val="Nyeri Punggung" class="sym-btn px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg font-medium hover:border-rose-400 transition">🦴 Nyeri Punggung</button>
@@ -582,7 +610,7 @@
 
                         <!-- Catatan Tambahan -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">3. Catatan Singkat (Opsional):</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">4. Catatan Singkat (Opsional):</label>
                             <input type="text" id="daily-log-note" placeholder="Contoh: Hari ke-2 aliran deras, kompres hangat membantu..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-purple-400">
                         </div>
 
@@ -1615,8 +1643,30 @@
         let periodRecords = [];
         let dailyLogs = {};
         let trackerCalendarMonth = new Date();
+        let selectedFlow = "";
         let selectedMood = "";
         let selectedSymptoms = [];
+
+        function getFlowBadgeHtml(flowVal, compact = false) {
+            if (!flowVal) return "";
+            const dropSvg = `<svg class="${compact ? 'w-2.5 h-2.5' : 'w-3.5 h-3.5'} inline-block" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+            if (flowVal === "Sedikit") {
+                return `<span class="inline-flex items-center text-rose-500" title="Darah Sedikit">${dropSvg}</span>`;
+            } else if (flowVal === "Sedang") {
+                return `<span class="inline-flex items-center -space-x-1 text-rose-600" title="Darah Sedang">${dropSvg}${dropSvg}</span>`;
+            } else if (flowVal === "Banyak") {
+                return `<span class="inline-flex items-center -space-x-1 text-rose-700" title="Darah Banyak">${dropSvg}${dropSvg}${dropSvg}</span>`;
+            }
+            return "";
+        }
+
+        function getFlowTextWithIcon(flowVal) {
+            if (!flowVal) return "-";
+            if (flowVal === "Sedikit") return "🩸 Sedikit";
+            if (flowVal === "Sedang") return "🩸🩸 Sedang";
+            if (flowVal === "Banyak") return "🩸🩸🩸 Banyak";
+            return flowVal;
+        }
         let showAllPeriodHistory = false;
         let lastClickedCalDate = null;
         let lastClickedCalTime = 0;
@@ -1996,19 +2046,21 @@
                 else if (isSubur) cell.classList.add('subur');
 
                 const logData = dailyLogs[isoStr];
-                let emoji = "";
+                let indicatorHtml = "";
                 if (logData) {
                     cell.classList.add('has-log');
-                    if (logData.mood) emoji = logData.mood.split(' ')[0];
+                    const flowIcon = logData.flow ? getFlowBadgeHtml(logData.flow, true) : (isRecordedMens ? "🩸" : "");
+                    const moodEmoji = logData.mood ? logData.mood.split(' ')[0] : "";
+                    indicatorHtml = `${flowIcon}${moodEmoji ? `<span class="ml-0.5">${moodEmoji}</span>` : ""}`;
                 } else if (isRecordedMens) {
-                    emoji = "🩸";
+                    indicatorHtml = "🩸";
                 } else if (isOvulasi) {
-                    emoji = "✨";
+                    indicatorHtml = "✨";
                 }
 
                 cell.innerHTML = `
                     <span class="text-[11px] font-bold">${d}</span>
-                    <span class="text-[11px] leading-none mt-0.5">${emoji}</span>
+                    <span class="text-[10px] leading-none mt-0.5 flex items-center justify-center">${indicatorHtml}</span>
                 `;
 
                 // Mendukung klik 1x (jurnal harian) dan klik 2x (langsung catat tanggal haid pertama/terakhir)
@@ -2032,7 +2084,7 @@
                     const tip = document.createElement('div');
                     tip.className = "cal-tooltip";
                     let statusInfo = isRecordedMens ? "🩸 Haid Tercatat" : isPredMens ? "📅 Prediksi Haid" : isOvulasi ? "✨ Puncak Ovulasi" : isSubur ? "🌸 Masa Subur" : "Hari Biasa";
-                    let detailLog = logData ? `<br>Mood: ${logData.mood || '-'}<br>Fisik: ${(logData.symptoms && logData.symptoms.length) ? logData.symptoms.join(', ') : '-'}` : "";
+                    let detailLog = logData ? `<br>Darah: ${getFlowTextWithIcon(logData.flow)}<br>Mood: ${logData.mood || '-'}<br>Fisik: ${(logData.symptoms && logData.symptoms.length) ? logData.symptoms.join(', ') : '-'}` : "";
                     tip.innerHTML = `<strong>${formatDate(dateObj)} (${statusInfo})</strong>${detailLog}<br><span class="text-teal-300">💡 Klik 2x tanggal ini untuk mencatat/mengatur hari haid.</span>`;
                     cell.appendChild(tip);
                 };
@@ -2041,7 +2093,29 @@
             }
         }
 
-        // Jurnal Suasana Hati & Kondisi Fisik
+        // Jurnal Volume Darah, Suasana Hati & Kondisi Fisik
+        function updateFlowButtonsUI() {
+            document.querySelectorAll('.flow-btn').forEach(btn => {
+                if (btn.dataset.val === selectedFlow) {
+                    btn.className = "flow-btn p-2.5 bg-rose-600 text-white border border-rose-600 rounded-xl font-bold transition flex flex-col items-center justify-center gap-1 shadow-sm";
+                    const iconWrap = btn.querySelector('span:first-child');
+                    if (iconWrap) iconWrap.className = "flex items-center justify-center -space-x-1 text-white";
+                } else {
+                    btn.className = "flow-btn p-2.5 bg-white text-slate-700 border border-slate-200 rounded-xl font-semibold hover:border-rose-400 transition flex flex-col items-center justify-center gap-1";
+                    const iconWrap = btn.querySelector('span:first-child');
+                    if (iconWrap) {
+                        const colorCls = btn.dataset.val === 'Sedikit' ? 'text-rose-500' : btn.dataset.val === 'Sedang' ? 'text-rose-600' : 'text-rose-700';
+                        iconWrap.className = `flex items-center justify-center -space-x-1 ${colorCls}`;
+                    }
+                }
+            });
+        }
+
+        function toggleFlow(flowVal) {
+            selectedFlow = (selectedFlow === flowVal) ? "" : flowVal;
+            updateFlowButtonsUI();
+        }
+
         function toggleMood(moodVal) {
             selectedMood = (selectedMood === moodVal) ? "" : moodVal;
             document.querySelectorAll('.mood-btn').forEach(btn => {
@@ -2078,16 +2152,19 @@
             const summaryEl = document.getElementById('selected-date-summary');
 
             if (log) {
+                selectedFlow = log.flow || "";
                 selectedMood = log.mood || "";
                 selectedSymptoms = Array.isArray(log.symptoms) ? [...log.symptoms] : [];
                 document.getElementById('daily-log-note').value = log.note || "";
                 summaryEl.className = "text-slate-700 not-italic leading-relaxed";
                 summaryEl.innerHTML = `
-                    <strong>Mood:</strong> ${log.mood || '-'} • 
+                    <strong>Keluarnya Darah:</strong> ${getFlowTextWithIcon(log.flow)} • 
+                    <strong>Mood:</strong> ${log.mood || '-'}<br>
                     <strong>Fisik:</strong> ${selectedSymptoms.length ? selectedSymptoms.join(', ') : '-'}
                     ${log.note ? `<br><strong>Catatan:</strong> "${log.note}"` : ''}
                 `;
             } else {
+                selectedFlow = "";
                 selectedMood = "";
                 selectedSymptoms = [];
                 document.getElementById('daily-log-note').value = "";
@@ -2095,6 +2172,7 @@
                 summaryEl.innerText = "Belum ada catatan pada tanggal yang dipilih.";
             }
 
+            updateFlowButtonsUI();
             document.querySelectorAll('.mood-btn').forEach(btn => {
                 btn.className = (btn.dataset.val === selectedMood)
                     ? "mood-btn p-2 bg-purple-600 text-white border border-purple-600 rounded-xl font-bold transition text-center shadow-sm"
@@ -2108,14 +2186,23 @@
             if (!dateStr) return;
 
             const note = document.getElementById('daily-log-note').value.trim();
-            if (!selectedMood && selectedSymptoms.length === 0 && !note) {
+            if (!selectedFlow && !selectedMood && selectedSymptoms.length === 0 && !note) {
                 delete dailyLogs[dateStr];
             } else {
                 dailyLogs[dateStr] = {
+                    flow: selectedFlow,
                     mood: selectedMood,
                     symptoms: [...selectedSymptoms],
                     note: note
                 };
+            }
+
+            // Jika pengguna mencatat aliran darah (Sedikit/Sedang/Banyak) pada tanggal yang belum ditandai haid, otomatis tandai di pelacak periode
+            if (selectedFlow) {
+                const alreadyMens = periodRecords.some(r => r.start && dateStr >= r.start && dateStr <= (r.end || r.start));
+                if (!alreadyMens) {
+                    recordPeriodFromCalendarDoubleClick(dateStr);
+                }
             }
 
             localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(dailyLogs));
