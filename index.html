@@ -440,13 +440,21 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <!-- Kolom Kiri: Form Pencatatan Bulan I, II, III, dst. -->
                     <div class="lg:col-span-7 bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                                <i data-lucide="list-plus" class="w-4 h-4 text-teal-600"></i> Pencatatan Riwayat Haid Bulanan (Bulan I, II, III, dst.)
-                            </h3>
-                            <button onclick="addPeriodRow()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
-                                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Bulan
-                            </button>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                                    <i data-lucide="list-plus" class="w-4 h-4 text-teal-600"></i> Pencatatan Riwayat Haid Bulanan (Bulan I, II, III, dst.)
+                                </h3>
+                                <p id="fifo-info-label" class="text-[11px] text-slate-500 mt-0.5">Menampilkan maksimal 4 bulan terbaru (FIFO). Bulan I dimulai dari data pertama kali dicatat.</p>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <button id="btn-toggle-history" onclick="toggleShowAllPeriods()" class="hidden bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1">
+                                    <i data-lucide="history" class="w-3.5 h-3.5"></i> <span id="btn-toggle-history-text">Lihat Semua</span>
+                                </button>
+                                <button onclick="addPeriodRow()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Bulan
+                                </button>
+                            </div>
                         </div>
 
                         <div id="period-rows-container" class="space-y-3">
@@ -457,6 +465,7 @@
                             <button onclick="saveAndAnalyzeTracker()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5">
                                 <i data-lucide="save" class="w-4 h-4"></i> Simpan & Analisis Siklus
                             </button>
+                            <span class="text-[11px] text-slate-500">💡 Klik tanggal kalender <strong>2x</strong> untuk mencatat hari haid langsung!</span>
                         </div>
                     </div>
 
@@ -1598,9 +1607,9 @@
         }
 
         // ---------------------------------------------------------------------
-        // 2. TRACKER PERIODE (PELACAK HAID 3 BULAN + LOCALSTORAGE + MOOD/FISIK)
+        // 2. TRACKER PERIODE (PELACAK HAID FIFO + DOUBLE CLICK KALENDER + MOOD)
         // ---------------------------------------------------------------------
-        const STORAGE_KEY_PERIODS = "edurepro_period_records_v1";
+        const STORAGE_KEY_PERIODS = "edurepro_period_records_v2";
         const STORAGE_KEY_LOGS = "edurepro_daily_logs_v1";
 
         let periodRecords = [];
@@ -1608,6 +1617,21 @@
         let trackerCalendarMonth = new Date();
         let selectedMood = "";
         let selectedSymptoms = [];
+        let showAllPeriodHistory = false;
+        let lastClickedCalDate = null;
+        let lastClickedCalTime = 0;
+
+        function getMonthNameId(monthIndex) {
+            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            return months[monthIndex] || "";
+        }
+
+        function getPeriodMonthTag(rec) {
+            if (!rec || !rec.start) return "";
+            const d = new Date(rec.start + "T00:00:00");
+            if (isNaN(d.getTime())) return "";
+            return `${getMonthNameId(d.getMonth())} ${d.getFullYear()}`;
+        }
 
         function loadTrackerFromStorage() {
             try {
@@ -1615,10 +1639,8 @@
                 if (savedPeriods) {
                     periodRecords = JSON.parse(savedPeriods);
                 } else {
-                    // Inisialisasi default 3 baris kosong (Bulan I, II, III)
+                    // Mulai dari 1 baris awal (Bulan I = bulan pertama kali data masuk)
                     periodRecords = [
-                        { start: "", end: "" },
-                        { start: "", end: "" },
                         { start: "", end: "" }
                     ];
                 }
@@ -1628,22 +1650,58 @@
                     dailyLogs = JSON.parse(savedLogs);
                 }
             } catch (e) {
-                periodRecords = [{ start: "", end: "" }, { start: "", end: "" }, { start: "", end: "" }];
+                periodRecords = [{ start: "", end: "" }];
                 dailyLogs = {};
             }
         }
 
+        function toggleShowAllPeriods() {
+            showAllPeriodHistory = !showAllPeriodHistory;
+            renderPeriodRows();
+        }
+
         function renderPeriodRows() {
             const container = document.getElementById('period-rows-container');
+            const toggleBtn = document.getElementById('btn-toggle-history');
+            const toggleText = document.getElementById('btn-toggle-history-text');
+            const fifoLabel = document.getElementById('fifo-info-label');
             container.innerHTML = "";
 
-            periodRecords.forEach((rec, index) => {
+            const total = periodRecords.length;
+            const hasHiddenFIFO = total > 4;
+
+            if (hasHiddenFIFO) {
+                toggleBtn.classList.remove('hidden');
+                if (showAllPeriodHistory) {
+                    toggleText.innerText = "Mode FIFO (4 Terbaru)";
+                    fifoLabel.innerText = `Menampilkan seluruh ${total} bulan tercatat (Bulan I s/d Bulan ${toRoman(total)}).`;
+                } else {
+                    toggleText.innerText = `Lihat Riwayat Lama (${total - 4})`;
+                    fifoLabel.innerText = `Mode FIFO aktif: menampilkan 4 bulan terbaru (Bulan ${toRoman(total - 3)} – ${toRoman(total)}). Bulan lama tersembunyi.`;
+                }
+            } else {
+                toggleBtn.classList.add('hidden');
+                showAllPeriodHistory = false;
+                fifoLabel.innerText = "Bulan I dimulai dari bulan pertama kali data haid dicatat (maks. 4 bulan tampil otomatis / FIFO).";
+            }
+
+            // FIFO: jika lebih dari 4 bulan & tidak sedang mode lihat semua, hanya tampilkan 4 terakhir
+            const startIndex = (!showAllPeriodHistory && total > 4) ? total - 4 : 0;
+
+            for (let index = startIndex; index < total; index++) {
+                const rec = periodRecords[index];
+                const monthTag = getPeriodMonthTag(rec);
                 const row = document.createElement('div');
                 row.className = "bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3";
                 row.innerHTML = `
-                    <div class="flex items-center gap-2 shrink-0">
-                        <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 font-extrabold text-xs flex items-center justify-center">${toRoman(index + 1)}</span>
-                        <span class="text-xs font-bold text-slate-800">Bulan ${toRoman(index + 1)}</span>
+                    <div class="flex items-center gap-2 shrink-0 min-w-[130px]">
+                        <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 font-extrabold text-xs flex items-center justify-center shrink-0">${toRoman(index + 1)}</span>
+                        <div>
+                            <span class="text-xs font-bold text-slate-800 block">Bulan ${toRoman(index + 1)}</span>
+                            <span class="text-[10px] font-medium ${monthTag ? 'text-teal-600' : 'text-slate-400'} block">
+                                ${monthTag ? monthTag : (index === 0 ? 'Data Pertama Masuk' : 'Belum diisi')}
+                            </span>
+                        </div>
                     </div>
                     <div class="grid grid-cols-2 gap-2 flex-grow">
                         <div>
@@ -1655,31 +1713,132 @@
                             <input type="date" value="${rec.end || ''}" onchange="updatePeriodField(${index}, 'end', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-medium focus:ring-2 focus:ring-rose-400 outline-none">
                         </div>
                     </div>
-                    ${periodRecords.length > 3 ? `
+                    ${periodRecords.length > 1 ? `
                         <button onclick="removePeriodRow(${index})" title="Hapus baris" class="text-slate-400 hover:text-rose-600 p-1 self-end sm:self-center">
                             <i data-lucide="x-circle" class="w-4 h-4"></i>
                         </button>
                     ` : ''}
                 `;
                 container.appendChild(row);
-            });
+            }
             lucide.createIcons();
+        }
+
+        function sortPeriodRecordsChronologically() {
+            // Pertahankan baris kosong di akhir, urutkan baris yang sudah punya tanggal mulai secara kronologis
+            // sehingga Bulan I selalu merupakan bulan pertama kali data masuk/tercatat
+            const filled = periodRecords.filter(r => r.start);
+            const empty = periodRecords.filter(r => !r.start);
+            filled.sort((a, b) => a.start.localeCompare(b.start));
+            periodRecords = [...filled, ...empty];
+            if (periodRecords.length === 0) {
+                periodRecords = [{ start: "", end: "" }];
+            }
         }
 
         function updatePeriodField(index, field, value) {
             periodRecords[index][field] = value;
+            if (field === 'start' && value && !periodRecords[index].end) {
+                periodRecords[index].end = value;
+            }
+            if (periodRecords[index].start && periodRecords[index].end && periodRecords[index].end < periodRecords[index].start) {
+                if (field === 'start') {
+                    periodRecords[index].end = value;
+                } else {
+                    periodRecords[index].start = value;
+                }
+            }
+            sortPeriodRecordsChronologically();
+            renderPeriodRows();
             saveAndAnalyzeTracker(true);
         }
 
         function addPeriodRow() {
-            periodRecords.push({ start: "", end: "" });
+            // Sesuai permintaan: jika pengguna mengklik tombol "Tambah Bulan" setelah bulan ke-4 (FIFO),
+            // tampilkan kembali bulan pertama / riwayat bulan yang tersembunyi sekaligus menambah slot bulan baru jika semua sudah terisi
+            if (periodRecords.length >= 4 && !showAllPeriodHistory) {
+                showAllPeriodHistory = true;
+            }
+            const hasEmptyRow = periodRecords.some(r => !r.start);
+            if (!hasEmptyRow) {
+                periodRecords.push({ start: "", end: "" });
+            }
             renderPeriodRows();
+            saveAndAnalyzeTracker(true);
         }
 
         function removePeriodRow(index) {
             periodRecords.splice(index, 1);
+            if (periodRecords.length === 0) {
+                periodRecords = [{ start: "", end: "" }];
+            }
             renderPeriodRows();
             saveAndAnalyzeTracker(true);
+        }
+
+        // Mencatat/menghapus hari haid langsung dari klik 2x pada tanggal di kalender
+        function recordPeriodFromCalendarDoubleClick(isoStr) {
+            const targetMonthPrefix = isoStr.slice(0, 7); // YYYY-MM
+
+            // Cari apakah sudah ada catatan haid pada bulan kalender (YYYY-MM) yang sama
+            let recIdx = periodRecords.findIndex(r => r.start && r.start.startsWith(targetMonthPrefix));
+
+            if (recIdx === -1) {
+                // Cek jika ada catatan haid lintas bulan yang berdekatan (selisih <= 10 hari dari start atau end)
+                recIdx = periodRecords.findIndex(r => {
+                    if (!r.start) return false;
+                    const dClick = new Date(isoStr + "T00:00:00");
+                    const dStart = new Date(r.start + "T00:00:00");
+                    const dEnd = new Date((r.end || r.start) + "T00:00:00");
+                    const diffStart = Math.abs((dClick - dStart) / 86400000);
+                    const diffEnd = Math.abs((dClick - dEnd) / 86400000);
+                    return diffStart <= 10 || diffEnd <= 10;
+                });
+            }
+
+            if (recIdx !== -1) {
+                const rec = periodRecords[recIdx];
+                const currentEnd = rec.end || rec.start;
+
+                if (isoStr === rec.start && isoStr === currentEnd) {
+                    // Klik 2x pada satu-satunya tanggal haid -> batal/hapus catatan
+                    periodRecords.splice(recIdx, 1);
+                    if (periodRecords.length === 0) periodRecords = [{ start: "", end: "" }];
+                } else if (isoStr < rec.start) {
+                    // Tanggal diklik lebih awal -> jadikan Tgl Haid Pertama
+                    rec.start = isoStr;
+                } else if (isoStr > currentEnd) {
+                    // Tanggal diklik lebih akhir -> jadikan Tgl Haid Terakhir
+                    rec.end = isoStr;
+                } else if (isoStr === currentEnd) {
+                    // Klik 2x di tanggal terakhir -> mundurkan 1 hari
+                    const prev = new Date(isoStr + "T00:00:00");
+                    prev.setDate(prev.getDate() - 1);
+                    rec.end = prev.toISOString().split('T')[0];
+                } else if (isoStr === rec.start) {
+                    // Klik 2x di tanggal pertama -> majukan 1 hari
+                    const next = new Date(isoStr + "T00:00:00");
+                    next.setDate(next.getDate() + 1);
+                    rec.start = next.toISOString().split('T')[0];
+                } else {
+                    // Klik 2x di tengah rentang -> jadikan tanggal tersebut sebagai Tgl Haid Terakhir
+                    rec.end = isoStr;
+                }
+            } else {
+                // Bulan baru: isi slot kosong pertama (Bulan I jika pertama kali), atau tambahkan baris baru (FIFO)
+                const emptyIdx = periodRecords.findIndex(r => !r.start);
+                if (emptyIdx !== -1) {
+                    periodRecords[emptyIdx] = { start: isoStr, end: isoStr };
+                } else {
+                    periodRecords.push({ start: isoStr, end: isoStr });
+                }
+            }
+
+            sortPeriodRecordsChronologically();
+            // Setiap kali data baru masuk otomatis mengikuti aturan FIFO (hanya 4 terbaru yang tampil kecuali user klik Tambah Bulan)
+            showAllPeriodHistory = false;
+            renderPeriodRows();
+            saveAndAnalyzeTracker(false);
         }
 
         function saveAndAnalyzeTracker(silent = false) {
@@ -1694,12 +1853,11 @@
         }
 
         function analyzeThreeMonthCycles() {
-            // Ambil data valid yang memiliki tanggal mulai dan urutkan kronologis
             const valid = periodRecords
                 .filter(r => r.start)
                 .map(r => {
                     const s = new Date(r.start + "T00:00:00");
-                    const e = r.end ? new Date(r.end + "T00:00:00") : new Date(s.getTime() + 4 * 86400000);
+                    const e = r.end ? new Date(r.end + "T00:00:00") : new Date(s.getTime());
                     const duration = Math.max(1, Math.round((e - s) / 86400000) + 1);
                     return { start: s, end: e, duration };
                 })
@@ -1714,14 +1872,14 @@
             if (valid.length === 0) {
                 statusBadge.innerText = "Belum Ada Data";
                 statusBadge.className = "text-base font-extrabold text-slate-600 mt-1";
-                conclusionText.innerText = "Silakan isi tanggal haid pertama dan terakhir pada Bulan I, II, dan III untuk mendapatkan kesimpulan kelancaran haid dan prediksi siklus berikutnya.";
+                conclusionText.innerText = "Klik 2x pada tanggal kalender di bawah atau isi form Bulan I untuk mencatat haid pertama kali. Sistem akan otomatis menganalisis siklus Anda.";
                 avgCycleEl.innerText = "- Hari";
                 avgDurEl.innerText = "- Hari";
                 nextPeriodEl.innerText = "-";
                 return { avgCycle: 28, avgDuration: 5, lastStart: null, validRecords: [] };
             }
 
-            // Ambil maksimal 3 siklus terakhir untuk analisis 3 bulan
+            // Analisis 3 siklus terakhir
             const recent = valid.slice(-3);
             const avgDuration = Math.round(recent.reduce((sum, item) => sum + item.duration, 0) / recent.length);
             avgDurEl.innerText = `${avgDuration} Hari`;
@@ -1745,11 +1903,10 @@
             predictedNext.setDate(predictedNext.getDate() + avgCycle);
             nextPeriodEl.innerText = formatDate(predictedNext);
 
-            // Kesimpulan Kelancaran Haid Berdasarkan Data 3 Bulan
             if (cycleLengths.length === 0) {
-                statusBadge.innerText = "Data 1 Bulan Tercatat";
+                statusBadge.innerText = "Data Bulan I Tercatat";
                 statusBadge.className = "text-base font-extrabold text-sky-700 mt-1";
-                conclusionText.innerText = `Lama haid tercatat ${avgDuration} hari. Tambahkan data Bulan II dan Bulan III agar sistem dapat menyimpulkan apakah siklus haid Anda tergolong lancar atau kurang lancar.`;
+                conclusionText.innerText = `Lama haid tercatat ${avgDuration} hari (${formatDate(lastRecord.start)} – ${formatDate(lastRecord.end)}). Catat siklus bulan berikutnya untuk melihat kesimpulan kelancaran siklus haid.`;
             } else {
                 const minC = Math.min(...cycleLengths);
                 const maxC = Math.max(...cycleLengths);
@@ -1807,16 +1964,15 @@
                 const isoStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                 const cell = document.createElement('div');
                 cell.className = "cal-day";
+                cell.title = "Klik 1x: lihat/isi jurnal harian • Klik 2x: catat/atur hari haid";
 
                 if (isoStr === todayStr) cell.classList.add('today');
 
-                // Cek apakah tanggal masuk dalam riwayat haid tercatat
                 let isRecordedMens = analysis.validRecords.some(r => dateObj >= r.start && dateObj <= r.end);
                 let isPredMens = false;
                 let isSubur = false;
                 let isOvulasi = false;
 
-                // Prediksi siklus mendatang berdasarkan data terakhir
                 if (!isRecordedMens && analysis.lastStart) {
                     const diffDays = Math.floor((dateObj - analysis.lastStart) / 86400000);
                     if (diffDays >= 0) {
@@ -1839,7 +1995,6 @@
                 else if (isOvulasi) cell.classList.add('ovulasi');
                 else if (isSubur) cell.classList.add('subur');
 
-                // Cek catatan mood/gejala fisik di localStorage
                 const logData = dailyLogs[isoStr];
                 let emoji = "";
                 if (logData) {
@@ -1856,21 +2011,30 @@
                     <span class="text-[11px] leading-none mt-0.5">${emoji}</span>
                 `;
 
-                // Klik tanggal untuk membuka log harian & menampilkan balon info
+                // Mendukung klik 1x (jurnal harian) dan klik 2x (langsung catat tanggal haid pertama/terakhir)
                 cell.onclick = (e) => {
                     e.stopPropagation();
+                    const now = Date.now();
+                    const isDoubleClick = (lastClickedCalDate === isoStr && (now - lastClickedCalTime) < 400);
+                    lastClickedCalDate = isoStr;
+                    lastClickedCalTime = now;
+
                     document.getElementById('daily-log-date').value = isoStr;
                     loadDailyLogForDate();
 
-                    document.querySelectorAll('.cal-tooltip').forEach(t => t.remove());
-                    if (logData || isRecordedMens || isPredMens || isSubur || isOvulasi) {
-                        const tip = document.createElement('div');
-                        tip.className = "cal-tooltip";
-                        let statusInfo = isRecordedMens ? "🩸 Haid Tercatat" : isPredMens ? "📅 Prediksi Haid" : isOvulasi ? "✨ Puncak Ovulasi" : isSubur ? "🌸 Masa Subur" : "Catatan Harian";
-                        let detailLog = logData ? `<br>Mood: ${logData.mood || '-'}<br>Fisik: ${(logData.symptoms && logData.symptoms.length) ? logData.symptoms.join(', ') : '-'}` : "<br>Klik panel kanan untuk isi mood/gejala.";
-                        tip.innerHTML = `<strong>${formatDate(dateObj)} (${statusInfo})</strong>${detailLog}`;
-                        cell.appendChild(tip);
+                    if (isDoubleClick) {
+                        lastClickedCalDate = null;
+                        recordPeriodFromCalendarDoubleClick(isoStr);
+                        return;
                     }
+
+                    document.querySelectorAll('.cal-tooltip').forEach(t => t.remove());
+                    const tip = document.createElement('div');
+                    tip.className = "cal-tooltip";
+                    let statusInfo = isRecordedMens ? "🩸 Haid Tercatat" : isPredMens ? "📅 Prediksi Haid" : isOvulasi ? "✨ Puncak Ovulasi" : isSubur ? "🌸 Masa Subur" : "Hari Biasa";
+                    let detailLog = logData ? `<br>Mood: ${logData.mood || '-'}<br>Fisik: ${(logData.symptoms && logData.symptoms.length) ? logData.symptoms.join(', ') : '-'}` : "";
+                    tip.innerHTML = `<strong>${formatDate(dateObj)} (${statusInfo})</strong>${detailLog}<br><span class="text-teal-300">💡 Klik 2x tanggal ini untuk mencatat/mengatur hari haid.</span>`;
+                    cell.appendChild(tip);
                 };
 
                 grid.appendChild(cell);
@@ -1931,7 +2095,6 @@
                 summaryEl.innerText = "Belum ada catatan pada tanggal yang dipilih.";
             }
 
-            // Refresh UI tombol
             document.querySelectorAll('.mood-btn').forEach(btn => {
                 btn.className = (btn.dataset.val === selectedMood)
                     ? "mood-btn p-2 bg-purple-600 text-white border border-purple-600 rounded-xl font-bold transition text-center shadow-sm"
@@ -1964,6 +2127,7 @@
             if (confirm("Hapus semua riwayat haid dan catatan suasana hati/fisik yang tersimpan di browser ini?")) {
                 localStorage.removeItem(STORAGE_KEY_PERIODS);
                 localStorage.removeItem(STORAGE_KEY_LOGS);
+                showAllPeriodHistory = false;
                 loadTrackerFromStorage();
                 renderPeriodRows();
                 analyzeThreeMonthCycles();
